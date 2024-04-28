@@ -55,11 +55,11 @@ public class TacticsMove : MonoBehaviour
 
         foreach (GameObject tile in tiles)
 
-    {
-        Tile t = tile.GetComponent<Tile>();
-        t.FindNeighbors (jumpHeight);
+        {
+            Tile t = tile.GetComponent<Tile>();
+            t.FindNeighbors(jumpHeight);
 
-    }
+        }
     }
 
     public void FindSelectableTiles()
@@ -76,6 +76,7 @@ public class TacticsMove : MonoBehaviour
         while (process.Count > 0)
         {
             Tile t = process.Dequeue();
+
             selectableTiles.Add(t);
             t.selectable = true;
 

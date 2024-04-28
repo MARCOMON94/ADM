@@ -75,12 +75,12 @@ public class Tile : MonoBehaviour
             {
                 Tile tile = item.GetComponent<Tile>();
                 if (tile != null && tile.walkable)
-                {
+               {
 
                 RaycastHit hit;
-                if (Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1))
+                if (!Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1))
                     {
-                    adjacencyList.Add(tile);
+                   adjacencyList.Add(tile);
                     }
                 }
 
