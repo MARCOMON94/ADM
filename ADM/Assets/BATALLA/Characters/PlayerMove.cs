@@ -10,20 +10,23 @@ public class PlayerMove : TacticsMove
     void Start()
     {
         Init();
-        FindSelectableTiles();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        Debug.DrawRay(transform.position, transform.forward);
+
         if (!moving)
         {
-            
+            FindSelectableTiles();
             CheckMouse();
         }
         else
         {
-            //todo: Move();
+           Move();
         }
     }
 
@@ -42,8 +45,7 @@ public class PlayerMove : TacticsMove
 
                     if (t.selectable)
                     {
-                        t.target = true;
-                        moving = false;
+                        MoveToTile(t);
                     }
                 }
             }
