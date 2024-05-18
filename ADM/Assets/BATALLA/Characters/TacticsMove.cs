@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TacticsMove : MonoBehaviour
 {
+    public bool turn = false;
     List<Tile> selectableTiles = new List<Tile> ();
     GameObject[] tiles; 
 
@@ -34,6 +35,8 @@ public class TacticsMove : MonoBehaviour
         tiles = GameObject.FindGameObjectsWithTag("Tile");
 
         halfHeight =  GetComponent<Collider>().bounds.extents.y;
+
+        TurnManager.AddUnit(this);
         
     }
 
@@ -166,6 +169,10 @@ public void Move()
         RemoveSelectableTiles();
         moving = false;
         ResetMovementStates();
+
+        TurnManager.EndTurn();
+
+        //recordar que al añadir accion el turno acaba al realizarla
     }
 }
 
@@ -293,7 +300,15 @@ void MoveToEdge()
     }
 }
 
+public void BeginTurn()
+{
+    turn = true;
+}
 
+public void EndTurn()
+{
+    turn = false;
+}
 
 
 
