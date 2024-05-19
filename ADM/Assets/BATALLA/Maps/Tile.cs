@@ -23,7 +23,11 @@ public class Tile : MonoBehaviour
     public Tile parent = null;      // El tile padre en el camino
     public int distance = 0;        // Distancia desde el inicio
 
-    
+    //For A*
+
+    public float f = 0;
+    public float g = 0;
+    public float h = 0;
 
     // Método Update para cambiar el color del tile según su estado
     void Update()
@@ -56,23 +60,27 @@ public class Tile : MonoBehaviour
         current = false;
         target = false;
         selectable = false;
+
+
         visited = false;
         parent = null;
         distance = 0;
+
+        f = g = h = 0;
     }
 
 
 
     // Encuentra los vecinos del tile que son transitables
-    public void FindNeighbors(float jumpHeight)
+    public void FindNeighbors(float jumpHeight, Tile target)
     {
         Reset();
 
         // Revisa los tiles en las direcciones especificadas
-        CheckTile(Vector3.forward, jumpHeight);
-        CheckTile(-Vector3.forward, jumpHeight);
-        CheckTile(Vector3.right, jumpHeight);
-        CheckTile(-Vector3.right, jumpHeight);
+        CheckTile(Vector3.forward, jumpHeight, target);
+        CheckTile(-Vector3.forward, jumpHeight, target);
+        CheckTile(Vector3.right, jumpHeight, target);
+        CheckTile(-Vector3.right, jumpHeight, target);
     }
     //Encuentra los tiles vecinos transitables. Llama a Reset para asegurarse de que el tile esté en su estado inicial y luego revisa en las cuatro direcciones cardinales.
 
@@ -80,7 +88,7 @@ public class Tile : MonoBehaviour
 
 
     // Revisa si hay un tile transitable en la dirección dada
-    public void CheckTile(Vector3 direction, float jumpHeight)
+    public void CheckTile(Vector3 direction, float jumpHeight, Tile target)
     {
         Vector3 halfExtents = new Vector3(0.25f, (1 + jumpHeight) / 2.0f, 0.25f);
         Collider[] colliders = Physics.OverlapBox(transform.position + direction, halfExtents);
@@ -91,7 +99,7 @@ public class Tile : MonoBehaviour
             if (tile != null && tile.walkable)
             {
                 RaycastHit hit;
-                if (!Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1))
+                if (!Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1) || (tile == target))
                 {
                     adjacencyList.Add(tile); // Añade el tile a la lista de adyacentes si es transitable
                 }
