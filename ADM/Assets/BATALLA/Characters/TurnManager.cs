@@ -1,88 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class TurnManager : MonoBehaviour
 {
-
-    static Dictionary<string, List <TacticsMove>> units = new Dictionary<string, List<TacticsMove>>();
-    static Queue<string> turnKey = new Queue<string>();
-    static Queue<TacticsMove> turnTeam = new Queue<TacticsMove>();
+    static List<TacticsMove> units = new List<TacticsMove>();
+    static int currentIndex = 0;
+    static int currentRound = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        InitTurnQueue();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (turnTeam.Count == 0)
+        if (units.Count == 0)
         {
-            InitTeamTurnQueue();
+            InitTurnQueue();
         }
     }
 
-    static void InitTeamTurnQueue()
+    static void InitTurnQueue()
     {
-        List<TacticsMove> teamList = units[turnKey.Peek()];
+        units = units.OrderByDescending(unit => unit.characterStats.speed).ToList();
+        currentIndex = 0;
 
-        foreach(TacticsMove unit in teamList)
+        if (units.Count > 0)
         {
-            turnTeam.Enqueue(unit);
+            StartTurn();
+        }
+    }
+
+    public static void StartTurn()
+    {
+        if (units.Count > 0)
+        {
+            units[currentIndex].BeginTurn();
+        }
+    }
+
+    public static void EndTurn()
+    {
+        units[currentIndex].EndTurn();
+        currentIndex++;
+
+        if (currentIndex >= units.Count)
+        {
+            currentIndex = 0;
+            currentRound++;
+            Debug.Log("Ronda " + currentRound);
         }
 
         StartTurn();
     }
 
-    public static void StartTurn()
-    {
-        if (turnTeam.Count > 0)
-        {
-            turnTeam.Peek().BeginTurn();
-        }
-
-    }
-
-    public static void EndTurn()
-    {
-        TacticsMove unit = turnTeam.Dequeue();
-        unit.EndTurn();
-
-        if (turnTeam.Count > 0)
-        {
-            StartTurn();
-        }
-        else
-        {
-            string team = turnKey.Dequeue();
-            turnKey.Enqueue(team);
-            InitTeamTurnQueue();
-        }
-    }
-
     public static void AddUnit(TacticsMove unit)
     {
-        List<TacticsMove> list;
-
-        if (!units.ContainsKey(unit.tag))
-        {
-            list = new List<TacticsMove>();
-            units[unit.tag] = list;
-
-            if (!turnKey.Contains(unit.tag))
-            { 
-                turnKey.Enqueue(unit.tag);
-            }
-        }
-        else 
-        {
-            list = units[unit.tag];
-        }
-
-        list.Add(unit);
+        units.Add(unit);
+        units = units.OrderByDescending(u => u.characterStats.speed).ToList();
     }
-    //remember to add unit remove function in this lines
 
+    // Opcional: función para eliminar un personaje si es necesario
+    public static void RemoveUnit(TacticsMove unit)
+    {
+        units.Remove(unit);
+    }
 }

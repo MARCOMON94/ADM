@@ -4,21 +4,15 @@ using UnityEngine;
 
 public class PlayerMove : TacticsMove
 {
-
-
-    // Start is called before the first frame update
+    // Método Start
     void Start()
     {
-        Init();
-        
+        Init(); // Llama al método Init de TacticsMove para inicializar
     }
 
-    // Update is called once per frame
+    // Método Update
     void Update()
     {
-
-        Debug.DrawRay(transform.position, transform.forward);
-
         if (!turn)
         {
             return;
@@ -26,31 +20,33 @@ public class PlayerMove : TacticsMove
 
         if (!moving)
         {
-            FindSelectableTiles();
-            CheckMouse();
+            FindSelectableTiles(); // Encuentra los tiles seleccionables
+
+            CheckMouse(); // Revisa la entrada del ratón
         }
         else
         {
-           Move();
+            Move(); // Llama al método Move para mover el personaje
         }
     }
 
+    // Método para revisar la entrada del ratón
     void CheckMouse()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
             RaycastHit hit;
+
             if (Physics.Raycast(ray, out hit))
             {
                 if (hit.collider.tag == "Tile")
                 {
-                    Tile t= hit.collider.GetComponent<Tile>();
+                    Tile t = hit.collider.GetComponent<Tile>();
 
                     if (t.selectable)
                     {
-                        MoveToTile(t);
+                        MoveToTile(t); // Mueve al personaje al tile seleccionado
                     }
                 }
             }

@@ -87,32 +87,27 @@ public class Tile : MonoBehaviour
 
     // Revisa si hay un tile transitable en la dirección dada
     public void CheckTile(Vector3 direction, float jumpHeight, Tile target)
-    {
-        // Define el tamaño del box collider para verificar la presencia de tiles
-        Vector3 halfExtents = new Vector3(0.25f, (1 + jumpHeight) / 2.0f, 0.25f);
-        // Verifica colisiones en una caja en la dirección especificada
-        Collider[] colliders = Physics.OverlapBox(transform.position + direction, halfExtents);
+{
+    Vector3 halfExtents = new Vector3(0.25f, (1 + jumpHeight) / 2.0f, 0.25f);
+    Collider[] colliders = Physics.OverlapBox(transform.position + direction, halfExtents);
 
-        foreach (Collider item in colliders)
+    foreach (Collider item in colliders)
+    {
+        Tile tile = item.GetComponent<Tile>();
+        if (tile != null && tile.walkable)
         {
-            Tile tile = item.GetComponent<Tile>();
-            if (tile != null && tile.walkable)
+            RaycastHit hit;
+            if (!Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1) || (tile == target))
             {
-                RaycastHit hit;
-                // Verifica que no haya obstáculos sobre el tile o si el tile es el objetivo
-                if (!Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1) || (tile == target))
-                {
-                    adjacencyList.Add(tile); // Añade el tile a la lista de adyacentes si es transitable
-                }
+                adjacencyList.Add(tile);
             }
         }
     }
-    
+}
 }
 
-/*Futuro Marco notas: con el renderer, será donde los bloques estarán con la opacidad a 0 y luego los que se puedan seleccionar los pondre con una 
-opacidad un poco más alta, para que solo se vean los bloques a los uqe se pueden mover.
 
-Además comprobar si en esta página es dónde quiero poner que las casillas horizontales disminuyan si se puede llegar o no, probalblemente habrá que
+
+/*Además comprobar si en esta página es dónde quiero poner que las casillas horizontales disminuyan si se puede llegar o no, probalblemente habrá que
 modificar el método checktile porque ahora mismo funciona con el jumpHeight*/
 
