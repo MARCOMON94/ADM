@@ -23,14 +23,16 @@ public class Tile : MonoBehaviour
     public Tile parent = null;      // El tile padre en el camino
     public int distance = 0;        // Distancia desde el inicio
 
-    //For A*
+    // Variables adicionales para A*
+    public float f = 0; // Costo total (g + h)
+    public float g = 0; // Costo desde el inicio hasta el nodo actual
+    public float h = 0; // Heurística (estimación del costo desde el nodo actual hasta el objetivo)
 
-    public float f = 0;
-    public float g = 0;
-    public float h = 0;
+    
+    
 
     // Método Update para cambiar el color del tile según su estado
-    void Update()
+        void Update()
     {
         if (current)
         {
@@ -50,24 +52,21 @@ public class Tile : MonoBehaviour
         }
     }
 
+    
 
-
-
-     // Resetea el estado del tile
+    // Resetea el estado del tile
     public void Reset()
     {
         adjacencyList.Clear();
         current = false;
         target = false;
         selectable = false;
-
-
         visited = false;
         parent = null;
         distance = 0;
-
-        f = g = h = 0;
+        f = g = h = 0; // Resetea los valores para A*
     }
+
 
 
 
@@ -82,7 +81,6 @@ public class Tile : MonoBehaviour
         CheckTile(Vector3.right, jumpHeight, target);
         CheckTile(-Vector3.right, jumpHeight, target);
     }
-    //Encuentra los tiles vecinos transitables. Llama a Reset para asegurarse de que el tile esté en su estado inicial y luego revisa en las cuatro direcciones cardinales.
 
 
 
@@ -90,7 +88,9 @@ public class Tile : MonoBehaviour
     // Revisa si hay un tile transitable en la dirección dada
     public void CheckTile(Vector3 direction, float jumpHeight, Tile target)
     {
+        // Define el tamaño del box collider para verificar la presencia de tiles
         Vector3 halfExtents = new Vector3(0.25f, (1 + jumpHeight) / 2.0f, 0.25f);
+        // Verifica colisiones en una caja en la dirección especificada
         Collider[] colliders = Physics.OverlapBox(transform.position + direction, halfExtents);
 
         foreach (Collider item in colliders)
@@ -99,6 +99,7 @@ public class Tile : MonoBehaviour
             if (tile != null && tile.walkable)
             {
                 RaycastHit hit;
+                // Verifica que no haya obstáculos sobre el tile o si el tile es el objetivo
                 if (!Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1) || (tile == target))
                 {
                     adjacencyList.Add(tile); // Añade el tile a la lista de adyacentes si es transitable
@@ -106,6 +107,7 @@ public class Tile : MonoBehaviour
             }
         }
     }
+    
 }
 
 /*Futuro Marco notas: con el renderer, será donde los bloques estarán con la opacidad a 0 y luego los que se puedan seleccionar los pondre con una 
