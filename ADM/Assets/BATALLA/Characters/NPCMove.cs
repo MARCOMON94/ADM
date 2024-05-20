@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class NPCMove : TacticsMove
 {
-
     GameObject target;
 
     // Start is called before the first frame update
@@ -26,17 +25,13 @@ public class NPCMove : TacticsMove
         if (!moving)
         {
             FindNearestTarget();
-
             CalculatePath();
-
             FindSelectableTiles();
-
             actualTargetTile.target = true;
-
         }
         else
         {
-           Move();
+            Move();
         }
     }
 
@@ -56,18 +51,14 @@ public class NPCMove : TacticsMove
         foreach (GameObject obj in targets)
         {
             float d = Vector3.Distance(transform.position, obj.transform.position);
-            
+
             if (d < distance)
             {
                 distance = d;
                 nearest = obj;
             }
-        }    
+        }
 
         target = nearest;
     }
-
-
-
-        //cualquier especificacion de a que personaje tienen que ir va aqui
 }

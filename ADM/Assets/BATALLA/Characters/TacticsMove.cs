@@ -35,33 +35,7 @@ public class TacticsMove : MonoBehaviour
         halfHeight = GetComponent<Collider>().bounds.extents.y; // Obtiene la mitad de la altura del colisionador
         TurnManager.AddUnit(this); // Añade este personaje al TurnManager
     }
-// Método para atacar
-    public void Attack(TacticsMove target)
-    {
-        if (Vector3.Distance(transform.position, target.transform.position) <= characterStats.attackRange)
-        {
-            target.TakeDamage(characterStats.basicDamage);
-        }
-    }
 
-    // Método para recibir daño
-    public void TakeDamage(int damage)
-    {
-        characterStats.health -= damage;
-        if (characterStats.health <= 0)
-        {
-            Die();
-        }
-    }
-
-
-
-    // Método para manejar la muerte del personaje
-    void Die()
-    {
-        // Lógica para manejar la muerte del personaje
-        Destroy(gameObject);
-    }
 
     // Método para iniciar el turno del personaje
     public void BeginTurn()
@@ -392,57 +366,64 @@ public class TacticsMove : MonoBehaviour
     }
 
     // Encuentra el camino hacia el tile objetivo usando A*
-    protected void FindPath(Tile target)
+    public void FindPath(Tile target)
+{
+    ComputeAdjacencyLists(characterStats.jumpHeight, target);
+    GetCurrentTile();
+
+    List<Tile> openList = new List<Tile>();
+    List<Tile> closedList = new List<Tile>();
+
+    openList.Add(currentTile);
+    currentTile.h = Vector3.Distance(currentTile.transform.position, target.transform.position);
+    currentTile.f = currentTile.h;
+
+    while (openList.Count > 0)
     {
-        ComputeAdjacencyLists(characterStats.jumpHeight, target);
-        GetCurrentTile();
+        Tile t = FindLowestF(openList);
+        closedList.Add(t);
 
-        List<Tile> openList = new List<Tile>();
-        List<Tile> closedList = new List<Tile>();
-
-        openList.Add(currentTile);
-        currentTile.h = Vector3.Distance(currentTile.transform.position, target.transform.position);
-        currentTile.f = currentTile.h;
-
-        while (openList.Count > 0)
+        if (t == target)
         {
-            Tile t = FindLowestF(openList);
-            closedList.Add(t);
+            actualTargetTile = FindEndTile(t);
+            MoveToTile(actualTargetTile);
+            return;
+        }
 
-            if (t == target)
+        foreach (Tile tile in t.adjacencyList)
+        {
+            if (closedList.Contains(tile))
             {
-                actualTargetTile = FindEndTile(t);
-                MoveToTile(actualTargetTile);
-                return;
+                continue;
             }
 
-            foreach (Tile tile in t.adjacencyList)
+            if (!openList.Contains(tile))
             {
-                if (closedList.Contains(tile))
-                {
-                    // Do nothing, already processed
-                }
-                else if (openList.Contains(tile))
-                {
-                    float tempG = t.g + Vector3.Distance(tile.transform.position, t.transform.position);
+                tile.parent = t;
+                tile.g = t.g + Vector3.Distance(tile.transform.position, t.transform.position);
+                float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
+                int additionalCost = (int)(heightDifference * 2); // Coste adicional por altura
+                tile.g += additionalCost;
+                tile.h = Vector3.Distance(tile.transform.position, target.transform.position);
+                tile.f = tile.g + tile.h;
+                openList.Add(tile);
+            }
+            else
+            {
+                float tempG = t.g + Vector3.Distance(tile.transform.position, t.transform.position);
+                float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
+                int additionalCost = (int)(heightDifference * 2); // Coste adicional por altura
+                tempG += additionalCost;
 
-                    if (tempG < tile.g)
-                    {
-                        tile.parent = t;
-                        tile.g = tempG;
-                        tile.f = tile.g + tile.h;
-                    }
-                }
-                else
+                if (tempG < tile.g)
                 {
                     tile.parent = t;
-                    tile.g = t.g + Vector3.Distance(tile.transform.position, t.transform.position);
-                    tile.h = Vector3.Distance(tile.transform.position, target.transform.position);
+                    tile.g = tempG;
                     tile.f = tile.g + tile.h;
-                    openList.Add(tile);
                 }
             }
         }
+    }
 
         Debug.Log("Path not found");
     
