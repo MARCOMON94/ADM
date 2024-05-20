@@ -9,62 +9,66 @@ public class TurnManager : MonoBehaviour
     static int currentIndex = 0;
     static int currentRound = 1;
 
-    // Start is called before the first frame update
+    // Método Start que se llama al inicio
     void Start()
     {
-        InitTurnQueue();
+        InitTurnQueue(); // Inicializa la cola de turnos
     }
 
-    // Update is called once per frame
+    // Método Update que se llama una vez por frame
     void Update()
     {
         if (units.Count == 0)
         {
-            InitTurnQueue();
+            InitTurnQueue(); // Si no hay unidades, inicializa la cola de turnos
         }
     }
 
+    // Método estático para inicializar la cola de turnos
     static void InitTurnQueue()
     {
-        units = units.OrderByDescending(unit => unit.characterStats.speed).ToList();
+        units = units.OrderByDescending(unit => unit.characterStats.speed).ToList(); // Ordena las unidades por velocidad
         currentIndex = 0;
 
         if (units.Count > 0)
         {
-            StartTurn();
+            StartTurn(); // Inicia el turno de la primera unidad
         }
     }
 
+    // Método estático para iniciar el turno de la unidad actual
     public static void StartTurn()
     {
         if (units.Count > 0)
         {
-            units[currentIndex].BeginTurn();
+            units[currentIndex].BeginTurn(); // Llama al método BeginTurn de la unidad actual
         }
     }
 
+    // Método estático para finalizar el turno de la unidad actual
     public static void EndTurn()
     {
-        units[currentIndex].EndTurn();
+        units[currentIndex].EndTurn(); // Llama al método EndTurn de la unidad actual
         currentIndex++;
 
         if (currentIndex >= units.Count)
         {
             currentIndex = 0;
             currentRound++;
-            Debug.Log("Ronda " + currentRound);
+            Debug.Log("Ronda " + currentRound); // Incrementa el número de rondas y lo muestra en el log
         }
 
-        StartTurn();
+        StartTurn(); // Inicia el turno de la siguiente unidad
     }
 
+    // Método estático para añadir una unidad a la cola de turnos
     public static void AddUnit(TacticsMove unit)
     {
         units.Add(unit);
-        units = units.OrderByDescending(u => u.characterStats.speed).ToList();
+        units = units.OrderByDescending(u => u.characterStats.speed).ToList(); // Reordena las unidades por velocidad
     }
 
-    // Opcional: función para eliminar un personaje si es necesario
+    // Método opcional para eliminar una unidad de la cola de turnos si es necesario
     public static void RemoveUnit(TacticsMove unit)
     {
         units.Remove(unit);

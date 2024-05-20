@@ -6,41 +6,43 @@ public class NPCMove : TacticsMove
 {
     GameObject target;
 
-    // Start is called before the first frame update
+    // Método Start que se llama al inicio
     void Start()
     {
-        Init();
+        Init(); // Llama al método Init de TacticsMove para inicializar
     }
 
-    // Update is called once per frame
+    // Método Update que se llama una vez por frame
     void Update()
     {
         Debug.DrawRay(transform.position, transform.forward);
 
         if (!turn)
         {
-            return;
+            return; // Si no es el turno del NPC, no hace nada
         }
 
         if (!moving)
         {
-            FindNearestTarget();
-            CalculatePath();
-            FindSelectableTiles();
-            actualTargetTile.target = true;
+            FindNearestTarget(); // Encuentra el objetivo más cercano
+            CalculatePath(); // Calcula el camino hacia el objetivo
+            FindSelectableTiles(); // Encuentra los tiles seleccionables
+            actualTargetTile.target = true; // Marca el tile objetivo
         }
         else
         {
-            Move();
+            Move(); // Mueve al NPC
         }
     }
 
+    // Método para calcular el camino hacia el tile objetivo
     void CalculatePath()
     {
-        Tile targetTile = GetTargetTile(target);
-        FindPath(targetTile);
+        Tile targetTile = GetTargetTile(target); // Obtiene el tile objetivo
+        FindPath(targetTile); // Encuentra el camino hacia el tile objetivo
     }
 
+    // Método para encontrar el objetivo más cercano
     void FindNearestTarget()
     {
         GameObject[] targets = GameObject.FindGameObjectsWithTag("Player");
@@ -59,6 +61,7 @@ public class NPCMove : TacticsMove
             }
         }
 
-        target = nearest;
+        target = nearest; // Asigna el objetivo más cercano como el objetivo actual
     }
 }
+
