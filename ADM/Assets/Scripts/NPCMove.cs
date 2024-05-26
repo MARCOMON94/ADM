@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class NPCMove : TacticsMove
 {
-    GameObject target;
+    GameObject target; // Objetivo actual del NPC
 
-    // Método Start que se llama al inicio
     void Start()
     {
-        Init(); // Llama al método Init de TacticsMove para inicializar
+        Init(false); // Inicializa el NPC usando el método Init de TacticsMove
     }
 
-    // Método Update que se llama una vez por frame
     void Update()
     {
-        Debug.DrawRay(transform.position, transform.forward);
+        Debug.DrawRay(transform.position, transform.forward); // Dibuja un rayo en la dirección hacia la que mira el NPC para depuración
 
-        if (!turn)
+        if (!turn) // Si no es el turno del NPC, no hace nada
         {
-            return; // Si no es el turno del NPC, no hace nada
+            return;
         }
 
-        if (!moving)
+        if (!moving) // Si el NPC no está en movimiento
         {
             FindNearestTarget(); // Encuentra el objetivo más cercano
             CalculatePath(); // Calcula el camino hacia el objetivo
@@ -35,21 +33,22 @@ public class NPCMove : TacticsMove
         }
     }
 
-    // Método para calcular el camino hacia el tile objetivo
+    // Calcula el camino hacia el tile objetivo
     void CalculatePath()
     {
         Tile targetTile = GetTargetTile(target); // Obtiene el tile objetivo
         FindPath(targetTile); // Encuentra el camino hacia el tile objetivo
     }
 
-    // Método para encontrar el objetivo más cercano
+    // Encuentra el objetivo más cercano
     void FindNearestTarget()
     {
-        GameObject[] targets = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] targets = GameObject.FindGameObjectsWithTag("Player"); // Encuentra todos los jugadores
 
         GameObject nearest = null;
         float distance = Mathf.Infinity;
 
+        // Busca el jugador más cercano
         foreach (GameObject obj in targets)
         {
             float d = Vector3.Distance(transform.position, obj.transform.position);
@@ -64,4 +63,3 @@ public class NPCMove : TacticsMove
         target = nearest; // Asigna el objetivo más cercano como el objetivo actual
     }
 }
-

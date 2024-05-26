@@ -4,35 +4,27 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-
     // Variables para determinar el estado del Tile
-    public bool walkable = true;    // Si es transitable
-    public bool current = false;    // Si es la posición actual del jugador
-    public bool target = false;     // Si es el destino del jugador
-    public bool selectable = false; // Si es seleccionable
-
-
+    public bool walkable = true; // Indica si el tile es transitable
+    public bool current = false; // Indica si el tile es el actual
+    public bool target = false; // Indica si el tile es el objetivo
+    public bool selectable = false; // Indica si el tile es seleccionable
 
     // Lista para almacenar los tiles adyacentes
     public List<Tile> adjacencyList = new List<Tile>();
 
-
-
     // Variables para la búsqueda de caminos
-    public bool visited = false;    // Si el tile ha sido visitado
-    public Tile parent = null;      // El tile padre en el camino
-    public int distance = 0;        // Distancia desde el inicio
+    public bool visited = false; // Indica si el tile ha sido visitado
+    public Tile parent = null; // Tile padre en la ruta
+    public int distance = 0; // Distancia desde el inicio
 
     // Variables adicionales para A*
     public float f = 0; // Costo total (g + h)
     public float g = 0; // Costo desde el inicio hasta el nodo actual
     public float h = 0; // Heurística (estimación del costo desde el nodo actual hasta el objetivo)
 
-    
-    
-
-    // Método Update para cambiar el color del tile según su estado
-        void Update()
+    // Método Update que se llama una vez por frame
+    void Update()
     {
         if (current)
         {
@@ -40,19 +32,17 @@ public class Tile : MonoBehaviour
         }
         else if (target)
         {
-            GetComponent<Renderer>().material.color = Color.green;   // Color para el tile objetivo
+            GetComponent<Renderer>().material.color = Color.green; // Color para el tile objetivo
         }
         else if (selectable)
         {
-            GetComponent<Renderer>().material.color = Color.red;     // Color para el tile seleccionable
+            GetComponent<Renderer>().material.color = Color.red; // Color para el tile seleccionable
         }
-        else 
+        else
         {
-            GetComponent<Renderer>().material.color = Color.white;   // Color por defecto
+            GetComponent<Renderer>().material.color = Color.white; // Color por defecto
         }
     }
-
-    
 
     // Resetea el estado del tile
     public void Reset()
@@ -67,9 +57,6 @@ public class Tile : MonoBehaviour
         f = g = h = 0; // Resetea los valores para A*
     }
 
-
-
-
     // Encuentra los vecinos del tile que son transitables
     public void FindNeighbors(float jumpHeight, Tile target)
     {
@@ -82,32 +69,23 @@ public class Tile : MonoBehaviour
         CheckTile(-Vector3.right, jumpHeight, target);
     }
 
-
-
-
     // Revisa si hay un tile transitable en la dirección dada
     public void CheckTile(Vector3 direction, float jumpHeight, Tile target)
-{
-    Vector3 halfExtents = new Vector3(0.25f, (1 + jumpHeight) / 2.0f, 0.25f);
-    Collider[] colliders = Physics.OverlapBox(transform.position + direction, halfExtents);
-
-    foreach (Collider item in colliders)
     {
-        Tile tile = item.GetComponent<Tile>();
-        if (tile != null && tile.walkable)
+        Vector3 halfExtents = new Vector3(0.25f, (1 + jumpHeight) / 2.0f, 0.25f);
+        Collider[] colliders = Physics.OverlapBox(transform.position + direction, halfExtents);
+
+        foreach (Collider item in colliders)
         {
-            RaycastHit hit;
-            if (!Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1) || (tile == target))
+            Tile tile = item.GetComponent<Tile>();
+            if (tile != null && tile.walkable)
             {
-                adjacencyList.Add(tile);
+                RaycastHit hit;
+                if (!Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1) || (tile == target))
+                {
+                    adjacencyList.Add(tile);
+                }
             }
         }
     }
 }
-}
-
-
-
-/*Además comprobar si en esta página es dónde quiero poner que las casillas horizontales disminuyan si se puede llegar o no, probalblemente habrá que
-modificar el método checktile porque ahora mismo funciona con el jumpHeight*/
-

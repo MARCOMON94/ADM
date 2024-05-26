@@ -18,5 +18,5 @@ MonoBehaviour:
   jumpVelocity: 4.5
   speed: 100
   basicDamage: 10
-  attackRange: 1.5
+  attackRange: 1
   health: 100
