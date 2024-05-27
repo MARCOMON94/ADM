@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae8d6dbf94fea54c87502072ec52984, type: 3}
   m_Name: Amarillo 1
   m_EditorClassIdentifier: 
+  name: paco
   move: 5
   jumpHeight: 2
   moveSpeed: 2

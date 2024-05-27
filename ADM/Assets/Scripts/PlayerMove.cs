@@ -47,7 +47,7 @@ public class PlayerMove : TacticsMove
     // Muestra el menú de acciones al jugador (mover, atacar, terminar turno)
     void ShowActionMenu()
     {
-        if (Input.GetKeyDown(KeyCode.M) && !hasMoved) // Si se presiona la tecla M y el jugador no se ha movido
+        if (Input.GetKeyDown(KeyCode.M)) // Si se presiona la tecla M
         {
             currentAction = PlayerAction.Move; // Establece la acción actual como mover
         }
@@ -123,7 +123,8 @@ public class PlayerMove : TacticsMove
                 {
                     TacticsMove enemy = hit.collider.GetComponent<TacticsMove>();
 
-                    if (enemy != null && Vector3.Distance(transform.position, enemy.transform.position) <= characterStats.attackRange)
+                    if (enemy != null && Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), 
+                                                      new Vector3(enemy.transform.position.x, 0, enemy.transform.position.z)) <= characterStats.attackRange)
                     {
                         CombatManager.Instance.Attack(this, enemy); // Realiza un ataque
                         EndTurn(); // Termina el turno del jugador
@@ -158,5 +159,13 @@ public class PlayerMove : TacticsMove
         }
 
         TurnManager.EndTurn(); // Notifica al TurnManager para finalizar el turno
+    }
+
+    public void BeginTurn()
+    {
+        turn = true; // Marca el turno como activo
+        currentAction = PlayerAction.None; // Resetea la acción actual
+        hasMoved = false; // Resetea el estado de movimiento
+        ShowActionMenu(); // Muestra el menú de acciones
     }
 }

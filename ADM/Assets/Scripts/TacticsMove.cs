@@ -79,45 +79,43 @@ public class TacticsMove : MonoBehaviour
 
     // Encuentra los tiles seleccionables dentro del rango de movimiento
     public void FindSelectableTiles()
+{
+    ComputeAdjacencyLists(characterStats.jumpHeight, null); // Calcula la lista de tiles adyacentes
+    GetCurrentTile(); // Obtiene el tile actual
+
+    Queue<Tile> process = new Queue<Tile>();
+    process.Enqueue(currentTile); // Añade el tile actual a la cola de procesamiento
+    currentTile.visited = true; // Marca el tile actual como visitado
+
+    while (process.Count > 0)
     {
-        ComputeAdjacencyLists(characterStats.jumpHeight, null); // Calcula la lista de tiles adyacentes
-        GetCurrentTile(); // Obtiene el tile actual
+        Tile t = process.Dequeue(); // Toma el siguiente tile de la cola
+        selectableTiles.Add(t); // Añade el tile a la lista de tiles seleccionables
+        t.selectable = true; // Marca el tile como seleccionable
 
-        Queue<Tile> process = new Queue<Tile>();
-        process.Enqueue(currentTile); // Añade el tile actual a la cola de procesamiento
-        currentTile.visited = true; // Marca el tile actual como visitado
-
-        while (process.Count > 0)
+        if (t.distance < characterStats.move) // Si la distancia del tile es menor que el rango de movimiento del personaje
         {
-            Tile t = process.Dequeue(); // Toma el siguiente tile de la cola
-            selectableTiles.Add(t); // Añade el tile a la lista de tiles seleccionables
-            t.selectable = true; // Marca el tile como seleccionable
-
-            // Si la distancia del tile es menor que el rango de movimiento del personaje
-            if (t.distance < characterStats.move)
+            foreach (Tile tile in t.adjacencyList) // Revisa cada tile adyacente
             {
-                foreach (Tile tile in t.adjacencyList) // Revisa cada tile adyacente
+                if (!tile.visited) // Si el tile no ha sido visitado
                 {
-                    if (!tile.visited) // Si el tile no ha sido visitado
+                    tile.parent = t; // Establece el tile actual como el padre del tile adyacente
+                    tile.visited = true; // Marca el tile adyacente como visitado
+
+                    float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
+                    int additionalCost = (int)(heightDifference * 2); // Cada unidad de altura cuesta 2 unidades de movimiento
+                    int newDistance = t.distance + 1 + additionalCost;
+
+                    if (newDistance <= characterStats.move) // Si la nueva distancia es menor o igual al rango de movimiento del personaje
                     {
-                        tile.parent = t; // Establece el tile actual como el padre del tile adyacente
-                        tile.visited = true; // Marca el tile adyacente como visitado
-
-                        float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
-                        int additionalCost = (int)(heightDifference * 2); // Cada unidad de altura cuesta 2 unidades de movimiento
-                        int newDistance = t.distance + 1 + additionalCost;
-
-                        // Si la nueva distancia es menor o igual al rango de movimiento del personaje
-                        if (newDistance <= characterStats.move)
-                        {
-                            tile.distance = newDistance; // Establece la nueva distancia
-                            process.Enqueue(tile); // Añade el tile adyacente a la cola de procesamiento
-                        }
+                        tile.distance = newDistance; // Establece la nueva distancia
+                        process.Enqueue(tile); // Añade el tile adyacente a la cola de procesamiento
                     }
                 }
             }
         }
     }
+}
 
     // Mueve al personaje hacia un tile específico
     public void MoveToTile(Tile tile)

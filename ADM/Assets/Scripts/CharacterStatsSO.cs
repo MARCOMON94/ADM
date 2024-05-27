@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CharacterStats", menuName = "Character Stats", order = 51)]
 public class CharacterStatsSO : ScriptableObject
 {
+    public string name = "Character";
     public int move = 5;
     public float jumpHeight = 2;
     public float moveSpeed = 2;
