@@ -3308,7 +3308,7 @@ GameObject:
   - component: {fileID: 263529591}
   - component: {fileID: 263529590}
   m_Layer: 5
-  m_Name: PassTurn
+  m_Name: passTurnButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7427,16 +7427,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 2065224440}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 3db099a5af8099d409c94cbc3b42f774, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.91161
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3db099a5af8099d409c94cbc3b42f774, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.91161
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3db099a5af8099d409c94cbc3b42f774, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.91161
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3db099a5af8099d409c94cbc3b42f774, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0020000935
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3db099a5af8099d409c94cbc3b42f774, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.67855847
+      value: -0.662
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3db099a5af8099d409c94cbc3b42f774, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.056999683
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3db099a5af8099d409c94cbc3b42f774, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7799,27 +7811,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.91161
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.91161
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.91161
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0061044693
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.674
+      value: -0.676
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.019
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14409,7 +14421,7 @@ GameObject:
   - component: {fileID: 1229531202}
   - component: {fileID: 1229531201}
   m_Layer: 5
-  m_Name: move
+  m_Name: moveButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14479,9 +14491,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1448428821}
+      - m_Target: {fileID: 1448428820}
         m_TargetAssemblyTypeName: TacticsMove, Assembly-CSharp
-        m_MethodName: Move
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18553,15 +18565,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 463472, guid: 7dc923b4c4812f147ba42a507e5507bd, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.87417734
+      value: 0.7969088
       objectReference: {fileID: 0}
     - target: {fileID: 463472, guid: 7dc923b4c4812f147ba42a507e5507bd, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.87417734
+      value: 0.7969088
       objectReference: {fileID: 0}
     - target: {fileID: 463472, guid: 7dc923b4c4812f147ba42a507e5507bd, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.87417734
+      value: 0.7969088
       objectReference: {fileID: 0}
     - target: {fileID: 463472, guid: 7dc923b4c4812f147ba42a507e5507bd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18569,11 +18581,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 463472, guid: 7dc923b4c4812f147ba42a507e5507bd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.776
+      value: -0.786
       objectReference: {fileID: 0}
     - target: {fileID: 463472, guid: 7dc923b4c4812f147ba42a507e5507bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.047145367
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 463472, guid: 7dc923b4c4812f147ba42a507e5507bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -20003,7 +20015,7 @@ GameObject:
   - component: {fileID: 1805059000}
   - component: {fileID: 1805058999}
   m_Layer: 5
-  m_Name: Attack
+  m_Name: attackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21801,15 +21813,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400152, guid: ef64611ee944d7c4ea26768458ee0961, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8797856
+      value: 0.8020214
       objectReference: {fileID: 0}
     - target: {fileID: 400152, guid: ef64611ee944d7c4ea26768458ee0961, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8797856
+      value: 0.8020214
       objectReference: {fileID: 0}
     - target: {fileID: 400152, guid: ef64611ee944d7c4ea26768458ee0961, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.8797856
+      value: 0.8020214
       objectReference: {fileID: 0}
     - target: {fileID: 400152, guid: ef64611ee944d7c4ea26768458ee0961, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21817,11 +21829,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400152, guid: ef64611ee944d7c4ea26768458ee0961, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.856
+      value: -0.84
       objectReference: {fileID: 0}
     - target: {fileID: 400152, guid: ef64611ee944d7c4ea26768458ee0961, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.01424551
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400152, guid: ef64611ee944d7c4ea26768458ee0961, type: 3}
       propertyPath: m_LocalRotation.w
@@ -22772,7 +22784,7 @@ Transform:
   m_GameObject: {fileID: 2065224437}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.49, y: 1.1655585, z: 5.508}
+  m_LocalPosition: {x: -3.49, y: 1.18, z: 5.452}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

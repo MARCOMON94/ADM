@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cae8d6dbf94fea54c87502072ec52984, type: 3}
-  m_Name: Rosa
+  m_Name: loli
   m_EditorClassIdentifier: 
-  name: pepa
+  name: loli
   move: 5
   jumpHeight: 2
   moveSpeed: 2
   jumpVelocity: 4.5
-  speed: 90
+  speed: 70
   basicDamage: 10
-  attackRange: 1.5
+  attackRange: 3
   health: 100

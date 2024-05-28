@@ -35,13 +35,13 @@ public class TacticsMove : MonoBehaviour
     }
 
     // Método para iniciar el turno del personaje
-    public void BeginTurn()
+    public virtual void BeginTurn()
     {
         turn = true; // Marca el turno como activo
     }
 
     // Método para finalizar el turno del personaje
-    public void EndTurn()
+    public virtual void EndTurn()
     {
         turn = false; // Marca el turno como inactivo
     }

@@ -23,9 +23,19 @@ public class NPCMove : TacticsMove
         if (!moving) // Si el NPC no está en movimiento
         {
             FindNearestTarget(); // Encuentra el objetivo más cercano
-            CalculatePath(); // Calcula el camino hacia el objetivo
-            FindSelectableTiles(); // Encuentra los tiles seleccionables
-            actualTargetTile.target = true; // Marca el tile objetivo
+            float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+
+            if (distanceToTarget <= characterStats.attackRange)
+            {
+                // Atacar al objetivo si está dentro del rango de ataque
+                AttackTarget();
+            }
+            else
+            {
+                CalculatePath(); // Calcula el camino hacia el objetivo
+                FindSelectableTiles(); // Encuentra los tiles seleccionables
+                actualTargetTile.target = true; // Marca el tile objetivo
+            }
         }
         else
         {
@@ -62,4 +72,19 @@ public class NPCMove : TacticsMove
 
         target = nearest; // Asigna el objetivo más cercano como el objetivo actual
     }
+
+    // Ataca al objetivo
+    void AttackTarget()
+    {
+        if (target != null)
+        {
+            TacticsMove targetMove = target.GetComponent<TacticsMove>();
+            if (targetMove != null)
+            {
+                CombatManager.Instance.Attack(this, targetMove); // Realiza el ataque
+                EndTurn(); // Termina el turno del NPC
+            }
+        }
+    }
 }
+

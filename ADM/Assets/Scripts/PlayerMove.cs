@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerMove : TacticsMove
 {
     private enum PlayerAction { None, Move, Attack } // Enum para las posibles acciones del jugador

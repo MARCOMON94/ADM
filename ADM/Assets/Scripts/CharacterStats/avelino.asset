@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cae8d6dbf94fea54c87502072ec52984, type: 3}
-  m_Name: Amarillo 1
+  m_Name: avelino
   m_EditorClassIdentifier: 
-  name: paco
+  name: avelino
   move: 5
   jumpHeight: 2
   moveSpeed: 2
   jumpVelocity: 4.5
-  speed: 80
+  speed: 100
   basicDamage: 10
-  attackRange: 2
+  attackRange: 1
   health: 100
