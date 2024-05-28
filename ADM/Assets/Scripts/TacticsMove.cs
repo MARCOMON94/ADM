@@ -4,53 +4,88 @@ using UnityEngine;
 
 public class TacticsMove : MonoBehaviour
 {
-    public bool turn = false; // Indica si es el turno del personaje
-    protected List<Tile> selectableTiles = new List<Tile>(); // Lista de tiles seleccionables
-    GameObject[] tiles; // Array de todos los tiles en el mapa
+    // Indica si es el turno del personaje
+    public bool turn = false;
 
-    Stack<Tile> path = new Stack<Tile>(); // Pila que representa el camino a seguir
-    Tile currentTile; // Tile actual en el que se encuentra el personaje
+    // Lista de tiles seleccionables
+    protected List<Tile> selectableTiles = new List<Tile>();
 
-    public bool moving = false; // Indica si el personaje está en movimiento
-    public CharacterStatsSO characterStats; // Usar ScriptableObject para estadísticas
+    // Array de todos los tiles en el mapa
+    GameObject[] tiles;
 
-    Vector3 velocity = new Vector3(); // Velocidad actual del personaje
-    Vector3 heading = new Vector3(); // Dirección del movimiento
+    // Pila que representa el camino a seguir
+    Stack<Tile> path = new Stack<Tile>();
 
-    float halfHeight = 0; // Mitad de la altura del colisionador del personaje
+    // Tile actual en el que se encuentra el personaje
+    Tile currentTile;
 
-    bool fallingDown = false; // Indica si el personaje está cayendo
-    bool jumpingUp = false; // Indica si el personaje está saltando
-    bool movingEdge = false; // Indica si el personaje se está moviendo hacia el borde
-    Vector3 jumpTarget; // Objetivo del salto
+    // Indica si el personaje está en movimiento
+    public bool moving = false;
 
-    public Tile actualTargetTile; // Tile objetivo final
+    // Usar ScriptableObject para estadísticas del personaje
+    public CharacterStatsSO characterStats;
+
+    // Velocidad actual del personaje
+    Vector3 velocity = new Vector3();
+
+    // Dirección del movimiento
+    Vector3 heading = new Vector3();
+
+    // Mitad de la altura del colisionador del personaje
+    float halfHeight = 0;
+
+    // Indicadores de estado de movimiento
+    bool fallingDown = false;
+    bool jumpingUp = false;
+    bool movingEdge = false;
+
+    // Objetivo del salto
+    Vector3 jumpTarget;
+
+    // Tile objetivo final
+    public Tile actualTargetTile;
 
     // Método de inicialización
     protected void Init(bool isPlayer)
     {
-        tiles = GameObject.FindGameObjectsWithTag("Tile"); // Encuentra todos los tiles en el mapa
-        halfHeight = GetComponent<Collider>().bounds.extents.y; // Obtiene la mitad de la altura del colisionador
-        TurnManager.AddUnit(this, isPlayer); // Añade este personaje al TurnManager
+        // Encuentra todos los tiles en el mapa
+        tiles = GameObject.FindGameObjectsWithTag("Tile");
+
+        // Obtiene la mitad de la altura del colisionador
+        halfHeight = GetComponent<Collider>().bounds.extents.y;
+
+        // Añade este personaje al TurnManager
+        TurnManager.AddUnit(this, isPlayer);
     }
 
     // Método para iniciar el turno del personaje
     public virtual void BeginTurn()
     {
-        turn = true; // Marca el turno como activo
+        // Marca el turno como activo
+        turn = true;
     }
 
     // Método para finalizar el turno del personaje
     public virtual void EndTurn()
     {
-        turn = false; // Marca el turno como inactivo
+        // Marca el turno como inactivo
+        turn = false;
+        RemoveSelectableTiles();
+
+        // Notifica al TurnManager para finalizar el turno solo si no es el NPC quien llama directamente a EndTurn
+        if (!(this is NPCMove))
+        {
+            TurnManager.EndTurn();
+        }
     }
 
     // Obtiene el tile actual en el que se encuentra el personaje
     public void GetCurrentTile()
     {
-        currentTile = GetTargetTile(gameObject); // Obtiene el tile debajo del personaje
-        currentTile.current = true; // Marca el tile como actual
+        // Obtiene el tile debajo del personaje
+        currentTile = GetTargetTile(gameObject);
+        // Marca el tile como actual
+        currentTile.current = true;
     }
 
     // Obtiene el tile debajo de un GameObject específico
@@ -62,7 +97,8 @@ public class TacticsMove : MonoBehaviour
         // Lanza un rayo hacia abajo desde la posición del target
         if (Physics.Raycast(target.transform.position, -Vector3.up, out hit, 1))
         {
-            tile = hit.collider.GetComponent<Tile>(); // Obtiene el componente Tile del objeto golpeado
+            // Obtiene el componente Tile del objeto golpeado
+            tile = hit.collider.GetComponent<Tile>();
         }
         return tile;
     }
@@ -79,56 +115,75 @@ public class TacticsMove : MonoBehaviour
 
     // Encuentra los tiles seleccionables dentro del rango de movimiento
     public void FindSelectableTiles()
-{
-    ComputeAdjacencyLists(characterStats.jumpHeight, null); // Calcula la lista de tiles adyacentes
-    GetCurrentTile(); // Obtiene el tile actual
-
-    Queue<Tile> process = new Queue<Tile>();
-    process.Enqueue(currentTile); // Añade el tile actual a la cola de procesamiento
-    currentTile.visited = true; // Marca el tile actual como visitado
-
-    while (process.Count > 0)
     {
-        Tile t = process.Dequeue(); // Toma el siguiente tile de la cola
-        selectableTiles.Add(t); // Añade el tile a la lista de tiles seleccionables
-        t.selectable = true; // Marca el tile como seleccionable
+        // Calcula la lista de tiles adyacentes
+        ComputeAdjacencyLists(characterStats.jumpHeight, null);
+        // Obtiene el tile actual
+        GetCurrentTile();
 
-        if (t.distance < characterStats.move) // Si la distancia del tile es menor que el rango de movimiento del personaje
+        Queue<Tile> process = new Queue<Tile>();
+        // Añade el tile actual a la cola de procesamiento
+        process.Enqueue(currentTile);
+        // Marca el tile actual como visitado
+        currentTile.visited = true;
+
+        while (process.Count > 0)
         {
-            foreach (Tile tile in t.adjacencyList) // Revisa cada tile adyacente
+            // Toma el siguiente tile de la cola
+            Tile t = process.Dequeue();
+            // Añade el tile a la lista de tiles seleccionables
+            selectableTiles.Add(t);
+            // Marca el tile como seleccionable
+            t.selectable = true;
+
+            if (t.distance < characterStats.move) // Si la distancia del tile es menor que el rango de movimiento del personaje
             {
-                if (!tile.visited) // Si el tile no ha sido visitado
+                foreach (Tile tile in t.adjacencyList) // Revisa cada tile adyacente
                 {
-                    tile.parent = t; // Establece el tile actual como el padre del tile adyacente
-                    tile.visited = true; // Marca el tile adyacente como visitado
-
-                    float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
-                    int additionalCost = (int)(heightDifference * 2); // Cada unidad de altura cuesta 2 unidades de movimiento
-                    int newDistance = t.distance + 1 + additionalCost;
-
-                    if (newDistance <= characterStats.move) // Si la nueva distancia es menor o igual al rango de movimiento del personaje
+                    if (!tile.visited) // Si el tile no ha sido visitado
                     {
-                        tile.distance = newDistance; // Establece la nueva distancia
-                        process.Enqueue(tile); // Añade el tile adyacente a la cola de procesamiento
+                        // Establece el tile actual como el padre del tile adyacente
+                        tile.parent = t;
+                        // Marca el tile adyacente como visitado
+                        tile.visited = true;
+
+                        // Calcula la diferencia de altura entre los tiles
+                        float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
+                        // Calcula el coste adicional por altura
+                        int additionalCost = (int)(heightDifference * 2);
+                        // Calcula la nueva distancia
+                        int newDistance = t.distance + 1 + additionalCost;
+
+                        if (newDistance <= characterStats.move) // Si la nueva distancia es menor o igual al rango de movimiento del personaje
+                        {
+                            // Establece la nueva distancia
+                            tile.distance = newDistance;
+                            // Añade el tile adyacente a la cola de procesamiento
+                            process.Enqueue(tile);
+                        }
                     }
                 }
             }
         }
     }
-}
 
     // Mueve al personaje hacia un tile específico
     public void MoveToTile(Tile tile)
     {
-        path.Clear(); // Limpia el camino actual
-        tile.target = true; // Marca el tile como objetivo
-        moving = true; // Marca que el personaje está en movimiento
+        // Limpia el camino actual
+        path.Clear();
+        // Marca el tile como objetivo
+        tile.target = true;
+        // Marca que el personaje está en movimiento
+        moving = true;
 
         Tile next = tile;
         while (next != null) // Recorre el camino hasta el tile objetivo
         {
-            path.Push(next); // Añade cada tile al camino
-            next = next.parent; // Sigue al tile padre
+            // Añade cada tile al camino
+            path.Push(next);
+            // Sigue al tile padre
+            next = next.parent;
         }
     }
 
@@ -137,9 +192,11 @@ public class TacticsMove : MonoBehaviour
     {
         if (path.Count > 0) // Si hay tiles en el camino
         {
-            Tile t = path.Peek(); // Obtiene el siguiente tile en el camino
+            // Obtiene el siguiente tile en el camino
+            Tile t = path.Peek();
             Vector3 target = t.transform.position;
 
+            // Ajusta la posición de destino para tener en cuenta la altura del colisionador
             target.y += halfHeight + t.GetComponent<Collider>().bounds.extents.y;
 
             if (Vector3.Distance(transform.position, target) >= 0.05f) // Si el personaje no ha llegado al tile objetivo
@@ -148,30 +205,40 @@ public class TacticsMove : MonoBehaviour
 
                 if (jump)
                 {
-                    Jump(target); // Si hay diferencia de altura, realiza un salto
+                    // Si hay diferencia de altura, realiza un salto
+                    Jump(target);
                 }
                 else
                 {
-                    CalculateHeading(target); // Calcula la dirección hacia el objetivo
-                    SetHorizontalVelocity(); // Establece la velocidad horizontal
+                    // Calcula la dirección hacia el objetivo y establece la velocidad horizontal
+                    CalculateHeading(target);
+                    SetHorizontalVelocity();
                 }
 
-                transform.forward = heading; // Establece la dirección del personaje
-                transform.position += velocity * Time.deltaTime; // Mueve al personaje
+                // Establece la dirección del personaje
+                transform.forward = heading;
+                // Mueve al personaje
+                transform.position += velocity * Time.deltaTime;
             }
             else
             {
-                transform.position = target; // Establece la posición final del personaje
-                path.Pop(); // Elimina el tile alcanzado del camino
-                ResetMovementStates(); // Resetea los estados de movimiento
+                // Establece la posición final del personaje
+                transform.position = target;
+                // Elimina el tile alcanzado del camino
+                path.Pop();
+                // Resetea los estados de movimiento
+                ResetMovementStates();
             }
         }
         else
         {
-            RemoveSelectableTiles(); // Elimina los tiles seleccionables
-            moving = false; // Marca que el personaje ha dejado de moverse
-            ResetMovementStates(); // Resetea los estados de movimiento
-            TurnManager.EndTurn(); // Notifica al TurnManager para finalizar el turno
+            // Elimina los tiles seleccionables y marca que el personaje ha dejado de moverse
+            RemoveSelectableTiles();
+            moving = false;
+            // Resetea los estados de movimiento
+            ResetMovementStates();
+            // Notifica al TurnManager para finalizar el turno
+            TurnManager.EndTurn();
         }
     }
 
@@ -194,7 +261,8 @@ public class TacticsMove : MonoBehaviour
 
         foreach (Tile tile in selectableTiles)
         {
-            tile.Reset(); // Resetea el estado del tile
+            // Resetea el estado del tile
+            tile.Reset();
         }
 
         selectableTiles.Clear();
@@ -218,19 +286,23 @@ public class TacticsMove : MonoBehaviour
     {
         if (fallingDown)
         {
-            FallDownward(target); // Maneja la caída
+            // Maneja la caída
+            FallDownward(target);
         }
         else if (jumpingUp)
         {
-            JumpUpward(target); // Maneja el ascenso
+            // Maneja el ascenso
+            JumpUpward(target);
         }
         else if (movingEdge)
         {
-            MoveToEdge(); // Mueve al personaje hacia el borde
+            // Mueve al personaje hacia el borde
+            MoveToEdge();
         }
         else
         {
-            PrepareJump(target); // Prepara el salto
+            // Prepara el salto
+            PrepareJump(target);
         }
     }
 
@@ -353,25 +425,34 @@ public class TacticsMove : MonoBehaviour
     // Encuentra el camino hacia el tile objetivo usando A*
     public void FindPath(Tile target)
     {
-        ComputeAdjacencyLists(characterStats.jumpHeight, target); // Calcula la lista de tiles adyacentes
-        GetCurrentTile(); // Obtiene el tile actual
+        // Calcula la lista de tiles adyacentes
+        ComputeAdjacencyLists(characterStats.jumpHeight, target);
+        // Obtiene el tile actual
+        GetCurrentTile();
 
         List<Tile> openList = new List<Tile>(); // Lista de tiles por evaluar
         List<Tile> closedList = new List<Tile>(); // Lista de tiles ya evaluados
 
-        openList.Add(currentTile); // Añade el tile actual a la lista de tiles por evaluar
-        currentTile.h = Vector3.Distance(currentTile.transform.position, target.transform.position); // Calcula la heurística del tile actual
-        currentTile.f = currentTile.h; // Establece el costo total del tile actual
+        // Añade el tile actual a la lista de tiles por evaluar
+        openList.Add(currentTile);
+        // Calcula la heurística del tile actual
+        currentTile.h = Vector3.Distance(currentTile.transform.position, target.transform.position);
+        // Establece el costo total del tile actual
+        currentTile.f = currentTile.h;
 
         while (openList.Count > 0)
         {
-            Tile t = FindLowestF(openList); // Encuentra el tile con el menor costo total
-            closedList.Add(t); // Añade el tile a la lista de tiles evaluados
+            // Encuentra el tile con el menor costo total
+            Tile t = FindLowestF(openList);
+            // Añade el tile a la lista de tiles evaluados
+            closedList.Add(t);
 
             if (t == target) // Si el tile actual es el objetivo
             {
-                actualTargetTile = FindEndTile(t); // Encuentra el tile final en el camino
-                MoveToTile(actualTargetTile); // Mueve al personaje al tile objetivo
+                // Encuentra el tile final en el camino
+                actualTargetTile = FindEndTile(t);
+                // Mueve al personaje al tile objetivo
+                MoveToTile(actualTargetTile);
                 return;
             }
 
@@ -384,27 +465,40 @@ public class TacticsMove : MonoBehaviour
 
                 if (!openList.Contains(tile)) // Si el tile no está en la lista de tiles por evaluar
                 {
-                    tile.parent = t; // Establece el tile actual como el padre del tile adyacente
-                    tile.g = t.g + Vector3.Distance(tile.transform.position, t.transform.position); // Calcula el costo desde el inicio hasta el nodo actual
+                    // Establece el tile actual como el padre del tile adyacente
+                    tile.parent = t;
+                    // Calcula el costo desde el inicio hasta el nodo actual
+                    tile.g = t.g + Vector3.Distance(tile.transform.position, t.transform.position);
+                    // Calcula la diferencia de altura entre los tiles
                     float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
-                    int additionalCost = (int)(heightDifference * 2); // Coste adicional por altura
+                    // Coste adicional por altura
+                    int additionalCost = (int)(heightDifference * 2);
                     tile.g += additionalCost;
-                    tile.h = Vector3.Distance(tile.transform.position, target.transform.position); // Calcula la heurística
-                    tile.f = tile.g + tile.h; // Establece el costo total
-                    openList.Add(tile); // Añade el tile a la lista de tiles por evaluar
+                    // Calcula la heurística
+                    tile.h = Vector3.Distance(tile.transform.position, target.transform.position);
+                    // Establece el costo total
+                    tile.f = tile.g + tile.h;
+                    // Añade el tile a la lista de tiles por evaluar
+                    openList.Add(tile);
                 }
                 else // Si el tile ya está en la lista de tiles por evaluar
                 {
-                    float tempG = t.g + Vector3.Distance(tile.transform.position, t.transform.position); // Calcula el costo temporal
+                    // Calcula el costo temporal
+                    float tempG = t.g + Vector3.Distance(tile.transform.position, t.transform.position);
+                    // Calcula la diferencia de altura entre los tiles
                     float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
-                    int additionalCost = (int)(heightDifference * 2); // Coste adicional por altura
+                    // Coste adicional por altura
+                    int additionalCost = (int)(heightDifference * 2);
                     tempG += additionalCost;
 
                     if (tempG < tile.g) // Si el costo temporal es menor que el costo actual
                     {
-                        tile.parent = t; // Actualiza el tile padre
-                        tile.g = tempG; // Actualiza el costo desde el inicio
-                        tile.f = tile.g + tile.h; // Actualiza el costo total
+                        // Actualiza el tile padre
+                        tile.parent = t;
+                        // Actualiza el costo desde el inicio
+                        tile.g = tempG;
+                        // Actualiza el costo total
+                        tile.f = tile.g + tile.h;
                     }
                 }
             }
@@ -416,18 +510,25 @@ public class TacticsMove : MonoBehaviour
     // Encuentra los tiles en el rango de ataque
     public void FindAttackableTiles()
     {
-        ComputeAdjacencyLists(characterStats.jumpHeight, null); // Calcula la lista de tiles adyacentes
-        GetCurrentTile(); // Obtiene el tile actual
+        // Calcula la lista de tiles adyacentes
+        ComputeAdjacencyLists(characterStats.jumpHeight, null);
+        // Obtiene el tile actual
+        GetCurrentTile();
 
         Queue<Tile> process = new Queue<Tile>();
-        process.Enqueue(currentTile); // Añade el tile actual a la cola de procesamiento
-        currentTile.visited = true; // Marca el tile actual como visitado
+        // Añade el tile actual a la cola de procesamiento
+        process.Enqueue(currentTile);
+        // Marca el tile actual como visitado
+        currentTile.visited = true;
 
         while (process.Count > 0)
         {
-            Tile t = process.Dequeue(); // Toma el siguiente tile de la cola
-            selectableTiles.Add(t); // Añade el tile a la lista de tiles seleccionables
-            t.selectable = true; // Marca el tile como seleccionable
+            // Toma el siguiente tile de la cola
+            Tile t = process.Dequeue();
+            // Añade el tile a la lista de tiles seleccionables
+            selectableTiles.Add(t);
+            // Marca el tile como seleccionable
+            t.selectable = true;
 
             if (t.distance < characterStats.attackRange) // Si la distancia del tile es menor que el rango de ataque del personaje
             {
@@ -435,10 +536,14 @@ public class TacticsMove : MonoBehaviour
                 {
                     if (!tile.visited) // Si el tile no ha sido visitado
                     {
-                        tile.parent = t; // Establece el tile actual como el padre del tile adyacente
-                        tile.visited = true; // Marca el tile adyacente como visitado
-                        tile.distance = 1 + t.distance; // Establece la distancia del tile adyacente
-                        process.Enqueue(tile); // Añade el tile adyacente a la cola de procesamiento
+                        // Establece el tile actual como el padre del tile adyacente
+                        tile.parent = t;
+                        // Marca el tile adyacente como visitado
+                        tile.visited = true;
+                        // Establece la distancia del tile adyacente
+                        tile.distance = 1 + t.distance;
+                        // Añade el tile adyacente a la cola de procesamiento
+                        process.Enqueue(tile);
                     }
                 }
             }

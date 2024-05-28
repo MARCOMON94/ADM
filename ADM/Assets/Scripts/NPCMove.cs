@@ -4,42 +4,51 @@ using UnityEngine;
 
 public class NPCMove : TacticsMove
 {
-    GameObject target; // Objetivo actual del NPC
+    // Objetivo actual del NPC
+    GameObject target;
 
     void Start()
     {
-        Init(false); // Inicializa el NPC usando el método Init de TacticsMove
+        // Inicializa el NPC usando el método Init de TacticsMove
+        Init(false);
     }
 
     void Update()
     {
-        Debug.DrawRay(transform.position, transform.forward); // Dibuja un rayo en la dirección hacia la que mira el NPC para depuración
+        // Dibuja un rayo en la dirección hacia la que mira el NPC para depuración
+        Debug.DrawRay(transform.position, transform.forward);
 
-        if (!turn) // Si no es el turno del NPC, no hace nada
+        // Si no es el turno del NPC, no hace nada
+        if (!turn)
         {
             return;
         }
 
-        if (!moving) // Si el NPC no está en movimiento
+        // Si el NPC no está en movimiento
+        if (!moving)
         {
-            FindNearestTarget(); // Encuentra el objetivo más cercano
+            // Encuentra el objetivo más cercano
+            FindNearestTarget();
             float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
+            // Ataca al objetivo si está dentro del rango de ataque
             if (distanceToTarget <= characterStats.attackRange)
             {
-                // Atacar al objetivo si está dentro del rango de ataque
                 AttackTarget();
             }
             else
             {
-                CalculatePath(); // Calcula el camino hacia el objetivo
-                FindSelectableTiles(); // Encuentra los tiles seleccionables
-                actualTargetTile.target = true; // Marca el tile objetivo
+                // Calcula el camino hacia el objetivo y se mueve hacia él
+                CalculatePath();
+                FindSelectableTiles();
+                actualTargetTile.target = true;
+                MoveToTile(actualTargetTile);
             }
         }
         else
         {
-            Move(); // Mueve al NPC
+            // Mueve al NPC
+            Move();
         }
     }
 
@@ -81,10 +90,18 @@ public class NPCMove : TacticsMove
             TacticsMove targetMove = target.GetComponent<TacticsMove>();
             if (targetMove != null)
             {
-                CombatManager.Instance.Attack(this, targetMove); // Realiza el ataque
-                EndTurn(); // Termina el turno del NPC
+                // Realiza el ataque
+                CombatManager.Instance.Attack(this, targetMove);
+                // Termina el turno del NPC
+                EndTurn();
             }
         }
     }
-}
 
+    // Sobrescribe EndTurn para incluir lógica específica de NPC
+    public override void EndTurn()
+    {
+        base.EndTurn();
+        TurnManager.EndTurn();
+    }
+}

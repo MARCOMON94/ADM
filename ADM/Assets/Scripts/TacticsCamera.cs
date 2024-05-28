@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class TacticsCamera : MonoBehaviour
 {
-    //un pivote para que la cámara no se desconfigure al cambiarle la posición, para quitar la que venía por defecto en el tutorial.
+    // Un pivote para que la cámara no se desconfigure al cambiarle la posición, para quitar la que venía por defecto en el tutorial.
     public Transform cameraPivot;
-
 
     // Método para rotar la cámara hacia la izquierda
     public void RotateLeft()

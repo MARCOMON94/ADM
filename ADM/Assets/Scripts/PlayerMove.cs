@@ -2,64 +2,68 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class PlayerMove : TacticsMove
 {
-    private enum PlayerAction { None, Move, Attack } // Enum para las posibles acciones del jugador
-    private PlayerAction currentAction = PlayerAction.None; // Acción actual del jugador
-    private bool hasMoved = false; // Indica si el jugador ya se ha movido en este turno
+    // Enum para las posibles acciones del jugador
+    private enum PlayerAction { None, Move, Attack }
+
+    // Acción actual del jugador
+    private PlayerAction currentAction = PlayerAction.None;
+
+    // Indica si el jugador ya se ha movido en este turno
+    private bool hasMoved = false;
 
     void Start()
     {
-        Init(true); // Inicializa el jugador usando el método Init de TacticsMove
+        // Inicializa el jugador usando el método Init de TacticsMove
+        Init(true);
     }
 
     void Update()
     {
-        if (!turn) // Si no es el turno del jugador, no hace nada
+        // Si no es el turno del jugador, no hace nada
+        if (!turn)
         {
             return;
         }
 
-        if (!moving) // Si el jugador no está en movimiento
+        // Si el jugador no está en movimiento
+        if (!moving)
         {
-            if (currentAction == PlayerAction.None) // Si no hay una acción actual
+            if (currentAction == PlayerAction.None)
             {
-                ShowActionMenu(); // Muestra el menú de acciones
+                // Espera a que se seleccione una acción mediante botones
             }
-            else if (currentAction == PlayerAction.Move) // Si la acción actual es mover
+            else if (currentAction == PlayerAction.Move)
             {
-                FindSelectableTiles(); // Encuentra los tiles seleccionables
-                CheckMouseMovement(); // Revisa el movimiento del ratón para moverse
+                // Encuentra los tiles seleccionables y revisa el movimiento del ratón para moverse
+                FindSelectableTiles();
+                CheckMouseMovement();
             }
-            else if (currentAction == PlayerAction.Attack) // Si la acción actual es atacar
+            else if (currentAction == PlayerAction.Attack)
             {
-                FindAttackableTiles(); // Encuentra los tiles en el rango de ataque
-                ShowAttackableEnemies(); // Muestra los enemigos que se pueden atacar
-                CheckMouseAttack(); // Revisa el movimiento del ratón para atacar
+                // Encuentra los tiles en el rango de ataque, muestra los enemigos que se pueden atacar y revisa el movimiento del ratón para atacar
+                FindAttackableTiles();
+                ShowAttackableEnemies();
+                CheckMouseAttack();
             }
         }
         else
         {
-            Move(); // Mueve al jugador
+            // Mueve al jugador
+            Move();
         }
     }
 
-    // Muestra el menú de acciones al jugador (mover, atacar, terminar turno)
-    void ShowActionMenu()
+    // Métodos para establecer la acción actual desde los botones
+    public void SetActionMove()
     {
-        if (Input.GetKeyDown(KeyCode.M)) // Si se presiona la tecla M
-        {
-            currentAction = PlayerAction.Move; // Establece la acción actual como mover
-        }
-        else if (Input.GetKeyDown(KeyCode.A)) // Si se presiona la tecla A
-        {
-            currentAction = PlayerAction.Attack; // Establece la acción actual como atacar
-        }
-        else if (Input.GetKeyDown(KeyCode.T)) // Si se presiona la tecla T
-        {
-            EndTurn(); // Termina el turno del jugador
-        }
+        currentAction = PlayerAction.Move;
+    }
+
+    public void SetActionAttack()
+    {
+        currentAction = PlayerAction.Attack;
     }
 
     // Revisa el movimiento del ratón para moverse
@@ -78,9 +82,11 @@ public class PlayerMove : TacticsMove
 
                     if (t.selectable) // Si el tile es seleccionable
                     {
-                        MoveToTile(t); // Mueve al jugador al tile
-                        currentAction = PlayerAction.None; // Resetea la acción actual
-                        hasMoved = true; // Marca que el jugador ya se ha movido
+                        // Mueve al jugador al tile
+                        MoveToTile(t);
+                        // Resetea la acción actual y marca que el jugador ya se ha movido
+                        currentAction = PlayerAction.None;
+                        hasMoved = true;
                     }
                 }
             }
@@ -127,8 +133,10 @@ public class PlayerMove : TacticsMove
                     if (enemy != null && Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), 
                                                       new Vector3(enemy.transform.position.x, 0, enemy.transform.position.z)) <= characterStats.attackRange)
                     {
-                        CombatManager.Instance.Attack(this, enemy); // Realiza un ataque
-                        EndTurn(); // Termina el turno del jugador
+                        // Realiza un ataque
+                        CombatManager.Instance.Attack(this, enemy);
+                        // Termina el turno del jugador
+                        EndTurn();
                     }
                 }
             }
@@ -138,8 +146,9 @@ public class PlayerMove : TacticsMove
     // Termina el turno del jugador
     public void EndTurn()
     {
-        currentAction = PlayerAction.None; // Resetea la acción actual
-        hasMoved = false; // Resetea el estado de movimiento
+        // Resetea la acción actual y el estado de movimiento
+        currentAction = PlayerAction.None;
+        hasMoved = false;
 
         // Resetea los colores de los enemigos
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("NPC");
@@ -158,15 +167,18 @@ public class PlayerMove : TacticsMove
             tile.selectable = false;
             tile.GetComponent<Renderer>().material.color = Color.white;
         }
+        selectableTiles.Clear();
 
-        TurnManager.EndTurn(); // Notifica al TurnManager para finalizar el turno
+        // Notifica al TurnManager para finalizar el turno
+        TurnManager.EndTurn();
     }
 
     public void BeginTurn()
     {
-        turn = true; // Marca el turno como activo
-        currentAction = PlayerAction.None; // Resetea la acción actual
-        hasMoved = false; // Resetea el estado de movimiento
-        ShowActionMenu(); // Muestra el menú de acciones
+        // Marca el turno como activo, resetea la acción actual y el estado de movimiento
+        turn = true;
+        currentAction = PlayerAction.None;
+        hasMoved = false;
+        // No mostrar el menú de acciones porque ahora se maneja con botones
     }
 }

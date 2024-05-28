@@ -2,17 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Esta clase define un ScriptableObject que almacena las estadísticas de un personaje.
 [CreateAssetMenu(fileName = "CharacterStats", menuName = "Character Stats", order = 51)]
 public class CharacterStatsSO : ScriptableObject
 {
+    // Nombre del personaje
     public string name = "Character";
-    public int move = 5;
-    public float jumpHeight = 2;
-    public float moveSpeed = 2;
-    public float jumpVelocity = 4.5f;
-    public int speed = 5; // Velocidad del personaje
-    public int basicDamage = 10; // Daño básico
-    public float attackRange = 1.5f; // Distancia de ataque
-    public int health = 100; // Vida
-}
 
+    // Cantidad de tiles que el personaje puede moverse
+    public int move = 5;
+
+    // Altura que el personaje puede saltar
+    public float jumpHeight = 2;
+
+    // Velocidad de movimiento del personaje
+    public float moveSpeed = 2;
+
+    // Velocidad de salto del personaje
+    public float jumpVelocity = 4.5f;
+
+    // Velocidad del personaje, usada para determinar el orden de turnos
+    public int speed = 5;
+
+    // Daño básico que el personaje puede infligir
+    public int basicDamage = 10;
+
+    // Rango de ataque del personaje
+    public float attackRange = 1.5f;
+
+    // Vida del personaje
+    public int health = 100;
+}

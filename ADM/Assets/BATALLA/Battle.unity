@@ -2193,6 +2193,7 @@ GameObject:
   - component: {fileID: 193657116}
   - component: {fileID: 193657115}
   - component: {fileID: 193657114}
+  - component: {fileID: 193657118}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2278,8 +2279,8 @@ RectTransform:
   - {fileID: 1053839721}
   - {fileID: 618235364}
   - {fileID: 1229531200}
-  - {fileID: 263529589}
   - {fileID: 1805058998}
+  - {fileID: 263529589}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2287,6 +2288,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &193657118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193657113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46c40f905a6e1f945970d88036660328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveButton: {fileID: 1229531201}
+  attackButton: {fileID: 1805058999}
+  passTurnButton: {fileID: 263529590}
 --- !u!1 &201763594
 GameObject:
   m_ObjectHideFlags: 0
@@ -3377,19 +3393,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 263529591}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2145444033}
-        m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
-        m_MethodName: EndTurn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &263529591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7444,7 +7448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3db099a5af8099d409c94cbc3b42f774, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.662
+      value: -0.815
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3db099a5af8099d409c94cbc3b42f774, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7827,7 +7831,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.676
+      value: -0.798
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalPosition.z
@@ -14490,19 +14494,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1229531202}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1448428820}
-        m_TargetAssemblyTypeName: TacticsMove, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: m
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1229531202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19711,7 +19703,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1735762266
 Transform:
   m_ObjectHideFlags: 0
@@ -20084,19 +20076,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1805059000}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2145444030}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1805059000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21763,10 +21743,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.34182644
-  m_Height: 1.5921707
+  m_Radius: 0.19516158
+  m_Height: 1.5358028
   m_Direction: 1
-  m_Center: {x: -0.000027656555, y: 0.23524988, z: -0.02342701}
+  m_Center: {x: 0.0018255711, y: 0.042413592, z: 0}
 --- !u!114 &1959072507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21792,7 +21772,7 @@ Transform:
   m_GameObject: {fileID: 1959072505}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.493, y: 1.1655585, z: 5.508}
+  m_LocalPosition: {x: -4.499, y: 1.2818886, z: 5.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21829,7 +21809,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400152, guid: ef64611ee944d7c4ea26768458ee0961, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.84
+      value: -0.791
       objectReference: {fileID: 0}
     - target: {fileID: 400152, guid: ef64611ee944d7c4ea26768458ee0961, type: 3}
       propertyPath: m_LocalPosition.z
@@ -22755,10 +22735,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.358041
-  m_Height: 1.5921707
+  m_Radius: 0.19516158
+  m_Height: 1.5358028
   m_Direction: 1
-  m_Center: {x: -0.055310845, y: 0.23524988, z: -0.041923225}
+  m_Center: {x: 0.0018255711, y: 0.042413592, z: 0}
 --- !u!114 &2065224439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22784,7 +22764,7 @@ Transform:
   m_GameObject: {fileID: 2065224437}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.49, y: 1.18, z: 5.452}
+  m_LocalPosition: {x: -1.52, y: 1.302, z: 4.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23746,6 +23726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7fc60eaaaa87744fa80328b25fd95e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 0}
 --- !u!114 &2145444034
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
-    public static CombatManager Instance; // Instancia única del CombatManager
+    // Instancia única del CombatManager
+    public static CombatManager Instance;
 
     void Awake()
     {

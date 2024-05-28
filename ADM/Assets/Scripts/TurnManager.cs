@@ -5,110 +5,120 @@ using System.Linq;
 
 public class TurnManager : MonoBehaviour
 {
-    static List<TacticsMove> playerUnits = new List<TacticsMove>(); // Lista de unidades de jugador
-    static List<TacticsMove> npcUnits = new List<TacticsMove>(); // Lista de unidades de NPC
-    static int currentIndex = 0; // Índice actual de la unidad en turno
-    static bool isPlayerTurn = true; // Indica si es el turno del jugador
-    static int currentRound = 1; // Número de la ronda actual
+    // Listas de unidades de jugadores y NPCs
+    static List<TacticsMove> playerUnits = new List<TacticsMove>();
+    static List<TacticsMove> npcUnits = new List<TacticsMove>();
+    
+    // Índice del turno actual y bandera para determinar si es turno del jugador
+    static int currentIndex = 0;
+    static bool isPlayerTurn = true;
+    static int currentRound = 1;
+    static bool isEndingTurn = false; // Añadimos esta bandera
 
-    // Método Start que se llama al inicio
+    public UIManager uiManager; // Referencia al UIManager
+
     void Start()
     {
-        InitTurnQueue(); // Inicializa la cola de turnos
+        InitTurnQueue(); // Inicializa la cola de turnos al inicio
     }
 
-    // Método Update que se llama una vez por frame
     void Update()
     {
+        // Si no hay unidades de jugadores o NPCs, inicializa la cola de turnos
         if (playerUnits.Count == 0 || npcUnits.Count == 0)
         {
-            InitTurnQueue(); // Si no hay unidades, inicializa la cola de turnos
+            InitTurnQueue();
         }
     }
 
-    // Método estático para inicializar la cola de turnos
     static void InitTurnQueue()
     {
-        playerUnits = playerUnits.OrderByDescending(unit => unit.characterStats.speed).ToList(); // Ordena las unidades por velocidad
+        // Ordena las unidades por velocidad de forma descendente
+        playerUnits = playerUnits.OrderByDescending(unit => unit.characterStats.speed).ToList();
         npcUnits = npcUnits.OrderByDescending(unit => unit.characterStats.speed).ToList();
-        currentIndex = 0; // Resetea el índice actual
-        isPlayerTurn = true; // Establece el turno del jugador
+        
+        currentIndex = 0; // Resetea el índice de turno
+        isPlayerTurn = true; // Empieza con el turno del jugador
 
         if (playerUnits.Count > 0)
         {
-            StartTurn(); // Inicia el turno de la primera unidad
+            StartTurn(); // Inicia el primer turno
         }
     }
 
-    // Método estático para iniciar el turno de la unidad actual
     public static void StartTurn()
     {
+        isEndingTurn = false; // Reseteamos la bandera al iniciar un nuevo turno
         if (isPlayerTurn && playerUnits.Count > 0)
         {
-            playerUnits[currentIndex].BeginTurn(); // Llama al método BeginTurn de la unidad actual
+            playerUnits[currentIndex].BeginTurn();
+            UIManager.Instance.SetCurrentPlayerMove(playerUnits[currentIndex] as PlayerMove);
+            UIManager.Instance.TogglePlayerControls(true); // Habilitar controles de jugador
         }
         else if (!isPlayerTurn && npcUnits.Count > 0)
         {
-            npcUnits[currentIndex].BeginTurn(); // Llama al método BeginTurn de la unidad actual
+            npcUnits[currentIndex].BeginTurn();
         }
     }
 
-    // Método estático para finalizar el turno de la unidad actual
     public static void EndTurn()
     {
+        if (isEndingTurn) return; // Si ya estamos en el proceso de finalizar un turno, salimos
+        isEndingTurn = true; // Marcamos que estamos finalizando un turno
+
+        // Deshabilitar controles de jugador al finalizar el turno
         if (isPlayerTurn)
         {
-            playerUnits[currentIndex].EndTurn(); // Llama al método EndTurn de la unidad actual
+            playerUnits[currentIndex].EndTurn();
             currentIndex++;
 
             if (currentIndex >= playerUnits.Count)
             {
                 currentIndex = 0;
-                isPlayerTurn = false; // Cambia al turno de los NPCs
+                isPlayerTurn = false;
             }
         }
         else
         {
-            npcUnits[currentIndex].EndTurn(); // Llama al método EndTurn de la unidad actual
+            npcUnits[currentIndex].EndTurn();
             currentIndex++;
 
             if (currentIndex >= npcUnits.Count)
             {
                 currentIndex = 0;
-                isPlayerTurn = true; // Cambia al turno de los jugadores
+                isPlayerTurn = true;
                 currentRound++;
-                Debug.Log("Ronda " + currentRound); // Incrementa el número de rondas y lo muestra en el log
+                Debug.Log("Ronda " + currentRound);
             }
         }
 
-        StartTurn(); // Inicia el turno de la siguiente unidad
+        isEndingTurn = false; // Reseteamos la bandera al finalizar el turno
+        StartTurn();
     }
 
-    // Método estático para añadir una unidad a la cola de turnos
     public static void AddUnit(TacticsMove unit, bool isPlayer)
     {
         if (isPlayer)
         {
-            playerUnits.Add(unit); // Añade la unidad a la lista de jugadores
-            playerUnits = playerUnits.OrderByDescending(u => u.characterStats.speed).ToList(); // Reordena las unidades por velocidad
+            playerUnits.Add(unit);
+            playerUnits = playerUnits.OrderByDescending(u => u.characterStats.speed).ToList();
         }
         else
         {
-            npcUnits.Add(unit); // Añade la unidad a la lista de NPCs
-            npcUnits = npcUnits.OrderByDescending(u => u.characterStats.speed).ToList(); // Reordena las unidades por velocidad
+            npcUnits.Add(unit);
+            npcUnits = npcUnits.OrderByDescending(u => u.characterStats.speed).ToList();
         }
     }
 
-    // Método opcional para eliminar una unidad de la cola de turnos si es necesario
     public static void RemoveUnit(TacticsMove unit, bool isPlayer)
     {
         if (isPlayer)
         {
-            playerUnits.Remove(unit); // Elimina la unidad de la lista de jugadores
+            playerUnits.Remove(unit);
         }
         else
         {
-            npcUnits.Remove(unit); // Elimina la unidad de la lista de NPCs
+            npcUnits.Remove(unit);
         }
     }
 }

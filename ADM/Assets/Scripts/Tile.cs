@@ -26,6 +26,7 @@ public class Tile : MonoBehaviour
     // Método Update que se llama una vez por frame
     void Update()
     {
+        // Cambia el color del tile basado en su estado
         if (current)
         {
             GetComponent<Renderer>().material.color = Color.magenta; // Color para el tile actual
