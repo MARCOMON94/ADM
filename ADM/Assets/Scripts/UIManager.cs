@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class UIManager : MonoBehaviour
     public Button moveButton;
     public Button attackButton;
     public Button passTurnButton;
+
+    // Referencias a los textos de salud de los personajes
+    public TextMeshProUGUI[] characterHealthTexts;
 
     // Referencia al movimiento del jugador actual
     private PlayerMove currentPlayerMove;
@@ -84,4 +88,15 @@ public class UIManager : MonoBehaviour
             currentPlayerMove.EndTurn();
         }
     }
+
+    // Método para actualizar la salud de un personaje
+    public void UpdateCharacterHealth(int characterIndex, int health)
+    {
+        if (characterIndex >= 0 && characterIndex < characterHealthTexts.Length)
+        {
+            characterHealthTexts[characterIndex].text = health.ToString();
+        }
+    }
+
+
 }

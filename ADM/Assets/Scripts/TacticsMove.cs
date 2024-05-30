@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TacticsMove : MonoBehaviour
 {
@@ -44,6 +45,7 @@ public class TacticsMove : MonoBehaviour
 
     // Tile objetivo final
     public Tile actualTargetTile;
+    
 
     // Método de inicialización
     protected void Init(bool isPlayer)
@@ -549,4 +551,10 @@ public class TacticsMove : MonoBehaviour
             }
         }
     }
+    //FALTA AÑADIR
+    public virtual void UpdateHealthUI()
+{
+    // Método virtual para ser sobrescrito por clases derivadas
+}
+
 }
