@@ -102,54 +102,89 @@ public class PlayerMove : TacticsMove
         }
     }
 
-    void CheckMouseAttack()
+    public void CheckMouseAttack()
+{
+    if (Input.GetMouseButtonDown(0))
     {
-        if (Input.GetMouseButtonDown(0))
+        Debug.Log("Mouse click detectado para ataque");
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            Debug.Log($"Objeto impactado: {hit.collider.name}");
 
-            if (Physics.Raycast(ray, out hit))
+            if (hit.collider.tag == "NPC")
             {
-                if (hit.collider.tag == "NPC")
-                {
-                    TacticsMove enemy = hit.collider.GetComponent<TacticsMove>();
+                TacticsMove enemy = hit.collider.GetComponent<TacticsMove>();
 
-                    if (enemy != null && Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), 
-                                                      new Vector3(enemy.transform.position.x, 0, enemy.transform.position.z)) <= characterStats.attackRange)
+                if (enemy != null)
+                {
+                    float distanceToEnemy = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
+                                                            new Vector3(enemy.transform.position.x, 0, enemy.transform.position.z));
+                    Debug.Log($"Distancia al enemigo {enemy.name}: {distanceToEnemy}, rango de ataque: {characterStats.attackRange}");
+
+                    if (distanceToEnemy <= characterStats.attackRange + 0.05f) // Añadimos un pequeño margen para problemas de precisión
                     {
-                        CombatManager.Instance.Attack(this, enemy);
+                        if (characterStats.attackType == AttackType.Normal)
+                        {
+                            Debug.Log($"Realizando ataque normal a {enemy.name}");
+                            CombatManager.Instance.Attack(this, enemy);
+                        }
+                        else if (characterStats.attackType == AttackType.Pierce)
+                        {
+                            Debug.Log($"Realizando ataque de penetración a {enemy.name}");
+                            CombatManager.Instance.AttackWithPierce(this, enemy);
+                        }
                         EndTurn();
                     }
+                    else
+                    {
+                        Debug.Log($"Enemigo {enemy.name} fuera de rango");
+                    }
+                }
+                else
+                {
+                    Debug.Log("Componente TacticsMove no encontrado en el objetivo impactado");
                 }
             }
-        }
-    }
-
-    public void EndTurn()
-    {
-        currentAction = PlayerAction.None;
-        hasMoved = false;
-
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("NPC");
-        foreach (GameObject enemy in enemies)
-        {
-            Renderer renderer = enemy.GetComponent<Renderer>();
-            if (renderer != null)
+            else
             {
-                renderer.material.color = Color.white;
+                Debug.Log("Impacto en objeto que no es NPC");
             }
         }
-
-        foreach (Tile tile in selectableTiles)
+        else
         {
-            tile.selectable = false;
-            tile.GetComponent<Renderer>().material.color = Color.white;
+            Debug.Log("Raycast no impactó en ningún objeto");
         }
-        selectableTiles.Clear();
-
-        TurnManager.EndTurn();
     }
+}
+
+
+    public void EndTurn()
+{
+    currentAction = PlayerAction.None;
+    hasMoved = false;
+
+    GameObject[] enemies = GameObject.FindGameObjectsWithTag("NPC");
+    foreach (GameObject enemy in enemies)
+    {
+        Renderer renderer = enemy.GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            renderer.material.color = Color.white;
+        }
+    }
+
+    foreach (Tile tile in selectableTiles)
+    {
+        tile.selectable = false;
+        tile.GetComponent<Renderer>().material.color = Color.white;
+    }
+    selectableTiles.Clear();
+
+    TurnManager.EndTurn();
+}
 
     public void BeginTurn()
     {
@@ -159,11 +194,15 @@ public class PlayerMove : TacticsMove
     }
 
     public override void UpdateHealthUI()
+{
+    int characterIndex = GetCharacterIndex();
+    if (characterIndex != -1)
     {
-        int characterIndex = GetCharacterIndex();
         Debug.Log($"Actualizando salud de {characterStats.name} en el índice {characterIndex} con salud {characterStats.health}");
         UIManager.Instance.UpdateCharacterHealth(characterIndex, characterStats.health);
     }
+}
+
 
     private int GetCharacterIndex()
     {
@@ -171,6 +210,7 @@ public class PlayerMove : TacticsMove
         if (characterStats.name == "Loli") return 1;
         if (characterStats.name == "Avelino") return 2;
         if (characterStats.name == "Pepa") return 3;
+        
         Debug.LogWarning($"Nombre de personaje {characterStats.name} no asignado a ningún índice");
         return -1;
     }

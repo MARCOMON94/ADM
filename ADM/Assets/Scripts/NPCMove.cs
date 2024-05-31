@@ -73,17 +73,50 @@ public class NPCMove : TacticsMove
     }
 
     void AttackTarget()
+{
+    if (target != null)
     {
-        if (target != null)
+        TacticsMove targetMove = target.GetComponent<TacticsMove>();
+        if (targetMove != null)
         {
-            TacticsMove targetMove = target.GetComponent<TacticsMove>();
-            if (targetMove != null)
+            float distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
+                                                      new Vector3(targetMove.transform.position.x, 0, targetMove.transform.position.z));
+            Debug.Log($"Distancia al objetivo {targetMove.name}: {distanceToTarget}, rango de ataque: {characterStats.attackRange}");
+
+            if (distanceToTarget <= characterStats.attackRange + 0.05f) // Añadimos un pequeño margen para problemas de precisión
             {
-                CombatManager.Instance.Attack(this, targetMove);
+                if (characterStats.attackType == AttackType.Normal)
+                {
+                    Debug.Log($"Realizando ataque normal a {targetMove.name}");
+                    CombatManager.Instance.Attack(this, targetMove);
+                }
+                else if (characterStats.attackType == AttackType.Pierce)
+                {
+                    Debug.Log($"Realizando ataque de penetración a {targetMove.name}");
+                    CombatManager.Instance.AttackWithPierce(this, targetMove);
+                }
                 EndTurn();
             }
+            else
+            {
+                Debug.Log($"Objetivo {targetMove.name} fuera de rango");
+            }
+        }
+        else
+        {
+            Debug.Log("Componente TacticsMove no encontrado en el objetivo");
         }
     }
+    else
+    {
+        Debug.Log("No se ha encontrado objetivo para atacar");
+    }
+}
+
+
+
+
+
 
     public override void EndTurn()
     {
@@ -92,11 +125,14 @@ public class NPCMove : TacticsMove
     }
 
     public override void UpdateHealthUI()
+{
+    int characterIndex = GetCharacterIndex();
+    if (characterIndex != -1)
     {
-        int characterIndex = GetCharacterIndex();
         Debug.Log($"Actualizando salud de {characterStats.name} en el índice {characterIndex} con salud {characterStats.health}");
         UIManager.Instance.UpdateCharacterHealth(characterIndex, characterStats.health);
     }
+}
 
     private int GetCharacterIndex()
     {
@@ -104,6 +140,7 @@ public class NPCMove : TacticsMove
         if (characterStats.name == "Pepa") return 3;
         if (characterStats.name == "Paco") return 0;
         if (characterStats.name == "Loli") return 1;
+        
         Debug.LogWarning($"Nombre de personaje {characterStats.name} no asignado a ningún índice");
         return -1;
     }

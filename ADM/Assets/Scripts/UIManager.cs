@@ -48,6 +48,12 @@ public class UIManager : MonoBehaviour
         currentPlayerMove = playerMove;
     }
 
+    // Obtiene el movimiento del jugador actual
+    public PlayerMove GetCurrentPlayerMove()
+    {
+        return currentPlayerMove;
+    }
+
     // Método llamado al hacer clic en el botón de mover
     void OnMoveButtonClicked()
     {
@@ -97,6 +103,4 @@ public class UIManager : MonoBehaviour
             characterHealthTexts[characterIndex].text = health.ToString();
         }
     }
-
-
 }

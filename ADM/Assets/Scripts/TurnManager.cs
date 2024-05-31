@@ -63,39 +63,42 @@ public class TurnManager : MonoBehaviour
     }
 
     public static void EndTurn()
+{
+    if (isEndingTurn) return; // Si ya estamos en el proceso de finalizar un turno, salimos
+    isEndingTurn = true; // Marcamos que estamos finalizando un turno
+
+    // Deshabilitar controles de jugador al finalizar el turno
+    if (isPlayerTurn)
     {
-        if (isEndingTurn) return; // Si ya estamos en el proceso de finalizar un turno, salimos
-        isEndingTurn = true; // Marcamos que estamos finalizando un turno
+        playerUnits[currentIndex].EndTurn();
+        currentIndex++;
 
-        // Deshabilitar controles de jugador al finalizar el turno
-        if (isPlayerTurn)
+        // Verificamos si el currentIndex es válido después de eliminar una unidad
+        if (currentIndex >= playerUnits.Count)
         {
-            playerUnits[currentIndex].EndTurn();
-            currentIndex++;
-
-            if (currentIndex >= playerUnits.Count)
-            {
-                currentIndex = 0;
-                isPlayerTurn = false;
-            }
+            currentIndex = 0;
+            isPlayerTurn = false;
         }
-        else
-        {
-            npcUnits[currentIndex].EndTurn();
-            currentIndex++;
-
-            if (currentIndex >= npcUnits.Count)
-            {
-                currentIndex = 0;
-                isPlayerTurn = true;
-                currentRound++;
-                Debug.Log("Ronda " + currentRound);
-            }
-        }
-
-        isEndingTurn = false; // Reseteamos la bandera al finalizar el turno
-        StartTurn();
     }
+    else
+    {
+        npcUnits[currentIndex].EndTurn();
+        currentIndex++;
+
+        // Verificamos si el currentIndex es válido después de eliminar una unidad
+        if (currentIndex >= npcUnits.Count)
+        {
+            currentIndex = 0;
+            isPlayerTurn = true;
+            currentRound++;
+            Debug.Log("Ronda " + currentRound);
+        }
+    }
+
+    isEndingTurn = false; // Reseteamos la bandera al finalizar el turno
+    StartTurn();
+}
+
 
     public static void AddUnit(TacticsMove unit, bool isPlayer)
     {
@@ -112,14 +115,38 @@ public class TurnManager : MonoBehaviour
     }
 
     public static void RemoveUnit(TacticsMove unit, bool isPlayer)
+{
+    if (isPlayer)
     {
-        if (isPlayer)
+        int index = playerUnits.IndexOf(unit);
+        if (index != -1)
         {
-            playerUnits.Remove(unit);
+            playerUnits.RemoveAt(index);
+            // Ajustamos currentIndex si es necesario
+            if (index <= currentIndex && currentIndex > 0)
+            {
+                currentIndex--;
+            }
         }
-        else
+        if (UIManager.Instance.GetCurrentPlayerMove() == unit)
         {
-            npcUnits.Remove(unit);
+            UIManager.Instance.SetCurrentPlayerMove(null);
+        }
+    }
+    else
+    {
+        int index = npcUnits.IndexOf(unit);
+        if (index != -1)
+        {
+            npcUnits.RemoveAt(index);
+            // Ajustamos currentIndex si es necesario
+            if (index <= currentIndex && currentIndex > 0)
+            {
+                currentIndex--;
+            }
         }
     }
 }
+}
+
+

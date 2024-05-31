@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AttackType
+{
+    Normal,
+    Pierce
+}
+
 // Esta clase define un ScriptableObject que almacena las estadísticas de un personaje.
 [CreateAssetMenu(fileName = "CharacterStats", menuName = "Character Stats", order = 51)]
 public class CharacterStatsSO : ScriptableObject
@@ -32,4 +38,5 @@ public class CharacterStatsSO : ScriptableObject
 
     // Vida del personaje
     public int health = 100;
+     public AttackType attackType = AttackType.Normal;
 }

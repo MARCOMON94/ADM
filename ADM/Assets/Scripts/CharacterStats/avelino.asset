@@ -20,4 +20,5 @@ MonoBehaviour:
   speed: 100
   basicDamage: 10
   attackRange: 1
-  health: 70
+  health: 0
+  attackType: 0
