@@ -83,26 +83,27 @@ public class PlayerMove : TacticsMove
     }
 
     void ShowAttackableEnemies()
+{
+    GameObject[] enemies = GameObject.FindGameObjectsWithTag("NPC");
+    foreach (GameObject enemy in enemies)
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("NPC");
-        foreach (GameObject enemy in enemies)
+        TacticsMove enemyMove = enemy.GetComponent<TacticsMove>();
+        Tile enemyTile = GetTargetTile(enemy);
+
+        if (enemyTile != null && selectableTiles.Contains(enemyTile))
         {
-            TacticsMove enemyMove = enemy.GetComponent<TacticsMove>();
-            Tile enemyTile = GetTargetTile(enemy);
-
-            if (enemyTile != null && selectableTiles.Contains(enemyTile))
+            Renderer renderer = enemy.GetComponent<Renderer>();
+            if (renderer != null)
             {
-                Renderer renderer = enemy.GetComponent<Renderer>();
-                if (renderer != null)
-                {
-                    renderer.material.color = Color.red;
-                }
-
-                enemyTile.selectable = true;
-                enemyTile.GetComponent<Renderer>().material.color = Color.red;
+                renderer.material.color = Color.red;
             }
+
+            // No marcar el tile como seleccionable si está ocupado por un enemigo
+            // enemyTile.selectable = true;
+            // enemyTile.GetComponent<Renderer>().material.color = Color.red;
         }
     }
+}
 
     public void CheckMouseAttack()
 {
