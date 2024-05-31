@@ -87,11 +87,6 @@ public class NPCMove : TacticsMove
 
             if (distanceToTarget <= characterStats.attackRange + 0.05f) // Añadimos un pequeño margen para problemas de precisión
             {
-                // Rotar hacia el objetivo antes de atacar
-                Vector3 direction = (target.transform.position - transform.position).normalized;
-                direction.y = 0; // Mantener la dirección en el plano horizontal
-                transform.forward = direction;
-
                 if (characterStats.attackType == AttackType.Normal)
                 {
                     Debug.Log($"Realizando ataque normal a {targetMove.name}");
@@ -101,10 +96,6 @@ public class NPCMove : TacticsMove
                 {
                     Debug.Log($"Realizando ataque de penetración a {targetMove.name}");
                     CombatManager.Instance.AttackWithPierce(this, targetMove);
-                }
-                if (Mathf.Abs(direction.x) > 0.5f && Mathf.Abs(direction.z) > 0.5f)
-                {
-                    transform.forward = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
                 }
                 EndTurn();
             }
@@ -123,7 +114,6 @@ public class NPCMove : TacticsMove
         Debug.Log("No se ha encontrado objetivo para atacar");
     }
 }
-
 
 
 

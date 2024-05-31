@@ -128,11 +128,6 @@ public class PlayerMove : TacticsMove
 
                     if (distanceToEnemy <= characterStats.attackRange + 0.05f) // Añadimos un pequeño margen para problemas de precisión
                     {
-                        // Rotar hacia el objetivo antes de atacar
-                        Vector3 direction = (enemy.transform.position - transform.position).normalized;
-                        direction.y = 0; // Mantener la dirección en el plano horizontal
-                        transform.forward = direction;
-
                         if (characterStats.attackType == AttackType.Normal)
                         {
                             Debug.Log($"Realizando ataque normal a {enemy.name}");
@@ -143,10 +138,6 @@ public class PlayerMove : TacticsMove
                             Debug.Log($"Realizando ataque de penetración a {enemy.name}");
                             CombatManager.Instance.AttackWithPierce(this, enemy);
                         }
-                        if (Mathf.Abs(direction.x) > 0.5f && Mathf.Abs(direction.z) > 0.5f)
-                {
-                    transform.forward = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
-                }
                         EndTurn();
                     }
                     else
