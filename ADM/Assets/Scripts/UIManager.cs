@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
         moveButton.onClick.AddListener(OnMoveButtonClicked);
         attackButton.onClick.AddListener(OnAttackButtonClicked);
         passTurnButton.onClick.AddListener(OnPassTurnButtonClicked);
-        TogglePlayerControls(false); // Desactiva los controles del jugador al inicio
+        HidePlayerControls(); // Desactiva los controles del jugador al inicio
     }
 
     // Establece el movimiento del jugador actual
@@ -103,4 +103,21 @@ public class UIManager : MonoBehaviour
             characterHealthTexts[characterIndex].text = health.ToString();
         }
     }
+
+    // Método para mostrar los controles del jugador
+    public void ShowPlayerControls()
+    {
+        moveButton.gameObject.SetActive(true);
+        attackButton.gameObject.SetActive(true);
+        passTurnButton.gameObject.SetActive(true);
+    }
+
+    // Método para ocultar los controles del jugador
+    public void HidePlayerControls()
+    {
+        moveButton.gameObject.SetActive(false);
+        attackButton.gameObject.SetActive(false);
+        passTurnButton.gameObject.SetActive(false);
+    }
+    
 }

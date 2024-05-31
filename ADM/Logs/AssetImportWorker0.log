@@ -15,7 +15,7 @@ C:/Users/jcmm1/Desktop/EL FRIKIJUEGO/EL FRIKIJUEGO/ADM/ADM
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-63491
+64256
 Successfully changed project path to: C:/Users/jcmm1/Desktop/EL FRIKIJUEGO/EL FRIKIJUEGO/ADM/ADM
 C:/Users/jcmm1/Desktop/EL FRIKIJUEGO/EL FRIKIJUEGO/ADM/ADM
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -49,12 +49,12 @@ C:/Users/jcmm1/Desktop/EL FRIKIJUEGO/EL FRIKIJUEGO/ADM/ADM
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [12848] Host "[IP] 192.168.1.138 [Port] 0 [Flags] 2 [Guid] 2199405435 [EditorId] 2199405435 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-9783C3L) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [372] Host "[IP] 192.168.1.138 [Port] 0 [Flags] 2 [Guid] 3713686044 [EditorId] 3713686044 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-9783C3L) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [12848] Host "[IP] 192.168.1.138 [Port] 0 [Flags] 2 [Guid] 2199405435 [EditorId] 2199405435 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-9783C3L) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [372] Host "[IP] 192.168.1.138 [Port] 0 [Flags] 2 [Guid] 3713686044 [EditorId] 3713686044 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-9783C3L) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
 [Physics::Module] Initialized MultithreadedJobDispatcher with 7 workers.
-Refreshing native plugins compatible for Editor in 4360.14 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 14.62 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.3.18f1 (d29bea25151d)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.18f1/Editor/Data/Resources/UnitySubsystems
@@ -70,46 +70,46 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.18f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.18f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.18f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56280
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56444
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.18f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.18f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.225498 seconds.
-- Loaded All Assemblies, in  6.596 seconds
+Registered in 0.012873 seconds.
+- Loaded All Assemblies, in  0.400 seconds
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.289 seconds
-Domain Reload Profiling: 6883ms
-	BeginReloadAssembly (4833ms)
+- Finished resetting the current domain, in  0.261 seconds
+Domain Reload Profiling: 659ms
+	BeginReloadAssembly (131ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (431ms)
+	RebuildCommonClasses (34ms)
 	RebuildNativeTypeToScriptingClass (12ms)
-	initialDomainReloadingComplete (282ms)
-	LoadAllAssembliesAndSetupDomain (1037ms)
-		LoadAssemblies (4829ms)
+	initialDomainReloadingComplete (70ms)
+	LoadAllAssembliesAndSetupDomain (150ms)
+		LoadAssemblies (129ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (1034ms)
-			TypeCache.Refresh (1033ms)
-				TypeCache.ScanAssembly (774ms)
+		AnalyzeDomain (148ms)
+			TypeCache.Refresh (147ms)
+				TypeCache.ScanAssembly (133ms)
 			ScanForSourceGeneratedMonoScriptInfo (0ms)
 			ResolveRequiredComponents (0ms)
-	FinalizeReload (289ms)
+	FinalizeReload (262ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (229ms)
+		SetupLoadedEditorAssemblies (203ms)
 			LogAssemblyErrors (0ms)
 			InitializePlatformSupportModulesInManaged (12ms)
 			SetLoadedEditorAssemblies (5ms)
 			RefreshPlugins (0ms)
 			BeforeProcessingInitializeOnLoad (2ms)
-			ProcessInitializeOnLoadAttributes (159ms)
-			ProcessInitializeOnLoadMethodAttributes (51ms)
+			ProcessInitializeOnLoadAttributes (138ms)
+			ProcessInitializeOnLoadMethodAttributes (46ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -117,12 +117,8 @@ Domain Reload Profiling: 6883ms
 ========================================================================
 Worker process is ready to serve import requests
 Begin MonoManager ReloadAssembly
-Symbol file data-000001DA86AA5010 doesn't match image C:\Users\jcmm1\Desktop\EL FRIKIJUEGO\EL FRIKIJUEGO\ADM\ADM\Library\ScriptAssemblies\Assembly-CSharp.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-000001DA86AE9150 doesn't match image C:\Users\jcmm1\Desktop\EL FRIKIJUEGO\EL FRIKIJUEGO\ADM\ADM\Library\ScriptAssemblies\Assembly-CSharp-Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-- Loaded All Assemblies, in  7.185 seconds
-Refreshing native plugins compatible for Editor in 3.93 ms, found 3 plugins.
+- Loaded All Assemblies, in  0.587 seconds
+Refreshing native plugins compatible for Editor in 3.26 ms, found 3 plugins.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Package Manager log level set to [2]
@@ -130,47 +126,47 @@ Package Manager log level set to [2]
 [Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.809 seconds
-Domain Reload Profiling: 7990ms
-	BeginReloadAssembly (182ms)
+- Finished resetting the current domain, in  0.563 seconds
+Domain Reload Profiling: 1148ms
+	BeginReloadAssembly (132ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (6ms)
+		DisableScriptedObjects (5ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (23ms)
-	RebuildCommonClasses (40ms)
-	RebuildNativeTypeToScriptingClass (12ms)
-	initialDomainReloadingComplete (48ms)
-	LoadAllAssembliesAndSetupDomain (6898ms)
-		LoadAssemblies (6335ms)
+		CreateAndSetChildDomain (18ms)
+	RebuildCommonClasses (38ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (39ms)
+	LoadAllAssembliesAndSetupDomain (364ms)
+		LoadAssemblies (274ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (674ms)
-			TypeCache.Refresh (650ms)
-				TypeCache.ScanAssembly (576ms)
-			ScanForSourceGeneratedMonoScriptInfo (17ms)
+		AnalyzeDomain (167ms)
+			TypeCache.Refresh (146ms)
+				TypeCache.ScanAssembly (133ms)
+			ScanForSourceGeneratedMonoScriptInfo (14ms)
 			ResolveRequiredComponents (6ms)
-	FinalizeReload (809ms)
+	FinalizeReload (564ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (630ms)
+		SetupLoadedEditorAssemblies (425ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (9ms)
+			InitializePlatformSupportModulesInManaged (8ms)
 			SetLoadedEditorAssemblies (5ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (74ms)
-			ProcessInitializeOnLoadAttributes (498ms)
-			ProcessInitializeOnLoadMethodAttributes (32ms)
-			AfterProcessingInitializeOnLoad (12ms)
+			BeforeProcessingInitializeOnLoad (62ms)
+			ProcessInitializeOnLoadAttributes (322ms)
+			ProcessInitializeOnLoadMethodAttributes (20ms)
+			AfterProcessingInitializeOnLoad (9ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (7ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
-Refreshing native plugins compatible for Editor in 3.88 ms, found 3 plugins.
+		AwakeInstancesAfterBackupRestoration (5ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 3.83 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 3346 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 45 unused Assets / (131.0 KB). Loaded Objects now: 3814.
-Memory consumption went from 142.1 MB to 141.9 MB.
-Total: 2.817000 ms (FindLiveObjects: 0.256400 ms CreateObjectMapping: 0.245700 ms MarkObjects: 2.198700 ms  DeleteObjects: 0.115600 ms)
+Unloading 45 unused Assets / (130.9 KB). Loaded Objects now: 3814.
+Memory consumption went from 141.9 MB to 141.8 MB.
+Total: 3.010100 ms (FindLiveObjects: 0.285700 ms CreateObjectMapping: 0.278700 ms MarkObjects: 2.319800 ms  DeleteObjects: 0.124600 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
@@ -187,26 +183,148 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 1282139.038159 seconds.
-  path: Assets/Scripts/TacticsMove.cs
-  artifactKey: Guid(b92525851b74a80428b0443324a85425) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/TacticsMove.cs using Guid(b92525851b74a80428b0443324a85425) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2b5636a73d03bd68dcfca010b7638a22') in 0.002299 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 0
-========================================================================
-Received Import Request.
-  Time since last request: 0.000021 seconds.
-  path: Assets/Scripts/PlayerMove.cs
-  artifactKey: Guid(7957e5287cb3e4b4395c41d59e104cfc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/PlayerMove.cs using Guid(7957e5287cb3e4b4395c41d59e104cfc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1f6e9e1ed97779fdb8fc6aec8d7f0ebd') in 0.000468 seconds
+  Time since last request: 1282830.691612 seconds.
+  path: Assets/Scripts/UIManager.cs
+  artifactKey: Guid(46c40f905a6e1f945970d88036660328) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/UIManager.cs using Guid(46c40f905a6e1f945970d88036660328) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0561403df6551a3de5beabb63e0007ff') in 0.002248 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 0
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
-Symbol file data-000001DA88E45020 doesn't match image C:\Users\jcmm1\Desktop\EL FRIKIJUEGO\EL FRIKIJUEGO\ADM\ADM\Library\ScriptAssemblies\Assembly-CSharp-Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-- Loaded All Assemblies, in  0.482 seconds
+- Loaded All Assemblies, in  0.448 seconds
+Refreshing native plugins compatible for Editor in 3.39 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.907 seconds
+Domain Reload Profiling: 1351ms
+	BeginReloadAssembly (152ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (32ms)
+	RebuildCommonClasses (31ms)
+	RebuildNativeTypeToScriptingClass (12ms)
+	initialDomainReloadingComplete (36ms)
+	LoadAllAssembliesAndSetupDomain (213ms)
+		LoadAssemblies (273ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (21ms)
+			TypeCache.Refresh (8ms)
+				TypeCache.ScanAssembly (1ms)
+			ScanForSourceGeneratedMonoScriptInfo (6ms)
+			ResolveRequiredComponents (6ms)
+	FinalizeReload (907ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (390ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (10ms)
+			SetLoadedEditorAssemblies (5ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (68ms)
+			ProcessInitializeOnLoadAttributes (279ms)
+			ProcessInitializeOnLoadMethodAttributes (20ms)
+			AfterProcessingInitializeOnLoad (9ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
+Refreshing native plugins compatible for Editor in 3.60 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3311 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 24 unused Assets / (102.4 KB). Loaded Objects now: 3829.
+Memory consumption went from 135.5 MB to 135.4 MB.
+Total: 2.669400 ms (FindLiveObjects: 0.422200 ms CreateObjectMapping: 0.222700 ms MarkObjects: 1.974000 ms  DeleteObjects: 0.049700 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: 6d391050e5a25f67b0a2c618074f2cd9 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.435 seconds
+Refreshing native plugins compatible for Editor in 3.45 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.043 seconds
+Domain Reload Profiling: 1475ms
+	BeginReloadAssembly (147ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (8ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (29ms)
+	RebuildCommonClasses (31ms)
+	RebuildNativeTypeToScriptingClass (16ms)
+	initialDomainReloadingComplete (31ms)
+	LoadAllAssembliesAndSetupDomain (204ms)
+		LoadAssemblies (270ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (13ms)
+			TypeCache.Refresh (5ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (7ms)
+	FinalizeReload (1044ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (482ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (11ms)
+			SetLoadedEditorAssemblies (5ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (74ms)
+			ProcessInitializeOnLoadAttributes (355ms)
+			ProcessInitializeOnLoadMethodAttributes (26ms)
+			AfterProcessingInitializeOnLoad (11ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (6ms)
+Refreshing native plugins compatible for Editor in 4.78 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3312 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 24 unused Assets / (102.4 KB). Loaded Objects now: 3844.
+Memory consumption went from 137.7 MB to 137.6 MB.
+Total: 2.943300 ms (FindLiveObjects: 0.269800 ms CreateObjectMapping: 0.253000 ms MarkObjects: 2.346000 ms  DeleteObjects: 0.073600 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: 6d391050e5a25f67b0a2c618074f2cd9 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.421 seconds
 Refreshing native plugins compatible for Editor in 4.37 ms, found 3 plugins.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
@@ -214,46 +332,46 @@ Native extension for WebGL target not found
 [Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.894 seconds
-Domain Reload Profiling: 1373ms
-	BeginReloadAssembly (176ms)
+- Finished resetting the current domain, in  1.033 seconds
+Domain Reload Profiling: 1451ms
+	BeginReloadAssembly (145ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (5ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (32ms)
-	RebuildCommonClasses (42ms)
-	RebuildNativeTypeToScriptingClass (12ms)
-	initialDomainReloadingComplete (32ms)
-	LoadAllAssembliesAndSetupDomain (217ms)
-		LoadAssemblies (297ms)
+		CreateAndSetChildDomain (30ms)
+	RebuildCommonClasses (31ms)
+	RebuildNativeTypeToScriptingClass (11ms)
+	initialDomainReloadingComplete (29ms)
+	LoadAllAssembliesAndSetupDomain (201ms)
+		LoadAssemblies (267ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (24ms)
-			TypeCache.Refresh (9ms)
-				TypeCache.ScanAssembly (1ms)
-			ScanForSourceGeneratedMonoScriptInfo (6ms)
-			ResolveRequiredComponents (7ms)
-	FinalizeReload (894ms)
+		AnalyzeDomain (13ms)
+			TypeCache.Refresh (5ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (6ms)
+	FinalizeReload (1034ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (425ms)
+		SetupLoadedEditorAssemblies (519ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (8ms)
-			SetLoadedEditorAssemblies (6ms)
+			InitializePlatformSupportModulesInManaged (11ms)
+			SetLoadedEditorAssemblies (5ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (68ms)
-			ProcessInitializeOnLoadAttributes (312ms)
-			ProcessInitializeOnLoadMethodAttributes (22ms)
-			AfterProcessingInitializeOnLoad (9ms)
+			BeforeProcessingInitializeOnLoad (83ms)
+			ProcessInitializeOnLoadAttributes (378ms)
+			ProcessInitializeOnLoadMethodAttributes (29ms)
+			AfterProcessingInitializeOnLoad (13ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (5ms)
-Refreshing native plugins compatible for Editor in 3.63 ms, found 3 plugins.
+		AwakeInstancesAfterBackupRestoration (8ms)
+Refreshing native plugins compatible for Editor in 4.73 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3311 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 24 unused Assets / (102.4 KB). Loaded Objects now: 3829.
-Memory consumption went from 135.6 MB to 135.5 MB.
-Total: 2.709200 ms (FindLiveObjects: 0.243000 ms CreateObjectMapping: 0.258000 ms MarkObjects: 2.159100 ms  DeleteObjects: 0.048400 ms)
+Unloading 3312 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 24 unused Assets / (102.4 KB). Loaded Objects now: 3859.
+Memory consumption went from 139.6 MB to 139.5 MB.
+Total: 3.553100 ms (FindLiveObjects: 0.338200 ms CreateObjectMapping: 0.305300 ms MarkObjects: 2.815100 ms  DeleteObjects: 0.093500 ms)
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -272,56 +390,54 @@ AssetImportParameters requested are different than current active one (requested
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
-Symbol file data-000001DA86AE50F0 doesn't match image C:\Users\jcmm1\Desktop\EL FRIKIJUEGO\EL FRIKIJUEGO\ADM\ADM\Library\ScriptAssemblies\Assembly-CSharp-Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-- Loaded All Assemblies, in  0.475 seconds
-Refreshing native plugins compatible for Editor in 3.60 ms, found 3 plugins.
+- Loaded All Assemblies, in  0.427 seconds
+Refreshing native plugins compatible for Editor in 3.39 ms, found 3 plugins.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.943 seconds
-Domain Reload Profiling: 1411ms
-	BeginReloadAssembly (149ms)
+- Finished resetting the current domain, in  0.998 seconds
+Domain Reload Profiling: 1422ms
+	BeginReloadAssembly (143ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (5ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (30ms)
-	RebuildCommonClasses (39ms)
+		CreateAndSetChildDomain (28ms)
+	RebuildCommonClasses (37ms)
 	RebuildNativeTypeToScriptingClass (11ms)
-	initialDomainReloadingComplete (42ms)
-	LoadAllAssembliesAndSetupDomain (227ms)
-		LoadAssemblies (297ms)
+	initialDomainReloadingComplete (29ms)
+	LoadAllAssembliesAndSetupDomain (203ms)
+		LoadAssemblies (267ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
 		AnalyzeDomain (13ms)
 			TypeCache.Refresh (6ms)
 				TypeCache.ScanAssembly (0ms)
 			ScanForSourceGeneratedMonoScriptInfo (0ms)
 			ResolveRequiredComponents (6ms)
-	FinalizeReload (943ms)
+	FinalizeReload (999ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (451ms)
+		SetupLoadedEditorAssemblies (510ms)
 			LogAssemblyErrors (0ms)
 			InitializePlatformSupportModulesInManaged (9ms)
 			SetLoadedEditorAssemblies (4ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (71ms)
-			ProcessInitializeOnLoadAttributes (333ms)
-			ProcessInitializeOnLoadMethodAttributes (24ms)
-			AfterProcessingInitializeOnLoad (9ms)
+			BeforeProcessingInitializeOnLoad (86ms)
+			ProcessInitializeOnLoadAttributes (372ms)
+			ProcessInitializeOnLoadMethodAttributes (29ms)
+			AfterProcessingInitializeOnLoad (11ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (7ms)
-Refreshing native plugins compatible for Editor in 3.84 ms, found 3 plugins.
+		AwakeInstancesAfterBackupRestoration (8ms)
+Refreshing native plugins compatible for Editor in 4.69 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 3312 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 24 unused Assets / (102.5 KB). Loaded Objects now: 3844.
-Memory consumption went from 137.8 MB to 137.7 MB.
-Total: 2.816300 ms (FindLiveObjects: 0.248600 ms CreateObjectMapping: 0.236500 ms MarkObjects: 2.276100 ms  DeleteObjects: 0.054100 ms)
+Unloading 24 unused Assets / (102.3 KB). Loaded Objects now: 3874.
+Memory consumption went from 141.5 MB to 141.4 MB.
+Total: 3.435900 ms (FindLiveObjects: 0.285700 ms CreateObjectMapping: 0.265600 ms MarkObjects: 2.822300 ms  DeleteObjects: 0.061300 ms)
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -339,9 +455,619 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 55.186271 seconds.
-  path: Assets/Scripts/PlayerMove.cs
-  artifactKey: Guid(7957e5287cb3e4b4395c41d59e104cfc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/PlayerMove.cs using Guid(7957e5287cb3e4b4395c41d59e104cfc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bcbba60972bbbdf6f92379f11780fc7c') in 0.004326 seconds
+  Time since last request: 516.813813 seconds.
+  path: Assets/BATALLA/Characters/npc.mat
+  artifactKey: Guid(3aab489fa54853446b076c8351c1eb9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/npc.mat using Guid(3aab489fa54853446b076c8351c1eb9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '071daa4ee2adc3593ebbd3b0b454faa5') in 0.147892 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 177.078214 seconds.
+  path: Assets/BATALLA/Characters/Jacob 1
+  artifactKey: Guid(353dbf0aa4897cc439f874b7065b6d8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/Jacob 1 using Guid(353dbf0aa4897cc439f874b7065b6d8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45e5ab85bdd92c5e38c83022417df074') in 0.000571 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.702851 seconds.
+  path: Assets/BATALLA/Characters/Jacob
+  artifactKey: Guid(aca7e3fbac25d3b47a4af6e1171c117d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/Jacob using Guid(aca7e3fbac25d3b47a4af6e1171c117d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '56c248699a1213109c199e99aedcf5f1') in 0.000594 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 5.721756 seconds.
+  path: Assets/BATALLA/Characters/Jacob/Jacob.blend
+  artifactKey: Guid(2b48a0e6b90dd964fab3c0021758dbb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/Jacob/Jacob.blend using Guid(2b48a0e6b90dd964fab3c0021758dbb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0d3738caf8cdc14d5739c0c234195f3e') in 0.404409 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1716
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/BATALLA/Characters/Jacob/Jacob.fbx
+  artifactKey: Guid(82684d355aa793e48b5da452246448ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/Jacob/Jacob.fbx using Guid(82684d355aa793e48b5da452246448ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '601e2b1c692a15945bfda81573381b7f') in 0.119131 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 392
+========================================================================
+Received Import Request.
+  Time since last request: 2.979070 seconds.
+  path: Assets/BATALLA/Characters/Jacob/textures
+  artifactKey: Guid(2710b99e070064f48a0c1ae9903c35b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/Jacob/textures using Guid(2710b99e070064f48a0c1ae9903c35b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f50f1ed256491678d63250879506606f') in 0.000784 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 10.068695 seconds.
+  path: Assets/BATALLA/Characters/Jacob/textures/Scene.png
+  artifactKey: Guid(f38c8f8a8d0cb8f48ade0aed43dc1c5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/Jacob/textures/Scene.png using Guid(f38c8f8a8d0cb8f48ade0aed43dc1c5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9920cc24b21e02537ef69e4e479c046d') in 0.051892 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/BATALLA/Characters/Jacob/textures/T_PropsAtlas.png
+  artifactKey: Guid(aa7a05d8c8e310e43bd29a6e0064c058) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/Jacob/textures/T_PropsAtlas.png using Guid(aa7a05d8c8e310e43bd29a6e0064c058) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e8b79787237e03c42c4b83d296c3fa69') in 0.020078 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/BATALLA/Characters/Jacob/textures/T_JacobColor.png
+  artifactKey: Guid(542bfe7f97060aa458283cd82c82e4de) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/Jacob/textures/T_JacobColor.png using Guid(542bfe7f97060aa458283cd82c82e4de) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3422f7262a7477031cfabf21616fb8a9') in 0.028076 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 8.312981 seconds.
+  path: Assets/BATALLA/Characters/Jacob/textures/Jacob.fbx
+  artifactKey: Guid(c81d139f24c11664ca5ef3adf7af10fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/Jacob/textures/Jacob.fbx using Guid(c81d139f24c11664ca5ef3adf7af10fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b107363ed8358aa16b147fd23a791660') in 0.203027 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 392
+========================================================================
+Received Import Request.
+  Time since last request: 57.209724 seconds.
+  path: Assets/BATALLA/Characters/Adventurer
+  artifactKey: Guid(903c9281f45dd5a439f66fc86d86f8b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/Adventurer using Guid(903c9281f45dd5a439f66fc86d86f8b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed2eea15d13978703bf36e8bc35e39f3') in 0.000753 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.184536 seconds.
+  path: Assets/BATALLA/Characters/Adventurer/Adventurer.blend
+  artifactKey: Guid(fcf70eda9e51adf4f8b0e7c0fd32812d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/Adventurer/Adventurer.blend using Guid(fcf70eda9e51adf4f8b0e7c0fd32812d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '057ed86784aa730b428845e92e03dda8') in 0.910536 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3687
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/BATALLA/Characters/Adventurer/textures
+  artifactKey: Guid(e675032be92522641af5f298e88185cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/Adventurer/textures using Guid(e675032be92522641af5f298e88185cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd5e805238de9e427539c2f1d6f904b95') in 0.000658 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 50.199233 seconds.
+  path: Assets/BATALLA/Characters/GradsInGames
+  artifactKey: Guid(2f657ed131748e04398960995203932c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/GradsInGames using Guid(2f657ed131748e04398960995203932c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5cf3d1c185bd245b21694d6dcc708382') in 0.000746 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 1.997889 seconds.
+  path: Assets/BATALLA/Characters/GradsInGames/DerivedDataCache
+  artifactKey: Guid(9519c9e021be366489c7a6f925c22823) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/GradsInGames/DerivedDataCache using Guid(9519c9e021be366489c7a6f925c22823) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0d8c04ac9d202f226313d69dcc98fb57') in 0.000527 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 1.246852 seconds.
+  path: Assets/BATALLA/Characters/GradsInGames/Config
+  artifactKey: Guid(4e971a45a99450f4e864acdedee4d2ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/GradsInGames/Config using Guid(4e971a45a99450f4e864acdedee4d2ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '35fcc2f306c08d21fd416af83a63e67f') in 0.000491 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 3.391726 seconds.
+  path: Assets/BATALLA/Characters/GradsInGames/Content
+  artifactKey: Guid(07b5ef12e72a41e4faa5fffed20530f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/GradsInGames/Content using Guid(07b5ef12e72a41e4faa5fffed20530f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dc9bc7b062a527ea1f987aa7e99fe963') in 0.000604 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 2.757502 seconds.
+  path: Assets/BATALLA/Characters/GradsInGames/Content/Final_Model.uasset
+  artifactKey: Guid(01b7761cc2a83e6429828c4d3bee890f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/GradsInGames/Content/Final_Model.uasset using Guid(01b7761cc2a83e6429828c4d3bee890f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1d64252d35722cca4e0ada80d09a04e4') in 0.001191 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.814368 seconds.
+  path: Assets/BATALLA/Characters/GradsInGames/Content/forest_slope_4k.uasset
+  artifactKey: Guid(aee68befa94870a408d58ea5a0e1f771) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/GradsInGames/Content/forest_slope_4k.uasset using Guid(aee68befa94870a408d58ea5a0e1f771) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b46adef6a3348da1604590fd7f2fd2f') in 0.000901 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 1.374232 seconds.
+  path: Assets/BATALLA/Characters/GradsInGames/Content/renderlevel_BuiltData.uasset
+  artifactKey: Guid(dc9d1a68304bb254f917be5227b43fc0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/GradsInGames/Content/renderlevel_BuiltData.uasset using Guid(dc9d1a68304bb254f917be5227b43fc0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2042fc9f7fd098860e80b6117d2dc06') in 0.001121 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.718048 seconds.
+  path: Assets/BATALLA/Characters/GradsInGames/Content/Collections
+  artifactKey: Guid(4bdc97c73ee6274449089c94419b4466) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/GradsInGames/Content/Collections using Guid(4bdc97c73ee6274449089c94419b4466) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c4019a8ea1344e1cd6780635b5ae620') in 0.000577 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 17.071622 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai
+  artifactKey: Guid(5e4480dadb853f045879f1da0d3267f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai using Guid(5e4480dadb853f045879f1da0d3267f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1d6bd19d3e00b23f327b8c126f2ff5ed') in 0.000581 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 1.742576 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Model
+  artifactKey: Guid(d42cdeeace2ddd74882e18fe12abc751) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Model using Guid(d42cdeeace2ddd74882e18fe12abc751) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e98394174137d762437c45907e9f4102') in 0.000564 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.056091 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Model/Kai.fbx
+  artifactKey: Guid(2c66ebbb6ff41c445a45f39340eddc48) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Model/Kai.fbx using Guid(2c66ebbb6ff41c445a45f39340eddc48) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a1d4e5f5cd3699af790e951ac4ba9045') in 0.100160 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 217
+========================================================================
+Received Import Request.
+  Time since last request: 9.648153 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials
+  artifactKey: Guid(ee87618345bec5a4a8aff6d215237da7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials using Guid(ee87618345bec5a4a8aff6d215237da7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e6ab2175fd162ff2af0d470a2472f89') in 0.000672 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.045980 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/F00_000_Hair_00_HAIR.asset
+  artifactKey: Guid(bc1162e25af19a1478c70aedb0e8e037) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/F00_000_Hair_00_HAIR.asset using Guid(bc1162e25af19a1478c70aedb0e8e037) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5732b1878c25ffa2ed0a0cdaa33a319d') in 0.019204 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_EyeHighlight_00_EYE.asset
+  artifactKey: Guid(68f20de3b3894a24292c210235a1eff3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_EyeHighlight_00_EYE.asset using Guid(68f20de3b3894a24292c210235a1eff3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'df08c2330f1f535779263429f704179f') in 0.038350 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_006_01_Tops_01_CLOTH.asset
+  artifactKey: Guid(f93c7d1b99c5b47448fa3a4d19026861) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_006_01_Tops_01_CLOTH.asset using Guid(f93c7d1b99c5b47448fa3a4d19026861) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '02a3dadc45827f6b44f7f32c8d82fd8d') in 0.012247 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000012 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_005_01_Shoes_01_CLOTH.asset
+  artifactKey: Guid(084372eb39817104d85304df541a3dd8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_005_01_Shoes_01_CLOTH.asset using Guid(084372eb39817104d85304df541a3dd8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '972a39ac6e9e42ab19c83bfba523f398') in 0.012664 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_FaceEyelash_00_FACE.asset
+  artifactKey: Guid(b7f358aca7067bd44955d084f04bcb74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_FaceEyelash_00_FACE.asset using Guid(b7f358aca7067bd44955d084f04bcb74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd0ad3d48fe89d62638061cae803cc889') in 0.013194 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_EyeExtra_01_EYE.asset
+  artifactKey: Guid(b4d1813cabec0a4408a422b200bb164d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_EyeExtra_01_EYE.asset using Guid(b4d1813cabec0a4408a422b200bb164d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '51173bd39d0c0e192b7c73b6c3741403') in 0.011794 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_FaceBrow_00_FACE.asset
+  artifactKey: Guid(9d2c744248f367a47a862fe79a981c8f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_FaceBrow_00_FACE.asset using Guid(9d2c744248f367a47a862fe79a981c8f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a82812f14dec66fb8171c440a74a33b7') in 0.012508 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_EyeIris_00_EYE.asset
+  artifactKey: Guid(4162763654d758048963bc086e7440b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_EyeIris_00_EYE.asset using Guid(4162763654d758048963bc086e7440b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7ae6f26c5974a16f7c36ec1ede133e05') in 0.012842 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_FaceEyeline_00_FACE.asset
+  artifactKey: Guid(575e576d45c698846bd234fd74fbad33) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_FaceEyeline_00_FACE.asset using Guid(575e576d45c698846bd234fd74fbad33) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '13e36c8758ef73f89540967db39a2570') in 0.013066 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_EyeWhite_00_EYE.asset
+  artifactKey: Guid(54f665eaf9d3d6d4a81407f4192c00ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_EyeWhite_00_EYE.asset using Guid(54f665eaf9d3d6d4a81407f4192c00ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e442afce340075628323b64894c23aa') in 0.015715 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_HairBack_00_HAIR.asset
+  artifactKey: Guid(8144c0dfbfa7dbe439df93fede66723b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_HairBack_00_HAIR.asset using Guid(8144c0dfbfa7dbe439df93fede66723b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f784a39d9d7a18bd474d1b594d4b5e8b') in 0.014303 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_001_01_Bottoms_01_CLOTH.asset
+  artifactKey: Guid(5269a82c34c659d4dac461f2d3e74225) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_001_01_Bottoms_01_CLOTH.asset using Guid(5269a82c34c659d4dac461f2d3e74225) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a4f0c5cdad75bb2e920330c7f693136c') in 0.012634 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000104 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_001_01_Body_00_SKIN.asset
+  artifactKey: Guid(3a38b502d99e5cc4d9372d8f6c2620f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_001_01_Body_00_SKIN.asset using Guid(3a38b502d99e5cc4d9372d8f6c2620f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2881058cc5e96361d5a9ea71dc123703') in 0.012918 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_Face_00_SKIN.asset
+  artifactKey: Guid(b34b71728d69ea64d8bbe611e494fb8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_Face_00_SKIN.asset using Guid(b34b71728d69ea64d8bbe611e494fb8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bff139ac9980c26b5cc6764d17399bba') in 0.012054 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_FaceMouth_00_FACE.asset
+  artifactKey: Guid(a0499f8b36fdc7a42ae7a3cc9813fa74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Materials/M00_000_00_FaceMouth_00_FACE.asset using Guid(a0499f8b36fdc7a42ae7a3cc9813fa74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae0ab1cdbeb5ba9c726de8d3d049effc') in 0.013486 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 221.431266 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/F00_000_Hair_00.png
+  artifactKey: Guid(9d6a9013b008d57428393a8811e552dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/F00_000_Hair_00.png using Guid(9d6a9013b008d57428393a8811e552dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '35da467d4899fee330e1b464ef3df226') in 0.031988 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_005_01_Shoes_01.png
+  artifactKey: Guid(100847c6ab1e29f42b8a2cdcc4137d6d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_005_01_Shoes_01.png using Guid(100847c6ab1e29f42b8a2cdcc4137d6d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1f9967a294f455695f834fbcfadc361') in 0.027212 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/F00_000_Hair_00_spe.png
+  artifactKey: Guid(7f1047567796a1943bcec05cd6e93368) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/F00_000_Hair_00_spe.png using Guid(7f1047567796a1943bcec05cd6e93368) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8c2f4ee1ec818216f3e9667eb157b7e4') in 0.018803 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_EyeExtra_01.png
+  artifactKey: Guid(98bdaa57dfb65d24e86ac56c8d29b4eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_EyeExtra_01.png using Guid(98bdaa57dfb65d24e86ac56c8d29b4eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '91dce03e9632663fe9eeb5e10ee87af4') in 0.031102 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Matcap_RimHair.png
+  artifactKey: Guid(999af8d511a029b4a8c85f684483711a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Matcap_RimHair.png using Guid(999af8d511a029b4a8c85f684483711a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c19dda796a982805ea7e6def8477ab9b') in 0.020302 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_EyeWhite_00.png
+  artifactKey: Guid(99255f96075784248870de5f7badbd76) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_EyeWhite_00.png using Guid(99255f96075784248870de5f7badbd76) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '20055268da2ce30460e9db429031e16b') in 0.028762 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Shader_NoneBlack_0.png
+  artifactKey: Guid(0c25897b858a6794aa09e1363443076e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Shader_NoneBlack_0.png using Guid(0c25897b858a6794aa09e1363443076e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3189ef919659c61531335aadbd4e959d') in 0.019490 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_001_01_Bottoms_01.png
+  artifactKey: Guid(0914dedac37fda443ac97ba79b041c0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_001_01_Bottoms_01.png using Guid(0914dedac37fda443ac97ba79b041c0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7c7f287fbb489682595677836740b21a') in 0.039156 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_HairBack_00_nml.png
+  artifactKey: Guid(0faedf1888edf1948a45026b76dab7d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_HairBack_00_nml.png using Guid(0faedf1888edf1948a45026b76dab7d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '84bcf3ab1feddfc1d996f9749a12a517') in 0.020495 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_HairBack_00.png
+  artifactKey: Guid(2c07dfa39cc24c741807ff79db2e3305) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_HairBack_00.png using Guid(2c07dfa39cc24c741807ff79db2e3305) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f53d1574e5779f8247019efc1d5313d8') in 0.020757 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/F00_000_Hair_00_nml.png
+  artifactKey: Guid(804d29b120021c444be084e3ea2500c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/F00_000_Hair_00_nml.png using Guid(804d29b120021c444be084e3ea2500c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '634c28629e798c92d87cd71f2b04a278') in 0.020007 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_EyeHighlight_00.png
+  artifactKey: Guid(baf243cf0bb7b1143a5be98a7e4d1a39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_EyeHighlight_00.png using Guid(baf243cf0bb7b1143a5be98a7e4d1a39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '04bcc395e9d80815e33676b374a5ccf9') in 0.018977 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Shader_NoneNormal.png
+  artifactKey: Guid(fcafcae7dadfa8e41af690e719f36ea0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Shader_NoneNormal.png using Guid(fcafcae7dadfa8e41af690e719f36ea0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa4d4072f7a2f6963b516a70a879fae0') in 0.020145 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_EyeIris_00.png
+  artifactKey: Guid(b2ee6814f583fa54a86341dc4f0bc55c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_EyeIris_00.png using Guid(b2ee6814f583fa54a86341dc4f0bc55c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5889c6d3dd80d555b090a8ed4f15b528') in 0.018993 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_FaceEyelash_00.png
+  artifactKey: Guid(0112d0d736acfd34480172ca978afb95) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_FaceEyelash_00.png using Guid(0112d0d736acfd34480172ca978afb95) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f85e2c4546960636cd71336dfdb8cf5e') in 0.018973 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_006_01_Tops_01.png
+  artifactKey: Guid(7aec41a59477f9e4fb2996770f9f0711) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_006_01_Tops_01.png using Guid(7aec41a59477f9e4fb2996770f9f0711) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e0f9f76e22bae6c1971f0e59ac5d7a18') in 0.026929 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_001_00_Body_00_nml.png
+  artifactKey: Guid(d6ac1d2b68b4678468e4b83712512075) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_001_00_Body_00_nml.png using Guid(d6ac1d2b68b4678468e4b83712512075) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6e929ec6256382724d63377138f23640') in 0.021341 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Thumbnail.png
+  artifactKey: Guid(2ab228eb8c05e72439081856c61d9eb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Thumbnail.png using Guid(2ab228eb8c05e72439081856c61d9eb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '30b87ac247b17644260a135421109724') in 0.020729 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_Face_00_out.png
+  artifactKey: Guid(a9edadb62b03e054085580dc15ec4eba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_Face_00_out.png using Guid(a9edadb62b03e054085580dc15ec4eba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f5e297916c9fbe48830c952392a6b583') in 0.018153 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Shader_NoneBlack.png
+  artifactKey: Guid(61ac262917b6b0b4ba3ac178d2a2ef31) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Shader_NoneBlack.png using Guid(61ac262917b6b0b4ba3ac178d2a2ef31) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '13867a5923aa160d8dc46342a398a656') in 0.015183 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_001_00_Body_00.png
+  artifactKey: Guid(2ed7810715631c7478628c0f572fce59) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_001_00_Body_00.png using Guid(2ed7810715631c7478628c0f572fce59) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd1c8aac77dd733fe74ff30b1679699fb') in 0.021042 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_FaceMouth_00.png
+  artifactKey: Guid(d103bd634548f7443b058b5b3acbff70) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_FaceMouth_00.png using Guid(d103bd634548f7443b058b5b3acbff70) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7ebeddbe4798cd28323c582c7438cc4c') in 0.018509 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_Face_00.png
+  artifactKey: Guid(1241fed5ec628fe409adeac5bbdbe08d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_Face_00.png using Guid(1241fed5ec628fe409adeac5bbdbe08d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fcd8b100f7cbcb1193e7dccb102104da') in 0.021489 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_FaceEyeline_00.png
+  artifactKey: Guid(516bb154712fa6d4bba72f5e02269683) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_FaceEyeline_00.png using Guid(516bb154712fa6d4bba72f5e02269683) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b39e2b73dcf766c9b00edfe163917911') in 0.018388 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Matcap_Rim.png
+  artifactKey: Guid(d46ef61815c18c240ac32fcc1fbf7b51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Matcap_Rim.png using Guid(d46ef61815c18c240ac32fcc1fbf7b51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4f3652c55b9c84c8d991880ee19063af') in 0.020971 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_FaceBrow_00.png
+  artifactKey: Guid(1d7dae0cef4a0b340915f6fc56fe455e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_FaceBrow_00.png using Guid(1d7dae0cef4a0b340915f6fc56fe455e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e96ad6887ef29ae665359d4e988738db') in 0.020266 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_Face_00_nml.png
+  artifactKey: Guid(f7a24402179519e4ea0a392f05a705aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/M00_000_00_Face_00_nml.png using Guid(f7a24402179519e4ea0a392f05a705aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3e80bb499f4de4c71da313aad1cff4b0') in 0.021168 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 52.474331 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Materials/M00_000_00_Face_00.mat
+  artifactKey: Guid(cb4a6cb43a40e6c4aa3da22f4ff15215) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Materials/M00_000_00_Face_00.mat using Guid(cb4a6cb43a40e6c4aa3da22f4ff15215) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f00d74bb31a5652f96b05cb7b8731dab') in 0.036336 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Materials/M00_001_00_Body_00.mat
+  artifactKey: Guid(73bf1c469dbd54c429148bf7b5a01d83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BATALLA/Characters/VRoid_Kai/Kai.Textures/Materials/M00_001_00_Body_00.mat using Guid(73bf1c469dbd54c429148bf7b5a01d83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd29fc71a31075477f91649eb56255b41') in 0.021954 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.447 seconds
+Refreshing native plugins compatible for Editor in 3.42 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.065 seconds
+Domain Reload Profiling: 1509ms
+	BeginReloadAssembly (152ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (38ms)
+	RebuildCommonClasses (34ms)
+	RebuildNativeTypeToScriptingClass (11ms)
+	initialDomainReloadingComplete (30ms)
+	LoadAllAssembliesAndSetupDomain (217ms)
+		LoadAssemblies (282ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (13ms)
+			TypeCache.Refresh (5ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (6ms)
+	FinalizeReload (1066ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (524ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (12ms)
+			SetLoadedEditorAssemblies (5ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (82ms)
+			ProcessInitializeOnLoadAttributes (385ms)
+			ProcessInitializeOnLoadMethodAttributes (30ms)
+			AfterProcessingInitializeOnLoad (11ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (6ms)
+Refreshing native plugins compatible for Editor in 4.08 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3311 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 23 unused Assets / (101.4 KB). Loaded Objects now: 3941.
+Memory consumption went from 150.9 MB to 150.8 MB.
+Total: 2.934200 ms (FindLiveObjects: 0.297800 ms CreateObjectMapping: 0.262400 ms MarkObjects: 2.307100 ms  DeleteObjects: 0.066000 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: 6d391050e5a25f67b0a2c618074f2cd9 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
