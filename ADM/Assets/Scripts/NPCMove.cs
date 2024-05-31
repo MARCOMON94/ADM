@@ -14,36 +14,38 @@ public class NPCMove : TacticsMove
     }
 
     void Update()
+{
+    Debug.DrawRay(transform.position, transform.forward);
+
+    if (!turn)
     {
-        Debug.DrawRay(transform.position, transform.forward);
+        return;
+    }
 
-        if (!turn)
+    if (!moving)
+    {
+        FindNearestTarget();
+        float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+
+        if (distanceToTarget <= characterStats.attackRange)
         {
-            return;
-        }
-
-        if (!moving)
-        {
-            FindNearestTarget();
-            float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
-
-            if (distanceToTarget <= characterStats.attackRange)
-            {
-                AttackTarget();
-            }
-            else
-            {
-                CalculatePath();
-                FindSelectableTiles();
-                actualTargetTile.target = true;
-                MoveToTile(actualTargetTile);
-            }
+            AttackTarget();
         }
         else
         {
-            Move();
+            CalculatePath();
+            // Llama a FindSelectableTiles con ignoreOccupied = true cuando en modo ataque
+            FindSelectableTiles(true);
+            actualTargetTile.target = true;
+            MoveToTile(actualTargetTile);
         }
     }
+    else
+    {
+        Move();
+    }
+}
+
 
     void CalculatePath()
     {

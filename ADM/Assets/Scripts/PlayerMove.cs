@@ -52,9 +52,11 @@ public class PlayerMove : TacticsMove
     }
 
     public void SetActionAttack()
-    {
-        currentAction = PlayerAction.Attack;
-    }
+{
+    currentAction = PlayerAction.Attack;
+    // Llama a FindSelectableTiles con ignoreOccupied = true
+    FindSelectableTiles(true);
+}
 
     void CheckMouseMovement()
     {

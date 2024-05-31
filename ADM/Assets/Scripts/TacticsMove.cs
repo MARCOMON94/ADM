@@ -106,68 +106,56 @@ public class TacticsMove : MonoBehaviour
     }
 
     // Calcula la lista de tiles adyacentes teniendo en cuenta la altura de salto
-    public void ComputeAdjacencyLists(float jumpHeight, Tile target)
+    public void ComputeAdjacencyLists(float jumpHeight, Tile target, bool ignoreOccupied)
+{
+    foreach (GameObject tile in tiles)
     {
-        foreach (GameObject tile in tiles)
-        {
-            Tile t = tile.GetComponent<Tile>();
-            t.FindNeighbors(jumpHeight, target); // Encuentra los vecinos del tile actual
-        }
+        Tile t = tile.GetComponent<Tile>();
+        t.FindNeighbors(jumpHeight, target, ignoreOccupied); // Pasar el parámetro ignoreOccupied
     }
+}
+
 
     // Encuentra los tiles seleccionables dentro del rango de movimiento
-    public void FindSelectableTiles()
+    public void FindSelectableTiles(bool ignoreOccupied = false)
+{
+    ComputeAdjacencyLists(characterStats.jumpHeight, null, ignoreOccupied);
+    GetCurrentTile();
+
+    Queue<Tile> process = new Queue<Tile>();
+    process.Enqueue(currentTile);
+    currentTile.visited = true;
+
+    while (process.Count > 0)
     {
-        // Calcula la lista de tiles adyacentes
-        ComputeAdjacencyLists(characterStats.jumpHeight, null);
-        // Obtiene el tile actual
-        GetCurrentTile();
+        Tile t = process.Dequeue();
+        selectableTiles.Add(t);
+        t.selectable = true;
 
-        Queue<Tile> process = new Queue<Tile>();
-        // Añade el tile actual a la cola de procesamiento
-        process.Enqueue(currentTile);
-        // Marca el tile actual como visitado
-        currentTile.visited = true;
-
-        while (process.Count > 0)
+        if (t.distance < characterStats.move)
         {
-            // Toma el siguiente tile de la cola
-            Tile t = process.Dequeue();
-            // Añade el tile a la lista de tiles seleccionables
-            selectableTiles.Add(t);
-            // Marca el tile como seleccionable
-            t.selectable = true;
-
-            if (t.distance < characterStats.move) // Si la distancia del tile es menor que el rango de movimiento del personaje
+            foreach (Tile tile in t.adjacencyList)
             {
-                foreach (Tile tile in t.adjacencyList) // Revisa cada tile adyacente
+                if (!tile.visited)
                 {
-                    if (!tile.visited) // Si el tile no ha sido visitado
+                    tile.parent = t;
+                    tile.visited = true;
+
+                    float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
+                    int additionalCost = (int)(heightDifference * 2);
+                    int newDistance = t.distance + 1 + additionalCost;
+
+                    if (newDistance <= characterStats.move)
                     {
-                        // Establece el tile actual como el padre del tile adyacente
-                        tile.parent = t;
-                        // Marca el tile adyacente como visitado
-                        tile.visited = true;
-
-                        // Calcula la diferencia de altura entre los tiles
-                        float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
-                        // Calcula el coste adicional por altura
-                        int additionalCost = (int)(heightDifference * 2);
-                        // Calcula la nueva distancia
-                        int newDistance = t.distance + 1 + additionalCost;
-
-                        if (newDistance <= characterStats.move) // Si la nueva distancia es menor o igual al rango de movimiento del personaje
-                        {
-                            // Establece la nueva distancia
-                            tile.distance = newDistance;
-                            // Añade el tile adyacente a la cola de procesamiento
-                            process.Enqueue(tile);
-                        }
+                        tile.distance = newDistance;
+                        process.Enqueue(tile);
                     }
                 }
             }
         }
     }
+}
+
 
     // Mueve al personaje hacia un tile específico
     public void MoveToTile(Tile tile)
@@ -426,131 +414,129 @@ public class TacticsMove : MonoBehaviour
 
     // Encuentra el camino hacia el tile objetivo usando A*
     public void FindPath(Tile target)
+{
+    // Pasar false como valor por defecto para ignoreOccupied
+    ComputeAdjacencyLists(characterStats.jumpHeight, target, false);
+    GetCurrentTile();
+
+    List<Tile> openList = new List<Tile>(); // Lista de tiles por evaluar
+    List<Tile> closedList = new List<Tile>(); // Lista de tiles ya evaluados
+
+    // Añade el tile actual a la lista de tiles por evaluar
+    openList.Add(currentTile);
+    // Calcula la heurística del tile actual
+    currentTile.h = Vector3.Distance(currentTile.transform.position, target.transform.position);
+    // Establece el costo total del tile actual
+    currentTile.f = currentTile.h;
+
+    while (openList.Count > 0)
     {
-        // Calcula la lista de tiles adyacentes
-        ComputeAdjacencyLists(characterStats.jumpHeight, target);
-        // Obtiene el tile actual
-        GetCurrentTile();
+        // Encuentra el tile con el menor costo total
+        Tile t = FindLowestF(openList);
+        // Añade el tile a la lista de tiles evaluados
+        closedList.Add(t);
 
-        List<Tile> openList = new List<Tile>(); // Lista de tiles por evaluar
-        List<Tile> closedList = new List<Tile>(); // Lista de tiles ya evaluados
-
-        // Añade el tile actual a la lista de tiles por evaluar
-        openList.Add(currentTile);
-        // Calcula la heurística del tile actual
-        currentTile.h = Vector3.Distance(currentTile.transform.position, target.transform.position);
-        // Establece el costo total del tile actual
-        currentTile.f = currentTile.h;
-
-        while (openList.Count > 0)
+        if (t == target) // Si el tile actual es el objetivo
         {
-            // Encuentra el tile con el menor costo total
-            Tile t = FindLowestF(openList);
-            // Añade el tile a la lista de tiles evaluados
-            closedList.Add(t);
+            // Encuentra el tile final en el camino
+            actualTargetTile = FindEndTile(t);
+            // Mueve al personaje al tile objetivo
+            MoveToTile(actualTargetTile);
+            return;
+        }
 
-            if (t == target) // Si el tile actual es el objetivo
+        foreach (Tile tile in t.adjacencyList) // Revisa cada tile adyacente
+        {
+            if (closedList.Contains(tile)) // Si el tile ya ha sido evaluado, se salta
             {
-                // Encuentra el tile final en el camino
-                actualTargetTile = FindEndTile(t);
-                // Mueve al personaje al tile objetivo
-                MoveToTile(actualTargetTile);
-                return;
+                continue;
             }
 
-            foreach (Tile tile in t.adjacencyList) // Revisa cada tile adyacente
+            if (!openList.Contains(tile)) // Si el tile no está en la lista de tiles por evaluar
             {
-                if (closedList.Contains(tile)) // Si el tile ya ha sido evaluado, se salta
-                {
-                    continue;
-                }
+                // Establece el tile actual como el padre del tile adyacente
+                tile.parent = t;
+                // Calcula el costo desde el inicio hasta el nodo actual
+                tile.g = t.g + Vector3.Distance(tile.transform.position, t.transform.position);
+                // Calcula la diferencia de altura entre los tiles
+                float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
+                // Coste adicional por altura
+                int additionalCost = (int)(heightDifference * 2);
+                tile.g += additionalCost;
+                // Calcula la heurística
+                tile.h = Vector3.Distance(tile.transform.position, target.transform.position);
+                // Establece el costo total
+                tile.f = tile.g + tile.h;
+                // Añade el tile a la lista de tiles por evaluar
+                openList.Add(tile);
+            }
+            else // Si el tile ya está en la lista de tiles por evaluar
+            {
+                // Calcula el costo temporal
+                float tempG = t.g + Vector3.Distance(tile.transform.position, t.transform.position);
+                // Calcula la diferencia de altura entre los tiles
+                float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
+                // Coste adicional por altura
+                int additionalCost = (int)(heightDifference * 2);
+                tempG += additionalCost;
 
-                if (!openList.Contains(tile)) // Si el tile no está en la lista de tiles por evaluar
+                if (tempG < tile.g) // Si el costo temporal es menor que el costo actual
                 {
-                    // Establece el tile actual como el padre del tile adyacente
+                    // Actualiza el tile padre
                     tile.parent = t;
-                    // Calcula el costo desde el inicio hasta el nodo actual
-                    tile.g = t.g + Vector3.Distance(tile.transform.position, t.transform.position);
-                    // Calcula la diferencia de altura entre los tiles
-                    float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
-                    // Coste adicional por altura
-                    int additionalCost = (int)(heightDifference * 2);
-                    tile.g += additionalCost;
-                    // Calcula la heurística
-                    tile.h = Vector3.Distance(tile.transform.position, target.transform.position);
-                    // Establece el costo total
+                    // Actualiza el costo desde el inicio
+                    tile.g = tempG;
+                    // Actualiza el costo total
                     tile.f = tile.g + tile.h;
-                    // Añade el tile a la lista de tiles por evaluar
-                    openList.Add(tile);
-                }
-                else // Si el tile ya está en la lista de tiles por evaluar
-                {
-                    // Calcula el costo temporal
-                    float tempG = t.g + Vector3.Distance(tile.transform.position, t.transform.position);
-                    // Calcula la diferencia de altura entre los tiles
-                    float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
-                    // Coste adicional por altura
-                    int additionalCost = (int)(heightDifference * 2);
-                    tempG += additionalCost;
-
-                    if (tempG < tile.g) // Si el costo temporal es menor que el costo actual
-                    {
-                        // Actualiza el tile padre
-                        tile.parent = t;
-                        // Actualiza el costo desde el inicio
-                        tile.g = tempG;
-                        // Actualiza el costo total
-                        tile.f = tile.g + tile.h;
-                    }
                 }
             }
         }
-
-        Debug.Log("Path not found");
     }
+
+    Debug.Log("Path not found");
+}
 
     // Encuentra los tiles en el rango de ataque
     public void FindAttackableTiles()
+{
+    // Pasar true para ignoreOccupied, ya que estamos buscando tiles en rango de ataque
+    ComputeAdjacencyLists(characterStats.jumpHeight, null, true);
+    GetCurrentTile();
+
+    Queue<Tile> process = new Queue<Tile>();
+    // Añade el tile actual a la cola de procesamiento
+    process.Enqueue(currentTile);
+    // Marca el tile actual como visitado
+    currentTile.visited = true;
+
+    while (process.Count > 0)
     {
-        // Calcula la lista de tiles adyacentes
-        ComputeAdjacencyLists(characterStats.jumpHeight, null);
-        // Obtiene el tile actual
-        GetCurrentTile();
+        // Toma el siguiente tile de la cola
+        Tile t = process.Dequeue();
+        // Añade el tile a la lista de tiles seleccionables
+        selectableTiles.Add(t);
+        // Marca el tile como seleccionable
+        t.selectable = true;
 
-        Queue<Tile> process = new Queue<Tile>();
-        // Añade el tile actual a la cola de procesamiento
-        process.Enqueue(currentTile);
-        // Marca el tile actual como visitado
-        currentTile.visited = true;
-
-        while (process.Count > 0)
+        if (t.distance < characterStats.attackRange) // Si la distancia del tile es menor que el rango de ataque del personaje
         {
-            // Toma el siguiente tile de la cola
-            Tile t = process.Dequeue();
-            // Añade el tile a la lista de tiles seleccionables
-            selectableTiles.Add(t);
-            // Marca el tile como seleccionable
-            t.selectable = true;
-
-            if (t.distance < characterStats.attackRange) // Si la distancia del tile es menor que el rango de ataque del personaje
+            foreach (Tile tile in t.adjacencyList) // Revisa cada tile adyacente
             {
-                foreach (Tile tile in t.adjacencyList) // Revisa cada tile adyacente
+                if (!tile.visited) // Si el tile no ha sido visitado
                 {
-                    if (!tile.visited) // Si el tile no ha sido visitado
-                    {
-                        // Establece el tile actual como el padre del tile adyacente
-                        tile.parent = t;
-                        // Marca el tile adyacente como visitado
-                        tile.visited = true;
-                        // Establece la distancia del tile adyacente
-                        tile.distance = 1 + t.distance;
-                        // Añade el tile adyacente a la cola de procesamiento
-                        process.Enqueue(tile);
-                    }
+                    // Establece el tile actual como el padre del tile adyacente
+                    tile.parent = t;
+                    // Marca el tile adyacente como visitado
+                    tile.visited = true;
+                    // Establece la distancia del tile adyacente
+                    tile.distance = 1 + t.distance;
+                    // Añade el tile adyacente a la cola de procesamiento
+                    process.Enqueue(tile);
                 }
             }
         }
     }
+}
     //FALTA AÑADIR
     public virtual void UpdateHealthUI()
 {

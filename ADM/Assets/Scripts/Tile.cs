@@ -22,6 +22,7 @@ public class Tile : MonoBehaviour
     public float f = 0; // Costo total (g + h)
     public float g = 0; // Costo desde el inicio hasta el nodo actual
     public float h = 0; // Heurística (estimación del costo desde el nodo actual hasta el objetivo)
+    public bool ignoreOccupied = false;
 
     // Método Update que se llama una vez por frame
     void Update()
@@ -59,34 +60,43 @@ public class Tile : MonoBehaviour
     }
 
     // Encuentra los vecinos del tile que son transitables
-    public void FindNeighbors(float jumpHeight, Tile target)
-    {
-        Reset();
+    public void FindNeighbors(float jumpHeight, Tile target, bool ignoreOccupied)
+{
+    Reset();
 
-        // Revisa los tiles en las direcciones especificadas
-        CheckTile(Vector3.forward, jumpHeight, target);
-        CheckTile(-Vector3.forward, jumpHeight, target);
-        CheckTile(Vector3.right, jumpHeight, target);
-        CheckTile(-Vector3.right, jumpHeight, target);
-    }
+    CheckTile(Vector3.forward, jumpHeight, target, ignoreOccupied);
+    CheckTile(-Vector3.forward, jumpHeight, target, ignoreOccupied);
+    CheckTile(Vector3.right, jumpHeight, target, ignoreOccupied);
+    CheckTile(-Vector3.right, jumpHeight, target, ignoreOccupied);
+}
 
     // Revisa si hay un tile transitable en la dirección dada
-    public void CheckTile(Vector3 direction, float jumpHeight, Tile target)
-    {
-        Vector3 halfExtents = new Vector3(0.25f, (1 + jumpHeight) / 2.0f, 0.25f);
-        Collider[] colliders = Physics.OverlapBox(transform.position + direction, halfExtents);
+    public void CheckTile(Vector3 direction, float jumpHeight, Tile target, bool ignoreOccupied)
+{
+    Vector3 halfExtents = new Vector3(0.25f, (1 + jumpHeight) / 2.0f, 0.25f);
+    Collider[] colliders = Physics.OverlapBox(transform.position + direction, halfExtents);
 
-        foreach (Collider item in colliders)
+    foreach (Collider item in colliders)
+    {
+        Tile tile = item.GetComponent<Tile>();
+        if (tile != null && tile.walkable)
         {
-            Tile tile = item.GetComponent<Tile>();
-            if (tile != null && tile.walkable)
+            RaycastHit hit;
+            // Modificar la condición para ignorar la ocupación si ignoreOccupied es true
+            if (ignoreOccupied || !Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1) || (tile == target))
             {
-                RaycastHit hit;
-                if (!Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1) || (tile == target))
-                {
-                    adjacencyList.Add(tile);
-                }
+                adjacencyList.Add(tile);
+                Debug.Log($"Tile {tile.name} es transitable y se ha añadido a la lista de adyacencia.");
+            }
+            else
+            {
+                Debug.Log($"Tile {tile.name} no es transitable porque está ocupado.");
             }
         }
+        else if (tile != null)
+        {
+            Debug.Log($"Tile {tile.name} no es transitable porque walkable es falso.");
+        }
     }
+}
 }
