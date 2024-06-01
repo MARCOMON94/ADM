@@ -90,33 +90,29 @@ public class PlayerMove : TacticsMove
         TacticsMove enemyMove = enemy.GetComponent<TacticsMove>();
         Tile enemyTile = GetTargetTile(enemy);
 
-        if (enemyTile != null && selectableTiles.Contains(enemyTile))
+        float heightDifference = Mathf.Abs(enemy.transform.position.y - transform.position.y);
+
+        // Añadimos la verificación de heightAttack aquí
+        if (enemyTile != null && selectableTiles.Contains(enemyTile) && 
+            (characterStats.heightAttack || heightDifference <= 0.1f)) // Solo mostrar si la diferencia de altura es mínima
         {
             Renderer renderer = enemy.GetComponent<Renderer>();
             if (renderer != null)
             {
                 renderer.material.color = Color.red;
             }
-
-            // No marcar el tile como seleccionable si está ocupado por un enemigo
-            // enemyTile.selectable = true;
-            // enemyTile.GetComponent<Renderer>().material.color = Color.red;
         }
     }
 }
-
     public void CheckMouseAttack()
 {
     if (Input.GetMouseButtonDown(0))
     {
-        Debug.Log("Mouse click detectado para ataque");
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log($"Objeto impactado: {hit.collider.name}");
-
             if (hit.collider.tag == "NPC")
             {
                 TacticsMove enemy = hit.collider.GetComponent<TacticsMove>();
@@ -125,40 +121,24 @@ public class PlayerMove : TacticsMove
                 {
                     float distanceToEnemy = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
                                                             new Vector3(enemy.transform.position.x, 0, enemy.transform.position.z));
-                    Debug.Log($"Distancia al enemigo {enemy.name}: {distanceToEnemy}, rango de ataque: {characterStats.attackRange}");
+                    float heightDifference = Mathf.Abs(enemy.transform.position.y - transform.position.y);
 
-                    if (distanceToEnemy <= characterStats.attackRange + 0.05f) // Añadimos un pequeño margen para problemas de precisión
+                    // Añadimos la verificación de heightAttack aquí
+                    if (distanceToEnemy <= characterStats.attackRange + 0.05f && 
+                        (characterStats.heightAttack || heightDifference <= 0.1f)) // Solo permitir ataques si la diferencia de altura es mínima
                     {
                         if (characterStats.attackType == AttackType.Normal)
                         {
-                            Debug.Log($"Realizando ataque normal a {enemy.name}");
                             CombatManager.Instance.Attack(this, enemy);
                         }
                         else if (characterStats.attackType == AttackType.Pierce)
                         {
-                            Debug.Log($"Realizando ataque de penetración a {enemy.name}");
                             CombatManager.Instance.AttackWithPierce(this, enemy);
                         }
                         EndTurn();
                     }
-                    else
-                    {
-                        Debug.Log($"Enemigo {enemy.name} fuera de rango");
-                    }
-                }
-                else
-                {
-                    Debug.Log("Componente TacticsMove no encontrado en el objetivo impactado");
                 }
             }
-            else
-            {
-                Debug.Log("Impacto en objeto que no es NPC");
-            }
-        }
-        else
-        {
-            Debug.Log("Raycast no impactó en ningún objeto");
         }
     }
 }
@@ -209,10 +189,14 @@ public class PlayerMove : TacticsMove
 
     private int GetCharacterIndex()
     {
-        if (characterStats.name == "Paco") return 0;
-        if (characterStats.name == "Loli") return 1;
-        if (characterStats.name == "Avelino") return 2;
-        if (characterStats.name == "Pepa") return 3;
+        if (characterStats.name == "Nekomaru") return 0;
+        if (characterStats.name == "Aya") return 1;
+        if (characterStats.name == "Umi") return 2;
+        if (characterStats.name == "Gaku") return 3;
+        if (characterStats.name == "Yuniti") return 4;
+        if (characterStats.name == "Hanami") return 5;
+        if (characterStats.name == "Flynn") return 6;
+        if (characterStats.name == "Kuroka") return 7;
         
         Debug.LogWarning($"Nombre de personaje {characterStats.name} no asignado a ningún índice");
         return -1;

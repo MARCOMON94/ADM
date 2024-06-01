@@ -57,7 +57,7 @@ public class TacticsMove : MonoBehaviour
         halfHeight = GetComponent<Collider>().bounds.extents.y;
 
         // Añade este personaje al TurnManager
-        TurnManager.AddUnit(this, isPlayer);
+        TurnManager.AddUnit(this);
     }
 
     // Método para iniciar el turno del personaje

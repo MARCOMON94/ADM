@@ -39,4 +39,5 @@ public class CharacterStatsSO : ScriptableObject
     // Vida del personaje
     public int health = 100;
      public AttackType attackType = AttackType.Normal;
+     public bool heightAttack;
 }

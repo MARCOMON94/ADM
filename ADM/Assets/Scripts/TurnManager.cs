@@ -6,11 +6,9 @@ using TMPro;
 
 public class TurnManager : MonoBehaviour
 {
-    static List<TacticsMove> playerUnits = new List<TacticsMove>();
-    static List<TacticsMove> npcUnits = new List<TacticsMove>();
+    static List<TacticsMove> units = new List<TacticsMove>();
 
     static int currentIndex = 0;
-    static bool isPlayerTurn = true;
     static int currentRound = 1;
     static bool isEndingTurn = false;
 
@@ -23,7 +21,7 @@ public class TurnManager : MonoBehaviour
 
     void Update()
     {
-        if (playerUnits.Count == 0 || npcUnits.Count == 0)
+        if (units.Count == 0)
         {
             InitTurnQueue();
         }
@@ -31,13 +29,11 @@ public class TurnManager : MonoBehaviour
 
     static void InitTurnQueue()
     {
-        playerUnits = playerUnits.OrderByDescending(unit => unit.characterStats.speed).ToList();
-        npcUnits = npcUnits.OrderByDescending(unit => unit.characterStats.speed).ToList();
+        units = units.OrderByDescending(unit => unit.characterStats.speed).ToList();
         
         currentIndex = 0;
-        isPlayerTurn = true;
 
-        if (playerUnits.Count > 0)
+        if (units.Count > 0)
         {
             StartTurn(); // Inicia el primer turno
         }
@@ -45,101 +41,71 @@ public class TurnManager : MonoBehaviour
 
     public static void StartTurn()
     {
+        Debug.Log("StartTurn called");
         isEndingTurn = false;
 
-        if (isPlayerTurn && playerUnits.Count > 0)
+        if (units.Count > 0)
         {
-            UIManager.Instance.ShowPlayerControls(); // Muestra los controles del jugador
-            playerUnits[currentIndex].BeginTurn();
-            UIManager.Instance.SetCurrentPlayerMove(playerUnits[currentIndex] as PlayerMove);
-        }
-        else if (!isPlayerTurn && npcUnits.Count > 0)
-        {
-            UIManager.Instance.HidePlayerControls(); // Oculta los controles del jugador
-            npcUnits[currentIndex].BeginTurn();
+            TacticsMove currentUnit = units[currentIndex];
+            Debug.Log($"{currentUnit.characterStats.name}'s turn with speed {currentUnit.characterStats.speed}");
+
+            if (currentUnit is PlayerMove)
+            {
+                Debug.Log("Player's turn");
+                UIManager.Instance.ShowPlayerControls(); // Muestra los controles del jugador
+                UIManager.Instance.SetCurrentPlayerMove(currentUnit as PlayerMove);
+            }
+            else
+            {
+                Debug.Log("NPC's turn");
+                UIManager.Instance.HidePlayerControls(); // Oculta los controles del jugador
+            }
+
+            currentUnit.BeginTurn();
         }
     }
 
     public static void EndTurn()
     {
+        Debug.Log("EndTurn called");
         if (isEndingTurn) return;
         isEndingTurn = true;
 
-        if (isPlayerTurn)
+        if (units.Count > 0)
         {
-            playerUnits[currentIndex].EndTurn();
+            units[currentIndex].EndTurn();
             currentIndex++;
 
-            if (currentIndex >= playerUnits.Count)
+            if (currentIndex >= units.Count)
             {
                 currentIndex = 0;
-                isPlayerTurn = false;
-            }
-        }
-        else
-        {
-            npcUnits[currentIndex].EndTurn();
-            currentIndex++;
-
-            if (currentIndex >= npcUnits.Count)
-            {
-                currentIndex = 0;
-                isPlayerTurn = true;
                 currentRound++;
                 Debug.Log("Ronda " + currentRound);
             }
-        }
 
-        isEndingTurn = false;
-        StartTurn();
-    }
-
-    public static void AddUnit(TacticsMove unit, bool isPlayer)
-    {
-        if (isPlayer)
-        {
-            playerUnits.Add(unit);
-            playerUnits = playerUnits.OrderByDescending(u => u.characterStats.speed).ToList();
-        }
-        else
-        {
-            npcUnits.Add(unit);
-            npcUnits = npcUnits.OrderByDescending(u => u.characterStats.speed).ToList();
+            isEndingTurn = false;
+            StartTurn();
         }
     }
 
-    public static void RemoveUnit(TacticsMove unit, bool isPlayer)
+    public static void AddUnit(TacticsMove unit)
     {
-        if (isPlayer)
+        units.Add(unit);
+        units = units.OrderByDescending(u => u.characterStats.speed).ToList();
+        InitTurnQueue(); // Reinitialize turn queue after adding unit
+    }
+
+    public static void RemoveUnit(TacticsMove unit)
+    {
+        int index = units.IndexOf(unit);
+        if (index != -1)
         {
-            int index = playerUnits.IndexOf(unit);
-            if (index != -1)
+            units.RemoveAt(index);
+            if (index <= currentIndex && currentIndex > 0)
             {
-                playerUnits.RemoveAt(index);
-                if (index <= currentIndex && currentIndex > 0)
-                {
-                    currentIndex--;
-                }
-            }
-            if (UIManager.Instance.GetCurrentPlayerMove() == unit)
-            {
-                UIManager.Instance.SetCurrentPlayerMove(null);
+                currentIndex--;
             }
         }
-        else
-        {
-            int index = npcUnits.IndexOf(unit);
-            if (index != -1)
-            {
-                npcUnits.RemoveAt(index);
-                if (index <= currentIndex && currentIndex > 0)
-                {
-                    currentIndex--;
-                }
-            }
-        }
+        InitTurnQueue(); // Reinitialize turn queue after removing unit
     }
 }
-
-
-

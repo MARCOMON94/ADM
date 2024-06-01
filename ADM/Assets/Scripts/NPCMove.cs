@@ -75,45 +75,47 @@ public class NPCMove : TacticsMove
     }
 
     void AttackTarget()
-{
-    if (target != null)
     {
-        TacticsMove targetMove = target.GetComponent<TacticsMove>();
-        if (targetMove != null)
+        if (target != null)
         {
-            float distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
-                                                      new Vector3(targetMove.transform.position.x, 0, targetMove.transform.position.z));
-            Debug.Log($"Distancia al objetivo {targetMove.name}: {distanceToTarget}, rango de ataque: {characterStats.attackRange}");
-
-            if (distanceToTarget <= characterStats.attackRange + 0.05f) // Añadimos un pequeño margen para problemas de precisión
+            TacticsMove targetMove = target.GetComponent<TacticsMove>();
+            if (targetMove != null)
             {
-                if (characterStats.attackType == AttackType.Normal)
+                float distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
+                                                          new Vector3(targetMove.transform.position.x, 0, targetMove.transform.position.z));
+                float heightDifference = Mathf.Abs(targetMove.transform.position.y - transform.position.y);
+
+                if (distanceToTarget <= characterStats.attackRange + 0.05f && 
+                    (characterStats.heightAttack || heightDifference <= characterStats.jumpHeight))
                 {
-                    Debug.Log($"Realizando ataque normal a {targetMove.name}");
-                    CombatManager.Instance.Attack(this, targetMove);
+                    if (characterStats.attackType == AttackType.Normal)
+                    {
+                        CombatManager.Instance.Attack(this, targetMove);
+                    }
+                    else if (characterStats.attackType == AttackType.Pierce)
+                    {
+                        CombatManager.Instance.AttackWithPierce(this, targetMove);
+                    }
+                    EndTurn();
                 }
-                else if (characterStats.attackType == AttackType.Pierce)
+                else
                 {
-                    Debug.Log($"Realizando ataque de penetración a {targetMove.name}");
-                    CombatManager.Instance.AttackWithPierce(this, targetMove);
+                    Debug.Log($"Target {targetMove.name} out of attack range or height difference is too great.");
+                    EndTurn(); // Asegurarse de que el turno termine si no se puede atacar
                 }
-                EndTurn();
             }
             else
             {
-                Debug.Log($"Objetivo {targetMove.name} fuera de rango");
+                Debug.Log("TacticsMove component not found on target.");
+                EndTurn();
             }
         }
         else
         {
-            Debug.Log("Componente TacticsMove no encontrado en el objetivo");
+            Debug.Log("No target found to attack.");
+            EndTurn();
         }
     }
-    else
-    {
-        Debug.Log("No se ha encontrado objetivo para atacar");
-    }
-}
 
 
 
@@ -138,10 +140,14 @@ public class NPCMove : TacticsMove
 
     private int GetCharacterIndex()
     {
-        if (characterStats.name == "Avelino") return 2;
-        if (characterStats.name == "Pepa") return 3;
-        if (characterStats.name == "Paco") return 0;
-        if (characterStats.name == "Loli") return 1;
+        if (characterStats.name == "Nekomaru") return 0;
+        if (characterStats.name == "Aya") return 1;
+        if (characterStats.name == "Umi") return 2;
+        if (characterStats.name == "Gaku") return 3;
+        if (characterStats.name == "Yuniti") return 4;
+        if (characterStats.name == "Hanami") return 5;
+        if (characterStats.name == "Flynn") return 6;
+        if (characterStats.name == "Kuroka") return 7;
         
         Debug.LogWarning($"Nombre de personaje {characterStats.name} no asignado a ningún índice");
         return -1;
