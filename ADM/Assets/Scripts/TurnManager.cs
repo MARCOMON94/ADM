@@ -13,11 +13,12 @@ public class TurnManager : MonoBehaviour
     static int currentRound = 1;
     static bool isEndingTurn = false;
 
-    public UIManager uiManager; // Referencia al UIManager
+    public UIManager uiManager;
 
     void Start()
     {
-        InitTurnQueue(); // Inicializa la cola de turnos al inicio
+        InitTurnQueue();
+        UIManager.Instance.UpdateRoundText(currentRound);
     }
 
     void Update()
@@ -31,13 +32,13 @@ public class TurnManager : MonoBehaviour
     static void InitTurnQueue()
     {
         units = units.OrderByDescending(unit => unit.characterStats.speed).ToList();
-        
+
         currentIndex = 0;
         isPlayerTurn = true;
 
         if (units.Count > 0)
         {
-            StartTurn(); // Inicia el primer turno
+            StartTurn();
         }
     }
 
@@ -47,15 +48,16 @@ public class TurnManager : MonoBehaviour
 
         if (units[currentIndex] is PlayerMove)
         {
-            UIManager.Instance.ShowPlayerControls(); // Muestra los controles del jugador
+            UIManager.Instance.ShowPlayerControls();
             UIManager.Instance.SetCurrentPlayerMove(units[currentIndex] as PlayerMove);
         }
         else
         {
-            UIManager.Instance.HidePlayerControls(); // Oculta los controles del jugador
+            UIManager.Instance.HidePlayerControls();
         }
 
         units[currentIndex].BeginTurn();
+        UIManager.Instance.UpdateTurnFrame(currentIndex); // Actualizamos el marco aquí
     }
 
     public static void EndTurn()
@@ -71,6 +73,7 @@ public class TurnManager : MonoBehaviour
             currentIndex = 0;
             currentRound++;
             Debug.Log("Ronda " + currentRound);
+            UIManager.Instance.UpdateRoundText(currentRound);
         }
 
         isEndingTurn = false;

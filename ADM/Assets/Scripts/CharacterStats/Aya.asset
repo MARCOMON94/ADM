@@ -17,8 +17,10 @@ MonoBehaviour:
   jumpHeight: 2
   moveSpeed: 2
   jumpVelocity: 4.5
-  speed: 95
+  speed: 50
   basicDamage: 10
   attackRange: 1
-  health: 0
+  health: -30
   attackType: 0
+  heightAttack: 0
+  canFly: 0

@@ -60,17 +60,18 @@ public class Tile : MonoBehaviour
     }
 
     // Encuentra los vecinos del tile que son transitables
-    public void FindNeighbors(float jumpHeight, Tile target, bool ignoreOccupied, bool canFly)
+    public void FindNeighbors(float jumpHeight, Tile target, bool ignoreOccupied)
 {
     Reset();
 
-    CheckTile(Vector3.forward, jumpHeight, target, ignoreOccupied, canFly);
-    CheckTile(-Vector3.forward, jumpHeight, target, ignoreOccupied, canFly);
-    CheckTile(Vector3.right, jumpHeight, target, ignoreOccupied, canFly);
-    CheckTile(-Vector3.right, jumpHeight, target, ignoreOccupied, canFly);
+    CheckTile(Vector3.forward, jumpHeight, target, ignoreOccupied);
+    CheckTile(-Vector3.forward, jumpHeight, target, ignoreOccupied);
+    CheckTile(Vector3.right, jumpHeight, target, ignoreOccupied);
+    CheckTile(-Vector3.right, jumpHeight, target, ignoreOccupied);
 }
 
-public void CheckTile(Vector3 direction, float jumpHeight, Tile target, bool ignoreOccupied, bool canFly)
+    // Revisa si hay un tile transitable en la dirección dada
+    public void CheckTile(Vector3 direction, float jumpHeight, Tile target, bool ignoreOccupied)
 {
     Vector3 halfExtents = new Vector3(0.25f, (1 + jumpHeight) / 2.0f, 0.25f);
     Collider[] colliders = Physics.OverlapBox(transform.position + direction, halfExtents);
@@ -81,15 +82,21 @@ public void CheckTile(Vector3 direction, float jumpHeight, Tile target, bool ign
         if (tile != null && tile.walkable)
         {
             RaycastHit hit;
+            // Modificar la condición para ignorar la ocupación si ignoreOccupied es true
             if (ignoreOccupied || !Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1) || (tile == target))
             {
-                if (canFly || Mathf.Abs(tile.transform.position.y - transform.position.y) <= jumpHeight)
-                {
-                    adjacencyList.Add(tile);
-                }
+                adjacencyList.Add(tile);
+                Debug.Log($"Tile {tile.name} es transitable y se ha añadido a la lista de adyacencia.");
             }
+            else
+            {
+                Debug.Log($"Tile {tile.name} no es transitable porque está ocupado.");
+            }
+        }
+        else if (tile != null)
+        {
+            Debug.Log($"Tile {tile.name} no es transitable porque walkable es falso.");
         }
     }
 }
-
 }

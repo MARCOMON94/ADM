@@ -111,11 +111,13 @@ public class TacticsMove : MonoBehaviour
     foreach (GameObject tile in tiles)
     {
         Tile t = tile.GetComponent<Tile>();
-        t.FindNeighbors(jumpHeight, target, ignoreOccupied, characterStats.canFly); // Pasar canFly
+        t.FindNeighbors(jumpHeight, target, ignoreOccupied); // Pasar el parámetro ignoreOccupied
     }
 }
 
-public void FindSelectableTiles(bool ignoreOccupied = false)
+
+    // Encuentra los tiles seleccionables dentro del rango de movimiento
+    public void FindSelectableTiles(bool ignoreOccupied = false)
 {
     ComputeAdjacencyLists(characterStats.jumpHeight, null, ignoreOccupied);
     GetCurrentTile();
@@ -139,13 +141,9 @@ public void FindSelectableTiles(bool ignoreOccupied = false)
                     tile.parent = t;
                     tile.visited = true;
 
-                    int newDistance = t.distance + 1;
-                    if (!characterStats.canFly)
-                    {
-                        float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
-                        int additionalCost = (int)(heightDifference * 2);
-                        newDistance += additionalCost;
-                    }
+                    float heightDifference = Mathf.Abs(tile.transform.position.y - t.transform.position.y);
+                    int additionalCost = (int)(heightDifference * 2);
+                    int newDistance = t.distance + 1 + additionalCost;
 
                     if (newDistance <= characterStats.move)
                     {
@@ -157,7 +155,6 @@ public void FindSelectableTiles(bool ignoreOccupied = false)
         }
     }
 }
-
 
 
     // Mueve al personaje hacia un tile específico

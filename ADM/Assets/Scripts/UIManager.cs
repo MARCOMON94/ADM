@@ -6,23 +6,21 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    // Instancia única del UIManager
     public static UIManager Instance;
 
-    // Referencias a los botones del UI
     public Button moveButton;
     public Button attackButton;
     public Button passTurnButton;
 
-    // Referencias a los textos de salud de los personajes
     public TextMeshProUGUI[] characterHealthTexts;
-
-    // Referencia al movimiento del jugador actual
     private PlayerMove currentPlayerMove;
+    public TextMeshProUGUI roundText;
+
+    
+    public Image[] characterFrames;
 
     void Awake()
     {
-        // Implementación del patrón Singleton
         if (Instance == null)
         {
             Instance = this;
@@ -35,26 +33,22 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        // Añade listeners a los botones para que llamen a los métodos correspondientes al hacer clic
         moveButton.onClick.AddListener(OnMoveButtonClicked);
         attackButton.onClick.AddListener(OnAttackButtonClicked);
         passTurnButton.onClick.AddListener(OnPassTurnButtonClicked);
-        HidePlayerControls(); // Desactiva los controles del jugador al inicio
+        HidePlayerControls(); 
     }
 
-    // Establece el movimiento del jugador actual
     public void SetCurrentPlayerMove(PlayerMove playerMove)
     {
         currentPlayerMove = playerMove;
     }
 
-    // Obtiene el movimiento del jugador actual
     public PlayerMove GetCurrentPlayerMove()
     {
         return currentPlayerMove;
     }
 
-    // Método llamado al hacer clic en el botón de mover
     void OnMoveButtonClicked()
     {
         if (currentPlayerMove != null)
@@ -64,7 +58,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // Activa o desactiva los controles del jugador
     public void TogglePlayerControls(bool enable)
     {
         moveButton.interactable = enable;
@@ -72,7 +65,6 @@ public class UIManager : MonoBehaviour
         passTurnButton.interactable = enable;
     }
 
-    // Método llamado al hacer clic en el botón de atacar
     void OnAttackButtonClicked()
     {
         if (currentPlayerMove != null)
@@ -86,7 +78,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // Método llamado al hacer clic en el botón de pasar turno
     void OnPassTurnButtonClicked()
     {
         if (currentPlayerMove != null)
@@ -95,7 +86,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // Método para actualizar la salud de un personaje
     public void UpdateCharacterHealth(int characterIndex, int health)
     {
         if (characterIndex >= 0 && characterIndex < characterHealthTexts.Length)
@@ -104,7 +94,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // Método para mostrar los controles del jugador
     public void ShowPlayerControls()
     {
         moveButton.gameObject.SetActive(true);
@@ -112,12 +101,31 @@ public class UIManager : MonoBehaviour
         passTurnButton.gameObject.SetActive(true);
     }
 
-    // Método para ocultar los controles del jugador
     public void HidePlayerControls()
     {
         moveButton.gameObject.SetActive(false);
         attackButton.gameObject.SetActive(false);
         passTurnButton.gameObject.SetActive(false);
     }
-    
+
+    // Añadimos un método para actualizar los marcos
+    public void UpdateTurnFrame(int characterIndex)
+    {
+        for (int i = 0; i < characterFrames.Length; i++)
+        {
+            if (i == characterIndex)
+            {
+                characterFrames[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                characterFrames[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void UpdateRoundText(int round)
+    {
+        roundText.text = "" + round;
+    }
 }

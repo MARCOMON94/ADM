@@ -75,47 +75,66 @@ public class NPCMove : TacticsMove
     }
 
     void AttackTarget()
+{
+    if (target != null)
     {
-        if (target != null)
+        TacticsMove targetMove = target.GetComponent<TacticsMove>();
+        if (targetMove != null)
         {
-            TacticsMove targetMove = target.GetComponent<TacticsMove>();
-            if (targetMove != null)
-            {
-                float distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
-                                                          new Vector3(targetMove.transform.position.x, 0, targetMove.transform.position.z));
-                float heightDifference = Mathf.Abs(targetMove.transform.position.y - transform.position.y);
+            float distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
+                                                      new Vector3(targetMove.transform.position.x, 0, targetMove.transform.position.z));
+            float heightDifference = Mathf.Abs(targetMove.transform.position.y - transform.position.y);
 
-                if (distanceToTarget <= characterStats.attackRange + 0.05f && 
-                    (characterStats.heightAttack || heightDifference <= characterStats.jumpHeight))
+            if (distanceToTarget <= characterStats.attackRange + 0.05f && 
+                (characterStats.heightAttack || heightDifference <= characterStats.jumpHeight))
+            {
+                if (characterStats.attackType == AttackType.Normal)
                 {
-                    if (characterStats.attackType == AttackType.Normal)
-                    {
-                        CombatManager.Instance.Attack(this, targetMove);
-                    }
-                    else if (characterStats.attackType == AttackType.Pierce)
-                    {
-                        CombatManager.Instance.AttackWithPierce(this, targetMove);
-                    }
-                    EndTurn();
+                    CombatManager.Instance.Attack(this, targetMove);
                 }
-                else
+                else if (characterStats.attackType == AttackType.Pierce)
                 {
-                    Debug.Log($"Target {targetMove.name} out of attack range or height difference is too great.");
-                    EndTurn(); // Asegurarse de que el turno termine si no se puede atacar
+                    CombatManager.Instance.AttackWithPierce(this, targetMove);
                 }
+
+                // Ajustar la rotación del NPC después de atacar
+                AdjustRotation(this);
+                EndTurn();
             }
             else
             {
-                Debug.Log("TacticsMove component not found on target.");
-                EndTurn();
+                Debug.Log($"Target {targetMove.name} out of attack range or height difference is too great.");
+                EndTurn(); // Asegurarse de que el turno termine si no se puede atacar
             }
         }
         else
         {
-            Debug.Log("No target found to attack.");
+            Debug.Log("TacticsMove component not found on target.");
             EndTurn();
         }
     }
+    else
+    {
+        Debug.Log("No target found to attack.");
+        EndTurn();
+    }
+}
+
+private void AdjustRotation(TacticsMove unit)
+{
+    Vector3 direction = unit.transform.forward;
+    if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+    {
+        direction.z = 0;
+        direction.x = Mathf.Sign(direction.x);
+    }
+    else
+    {
+        direction.x = 0;
+        direction.z = Mathf.Sign(direction.z);
+    }
+    unit.transform.rotation = Quaternion.LookRotation(direction);
+}
 
 
 
