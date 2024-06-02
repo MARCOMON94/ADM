@@ -9,6 +9,7 @@ public class TurnManager : MonoBehaviour
     static List<TacticsMove> units = new List<TacticsMove>();
 
     static int currentIndex = 0;
+    static bool isPlayerTurn = true;
     static int currentRound = 1;
     static bool isEndingTurn = false;
 
@@ -32,6 +33,7 @@ public class TurnManager : MonoBehaviour
         units = units.OrderByDescending(unit => unit.characterStats.speed).ToList();
         
         currentIndex = 0;
+        isPlayerTurn = true;
 
         if (units.Count > 0)
         {
@@ -41,58 +43,44 @@ public class TurnManager : MonoBehaviour
 
     public static void StartTurn()
     {
-        Debug.Log("StartTurn called");
         isEndingTurn = false;
 
-        if (units.Count > 0)
+        if (units[currentIndex] is PlayerMove)
         {
-            TacticsMove currentUnit = units[currentIndex];
-            Debug.Log($"{currentUnit.characterStats.name}'s turn with speed {currentUnit.characterStats.speed}");
-
-            if (currentUnit is PlayerMove)
-            {
-                Debug.Log("Player's turn");
-                UIManager.Instance.ShowPlayerControls(); // Muestra los controles del jugador
-                UIManager.Instance.SetCurrentPlayerMove(currentUnit as PlayerMove);
-            }
-            else
-            {
-                Debug.Log("NPC's turn");
-                UIManager.Instance.HidePlayerControls(); // Oculta los controles del jugador
-            }
-
-            currentUnit.BeginTurn();
+            UIManager.Instance.ShowPlayerControls(); // Muestra los controles del jugador
+            UIManager.Instance.SetCurrentPlayerMove(units[currentIndex] as PlayerMove);
         }
+        else
+        {
+            UIManager.Instance.HidePlayerControls(); // Oculta los controles del jugador
+        }
+
+        units[currentIndex].BeginTurn();
     }
 
     public static void EndTurn()
     {
-        Debug.Log("EndTurn called");
         if (isEndingTurn) return;
         isEndingTurn = true;
 
-        if (units.Count > 0)
+        units[currentIndex].EndTurn();
+        currentIndex++;
+
+        if (currentIndex >= units.Count)
         {
-            units[currentIndex].EndTurn();
-            currentIndex++;
-
-            if (currentIndex >= units.Count)
-            {
-                currentIndex = 0;
-                currentRound++;
-                Debug.Log("Ronda " + currentRound);
-            }
-
-            isEndingTurn = false;
-            StartTurn();
+            currentIndex = 0;
+            currentRound++;
+            Debug.Log("Ronda " + currentRound);
         }
+
+        isEndingTurn = false;
+        StartTurn();
     }
 
     public static void AddUnit(TacticsMove unit)
     {
         units.Add(unit);
         units = units.OrderByDescending(u => u.characterStats.speed).ToList();
-        InitTurnQueue(); // Reinitialize turn queue after adding unit
     }
 
     public static void RemoveUnit(TacticsMove unit)
@@ -106,6 +94,5 @@ public class TurnManager : MonoBehaviour
                 currentIndex--;
             }
         }
-        InitTurnQueue(); // Reinitialize turn queue after removing unit
     }
 }
