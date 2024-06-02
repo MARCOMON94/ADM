@@ -20,6 +20,7 @@ MonoBehaviour:
   speed: 75
   basicDamage: 10
   attackRange: 3
-  health: 210
+  health: 0
   attackType: 0
   heightAttack: 1
+  canFly: 1
