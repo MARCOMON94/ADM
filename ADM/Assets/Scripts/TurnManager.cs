@@ -7,7 +7,6 @@ using TMPro;
 public class TurnManager : MonoBehaviour
 {
     static List<TacticsMove> units = new List<TacticsMove>();
-
     static int currentIndex = 0;
     static bool isPlayerTurn = true;
     static int currentRound = 1;
@@ -16,10 +15,17 @@ public class TurnManager : MonoBehaviour
     public UIManager uiManager;
 
     void Start()
+{
+    // Asumiendo que tienes los personajes en orden específico
+    string[] characterNames = new string[] { "Nekomaru", "Aya", "Umi", "Gaku", "Yuniti", "Hanami", "Flynn", "Kuroka" };
+    for (int i = 0; i < characterNames.Length; i++)
     {
-        InitTurnQueue();
-        UIManager.Instance.UpdateRoundText(currentRound);
+        UIManager.Instance.RegisterCharacterTurnIndicator(characterNames[i], i);
     }
+    
+    InitTurnQueue();
+    UIManager.Instance.UpdateRoundText(currentRound);
+}
 
     void Update()
     {
@@ -32,7 +38,6 @@ public class TurnManager : MonoBehaviour
     static void InitTurnQueue()
     {
         units = units.OrderByDescending(unit => unit.characterStats.speed).ToList();
-
         currentIndex = 0;
         isPlayerTurn = true;
 
@@ -57,7 +62,7 @@ public class TurnManager : MonoBehaviour
         }
 
         units[currentIndex].BeginTurn();
-        UIManager.Instance.UpdateTurnFrame(currentIndex); // Actualizamos el marco aquí
+        UIManager.Instance.UpdateTurnFrame(units[currentIndex].characterStats.name); // Actualizamos el marco aquí
     }
 
     public static void EndTurn()
@@ -92,10 +97,22 @@ public class TurnManager : MonoBehaviour
         if (index != -1)
         {
             units.RemoveAt(index);
-            if (index <= currentIndex && currentIndex > 0)
+
+            if (index < currentIndex)
             {
                 currentIndex--;
             }
+            else if (index == currentIndex)
+            {
+                currentIndex = currentIndex % units.Count; // Reset currentIndex if it is the removed one
+            }
+            
+            UIManager.Instance.DeactivateTurnFrame(unit.characterStats.name);
         }
+    }
+
+    public static List<TacticsMove> GetUnits()
+    {
+        return units;
     }
 }

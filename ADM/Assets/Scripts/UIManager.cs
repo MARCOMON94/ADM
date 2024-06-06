@@ -16,8 +16,8 @@ public class UIManager : MonoBehaviour
     private PlayerMove currentPlayerMove;
     public TextMeshProUGUI roundText;
 
-    
-    public Image[] characterFrames;
+    public Image[] turnIndicators; // Array público para asignar en el Inspector
+    private Dictionary<string, int> characterTurnIndexMap = new Dictionary<string, int>();
 
     void Awake()
     {
@@ -108,19 +108,42 @@ public class UIManager : MonoBehaviour
         passTurnButton.gameObject.SetActive(false);
     }
 
-    // Añadimos un método para actualizar los marcos
-    public void UpdateTurnFrame(int characterIndex)
+    public void UpdateTurnFrame(string characterName)
     {
-        for (int i = 0; i < characterFrames.Length; i++)
+        int characterIndex;
+        if (characterTurnIndexMap.TryGetValue(characterName, out characterIndex))
         {
-            if (i == characterIndex)
+            for (int i = 0; i < turnIndicators.Length; i++)
             {
-                characterFrames[i].gameObject.SetActive(true);
+                turnIndicators[i].gameObject.SetActive(i == characterIndex);
             }
-            else
-            {
-                characterFrames[i].gameObject.SetActive(false);
-            }
+        }
+    }
+
+    public void DeactivateTurnFrame(string characterName)
+    {
+        int characterIndex;
+        if (characterTurnIndexMap.TryGetValue(characterName, out characterIndex))
+        {
+            turnIndicators[characterIndex].gameObject.SetActive(false);
+        }
+    }
+
+    public void RegisterCharacterTurnIndicator(string characterName, int index)
+    {
+        if (!characterTurnIndexMap.ContainsKey(characterName))
+        {
+            characterTurnIndexMap.Add(characterName, index);
+        }
+    }
+
+    public void RemoveTurnIndicator(string characterName)
+    {
+        if (characterTurnIndexMap.ContainsKey(characterName))
+        {
+            int index = characterTurnIndexMap[characterName];
+            turnIndicators[index].gameObject.SetActive(false);
+            characterTurnIndexMap.Remove(characterName);
         }
     }
 
