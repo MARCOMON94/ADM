@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; // Asegúrate de incluir esto
 using UnityEngine.UI;
 using TMPro;
 
@@ -12,12 +13,18 @@ public class UIManager : MonoBehaviour
     public Button attackButton;
     public Button passTurnButton;
 
+    public Button restartButton;
+    public Button mainMenuButton;
+    public Image gameOverImage;
+
     public TextMeshProUGUI[] characterHealthTexts;
     private PlayerMove currentPlayerMove;
     public TextMeshProUGUI roundText;
 
     public Image[] turnIndicators; // Array público para asignar en el Inspector
     private Dictionary<string, int> characterTurnIndexMap = new Dictionary<string, int>();
+
+    private Dictionary<CharacterStatsSO, CharacterStatsSnapshot> initialStats;
 
     void Awake()
     {
@@ -33,11 +40,52 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
+        initialStats = new Dictionary<CharacterStatsSO, CharacterStatsSnapshot>();
+        CharacterStatsSO[] allStats = Resources.FindObjectsOfTypeAll<CharacterStatsSO>();
+        foreach (CharacterStatsSO stats in allStats)
+        {
+            initialStats[stats] = new CharacterStatsSnapshot(stats);
+        }
+
         moveButton.onClick.AddListener(OnMoveButtonClicked);
         attackButton.onClick.AddListener(OnAttackButtonClicked);
         passTurnButton.onClick.AddListener(OnPassTurnButtonClicked);
-        HidePlayerControls(); 
+        restartButton.onClick.AddListener(OnRestartButtonClicked);
+        mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
+        HidePlayerControls();
+        HideGameOverScreen();
     }
+
+    public void ShowGameOverScreen()
+    {
+        gameOverImage.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
+        mainMenuButton.gameObject.SetActive(true);
+    }
+
+    public void HideGameOverScreen()
+    {
+        gameOverImage.gameObject.SetActive(false);
+        restartButton.gameObject.SetActive(false);
+        mainMenuButton.gameObject.SetActive(false);
+    }
+
+    public void OnRestartButtonClicked()
+{
+    foreach (var entry in initialStats)
+    {
+        entry.Value.Restore(entry.Key);
+    }
+    TurnManager.ResetTurnManager(); // Asegúrate de llamar a esta función
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+}
+
+    public void OnMainMenuButtonClicked()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    // Otras funciones existentes del UIManager...
 
     public void SetCurrentPlayerMove(PlayerMove playerMove)
     {
@@ -49,7 +97,7 @@ public class UIManager : MonoBehaviour
         return currentPlayerMove;
     }
 
-    void OnMoveButtonClicked()
+    public void OnMoveButtonClicked()
     {
         if (currentPlayerMove != null)
         {
@@ -65,7 +113,7 @@ public class UIManager : MonoBehaviour
         passTurnButton.interactable = enable;
     }
 
-    void OnAttackButtonClicked()
+    public void OnAttackButtonClicked()
     {
         if (currentPlayerMove != null)
         {
@@ -78,7 +126,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void OnPassTurnButtonClicked()
+    public void OnPassTurnButtonClicked()
     {
         if (currentPlayerMove != null)
         {

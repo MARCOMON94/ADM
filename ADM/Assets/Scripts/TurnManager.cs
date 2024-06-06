@@ -15,17 +15,17 @@ public class TurnManager : MonoBehaviour
     public UIManager uiManager;
 
     void Start()
-{
-    // Asumiendo que tienes los personajes en orden específico
-    string[] characterNames = new string[] { "Nekomaru", "Aya", "Umi", "Gaku", "Yuniti", "Hanami", "Flynn", "Kuroka" };
-    for (int i = 0; i < characterNames.Length; i++)
     {
-        UIManager.Instance.RegisterCharacterTurnIndicator(characterNames[i], i);
+        // Asumiendo que tienes los personajes en orden específico
+        string[] characterNames = new string[] { "Nekomaru", "Aya", "Umi", "Gaku", "Yuniti", "Hanami", "Flynn", "Kuroka" };
+        for (int i = 0; i < characterNames.Length; i++)
+        {
+            UIManager.Instance.RegisterCharacterTurnIndicator(characterNames[i], i);
+        }
+        
+        InitTurnQueue();
+        UIManager.Instance.UpdateRoundText(currentRound);
     }
-    
-    InitTurnQueue();
-    UIManager.Instance.UpdateRoundText(currentRound);
-}
 
     void Update()
     {
@@ -66,24 +66,35 @@ public class TurnManager : MonoBehaviour
     }
 
     public static void EndTurn()
+{
+    if (isEndingTurn) return;
+    isEndingTurn = true;
+
+    if (units.Count == 0)
     {
-        if (isEndingTurn) return;
-        isEndingTurn = true;
-
-        units[currentIndex].EndTurn();
-        currentIndex++;
-
-        if (currentIndex >= units.Count)
-        {
-            currentIndex = 0;
-            currentRound++;
-            Debug.Log("Ronda " + currentRound);
-            UIManager.Instance.UpdateRoundText(currentRound);
-        }
-
         isEndingTurn = false;
+        return;
+    }
+
+    units[currentIndex].EndTurn();
+    currentIndex++;
+
+    if (currentIndex >= units.Count)
+    {
+        currentIndex = 0;
+        currentRound++;
+        Debug.Log("Ronda " + currentRound);
+        UIManager.Instance.UpdateRoundText(currentRound);
+    }
+
+    CheckGameOver();
+    isEndingTurn = false;
+
+    if (units.Count > 0)
+    {
         StartTurn();
     }
+}
 
     public static void AddUnit(TacticsMove unit)
     {
@@ -115,4 +126,22 @@ public class TurnManager : MonoBehaviour
     {
         return units;
     }
+
+    private static void CheckGameOver()
+    {
+        bool allPlayersDead = !units.Any(unit => unit is PlayerMove);
+        if (allPlayersDead)
+        {
+            UIManager.Instance.ShowGameOverScreen();
+        }
+    }
+
+   public static void ResetTurnManager()
+{
+    units.Clear();
+    currentIndex = 0;
+    isPlayerTurn = true;
+    currentRound = 1;
+    isEndingTurn = false;
+}
 }

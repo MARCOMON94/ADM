@@ -14,38 +14,46 @@ public class NPCMove : TacticsMove
     }
 
     void Update()
-{
-    Debug.DrawRay(transform.position, transform.forward);
-
-    if (!turn)
     {
-        return;
-    }
+        Debug.DrawRay(transform.position, transform.forward);
 
-    if (!moving)
-    {
-        FindNearestTarget();
-        float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
-
-        if (distanceToTarget <= characterStats.attackRange)
+        if (!turn)
         {
-            AttackTarget();
+            return;
+        }
+
+        if (!moving)
+        {
+            FindNearestTarget();
+
+            // Verificar si se encontró un objetivo
+            if (target == null)
+            {
+                Debug.Log("No target found.");
+                EndTurn();
+                return;
+            }
+
+            float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+
+            if (distanceToTarget <= characterStats.attackRange)
+            {
+                AttackTarget();
+            }
+            else
+            {
+                CalculatePath();
+                // Llama a FindSelectableTiles con ignoreOccupied = true cuando en modo ataque
+                FindSelectableTiles(true);
+                actualTargetTile.target = true;
+                MoveToTile(actualTargetTile);
+            }
         }
         else
         {
-            CalculatePath();
-            // Llama a FindSelectableTiles con ignoreOccupied = true cuando en modo ataque
-            FindSelectableTiles(true);
-            actualTargetTile.target = true;
-            MoveToTile(actualTargetTile);
+            Move();
         }
     }
-    else
-    {
-        Move();
-    }
-}
-
 
     void CalculatePath()
     {
@@ -75,71 +83,66 @@ public class NPCMove : TacticsMove
     }
 
     void AttackTarget()
-{
-    if (target != null)
     {
-        TacticsMove targetMove = target.GetComponent<TacticsMove>();
-        if (targetMove != null)
+        if (target != null)
         {
-            float distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
-                                                      new Vector3(targetMove.transform.position.x, 0, targetMove.transform.position.z));
-            float heightDifference = Mathf.Abs(targetMove.transform.position.y - transform.position.y);
-
-            if (distanceToTarget <= characterStats.attackRange + 0.05f && 
-                (characterStats.heightAttack || heightDifference <= characterStats.jumpHeight))
+            TacticsMove targetMove = target.GetComponent<TacticsMove>();
+            if (targetMove != null)
             {
-                if (characterStats.attackType == AttackType.Normal)
-                {
-                    CombatManager.Instance.Attack(this, targetMove);
-                }
-                else if (characterStats.attackType == AttackType.Pierce)
-                {
-                    CombatManager.Instance.AttackWithPierce(this, targetMove);
-                }
+                float distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
+                                                          new Vector3(targetMove.transform.position.x, 0, targetMove.transform.position.z));
+                float heightDifference = Mathf.Abs(targetMove.transform.position.y - transform.position.y);
 
-                // Ajustar la rotación del NPC después de atacar
-                AdjustRotation(this);
-                EndTurn();
+                if (distanceToTarget <= characterStats.attackRange + 0.05f && 
+                    (characterStats.heightAttack || heightDifference <= characterStats.jumpHeight))
+                {
+                    if (characterStats.attackType == AttackType.Normal)
+                    {
+                        CombatManager.Instance.Attack(this, targetMove);
+                    }
+                    else if (characterStats.attackType == AttackType.Pierce)
+                    {
+                        CombatManager.Instance.AttackWithPierce(this, targetMove);
+                    }
+
+                    // Ajustar la rotación del NPC después de atacar
+                    AdjustRotation(this);
+                    EndTurn();
+                }
+                else
+                {
+                    Debug.Log($"Target {targetMove.name} out of attack range or height difference is too great.");
+                    EndTurn(); // Asegurarse de que el turno termine si no se puede atacar
+                }
             }
             else
             {
-                Debug.Log($"Target {targetMove.name} out of attack range or height difference is too great.");
-                EndTurn(); // Asegurarse de que el turno termine si no se puede atacar
+                Debug.Log("TacticsMove component not found on target.");
+                EndTurn();
             }
         }
         else
         {
-            Debug.Log("TacticsMove component not found on target.");
+            Debug.Log("No target found to attack.");
             EndTurn();
         }
     }
-    else
+
+    private void AdjustRotation(TacticsMove unit)
     {
-        Debug.Log("No target found to attack.");
-        EndTurn();
+        Vector3 direction = unit.transform.forward;
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+        {
+            direction.z = 0;
+            direction.x = Mathf.Sign(direction.x);
+        }
+        else
+        {
+            direction.x = 0;
+            direction.z = Mathf.Sign(direction.z);
+        }
+        unit.transform.rotation = Quaternion.LookRotation(direction);
     }
-}
-
-private void AdjustRotation(TacticsMove unit)
-{
-    Vector3 direction = unit.transform.forward;
-    if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
-    {
-        direction.z = 0;
-        direction.x = Mathf.Sign(direction.x);
-    }
-    else
-    {
-        direction.x = 0;
-        direction.z = Mathf.Sign(direction.z);
-    }
-    unit.transform.rotation = Quaternion.LookRotation(direction);
-}
-
-
-
-
-
 
     public override void EndTurn()
     {
@@ -148,14 +151,14 @@ private void AdjustRotation(TacticsMove unit)
     }
 
     public override void UpdateHealthUI()
-{
-    int characterIndex = GetCharacterIndex();
-    if (characterIndex != -1)
     {
-        Debug.Log($"Actualizando salud de {characterStats.name} en el índice {characterIndex} con salud {characterStats.health}");
-        UIManager.Instance.UpdateCharacterHealth(characterIndex, characterStats.health);
+        int characterIndex = GetCharacterIndex();
+        if (characterIndex != -1)
+        {
+            Debug.Log($"Actualizando salud de {characterStats.name} en el índice {characterIndex} con salud {characterStats.health}");
+            UIManager.Instance.UpdateCharacterHealth(characterIndex, characterStats.health);
+        }
     }
-}
 
     private int GetCharacterIndex()
     {
@@ -167,7 +170,7 @@ private void AdjustRotation(TacticsMove unit)
         if (characterStats.name == "Hanami") return 5;
         if (characterStats.name == "Flynn") return 6;
         if (characterStats.name == "Kuroka") return 7;
-        
+
         Debug.LogWarning($"Nombre de personaje {characterStats.name} no asignado a ningún índice");
         return -1;
     }
