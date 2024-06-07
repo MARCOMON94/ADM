@@ -9,12 +9,21 @@ public class NPCMove : TacticsMove
 
     void Start()
     {
+        /* 
+        Inicializa el NPC, configurando su estado inicial y actualizando
+        su UI de salud.
+        */
         Init(false);
         UpdateHealthUI();
     }
 
     void Update()
     {
+        /* 
+        En cada frame, se dibuja un rayo en la dirección en la que está
+        mirando el NPC. Si es su turno, busca el objetivo más cercano y
+        decide si atacar o moverse hacia él.
+        */
         Debug.DrawRay(transform.position, transform.forward);
 
         if (!turn)
@@ -26,10 +35,8 @@ public class NPCMove : TacticsMove
         {
             FindNearestTarget();
 
-            // Verificar si se encontró un objetivo
             if (target == null)
             {
-                Debug.Log("No target found.");
                 EndTurn();
                 return;
             }
@@ -43,7 +50,6 @@ public class NPCMove : TacticsMove
             else
             {
                 CalculatePath();
-                // Llama a FindSelectableTiles con ignoreOccupied = true cuando en modo ataque
                 FindSelectableTiles(true);
                 actualTargetTile.target = true;
                 MoveToTile(actualTargetTile);
@@ -57,12 +63,19 @@ public class NPCMove : TacticsMove
 
     void CalculatePath()
     {
+        /* 
+        Calcula el camino hacia el objetivo utilizando el método FindPath
+        de la clase base.
+        */
         Tile targetTile = GetTargetTile(target);
         FindPath(targetTile);
     }
 
     void FindNearestTarget()
     {
+        /* 
+        Encuentra el objetivo más cercano al NPC.
+        */
         GameObject[] targets = GameObject.FindGameObjectsWithTag("Player");
 
         GameObject nearest = null;
@@ -84,6 +97,10 @@ public class NPCMove : TacticsMove
 
     void AttackTarget()
     {
+        /* 
+        Maneja el ataque del NPC a su objetivo. Si el objetivo está en
+        rango de ataque, realiza el ataque y finaliza el turno.
+        */
         if (target != null)
         {
             TacticsMove targetMove = target.GetComponent<TacticsMove>();
@@ -105,31 +122,31 @@ public class NPCMove : TacticsMove
                         CombatManager.Instance.AttackWithPierce(this, targetMove);
                     }
 
-                    // Ajustar la rotación del NPC después de atacar
                     AdjustRotation(this);
                     EndTurn();
                 }
                 else
                 {
-                    Debug.Log($"Target {targetMove.name} out of attack range or height difference is too great.");
-                    EndTurn(); // Asegurarse de que el turno termine si no se puede atacar
+                    EndTurn();
                 }
             }
             else
             {
-                Debug.Log("TacticsMove component not found on target.");
                 EndTurn();
             }
         }
         else
         {
-            Debug.Log("No target found to attack.");
             EndTurn();
         }
     }
 
     private void AdjustRotation(TacticsMove unit)
     {
+        /* 
+        Ajusta la rotación del NPC para que mire en una dirección recta
+        (norte, sur, este, oeste).
+        */
         Vector3 direction = unit.transform.forward;
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
         {
@@ -146,22 +163,30 @@ public class NPCMove : TacticsMove
 
     public override void EndTurn()
     {
+        /* 
+        Finaliza el turno del NPC y notifica al TurnManager.
+        */
         base.EndTurn();
         TurnManager.EndTurn();
     }
 
     public override void UpdateHealthUI()
     {
+        /* 
+        Actualiza la UI de salud del NPC.
+        */
         int characterIndex = GetCharacterIndex();
         if (characterIndex != -1)
         {
-            Debug.Log($"Actualizando salud de {characterStats.name} en el índice {characterIndex} con salud {characterStats.health}");
             UIManager.Instance.UpdateCharacterHealth(characterIndex, characterStats.health);
         }
     }
 
     private int GetCharacterIndex()
     {
+        /* 
+        Devuelve el índice del personaje basado en su nombre.
+        */
         if (characterStats.name == "Nekomaru") return 0;
         if (characterStats.name == "Aya") return 1;
         if (characterStats.name == "Umi") return 2;
@@ -171,7 +196,6 @@ public class NPCMove : TacticsMove
         if (characterStats.name == "Flynn") return 6;
         if (characterStats.name == "Kuroka") return 7;
 
-        Debug.LogWarning($"Nombre de personaje {characterStats.name} no asignado a ningún índice");
         return -1;
     }
 }

@@ -11,12 +11,20 @@ public class PlayerMove : TacticsMove
 
     void Start()
     {
+        /* 
+        Inicializa el movimiento del jugador, configurando su estado inicial 
+        y actualizando su UI de salud.
+        */
         Init(true);
         UpdateHealthUI();
     }
 
     void Update()
     {
+        /* 
+        En cada frame, si es el turno del jugador, maneja la lógica de
+        movimiento o ataque dependiendo de la acción seleccionada.
+        */
         if (!turn)
         {
             return;
@@ -48,18 +56,27 @@ public class PlayerMove : TacticsMove
 
     public void SetActionMove()
     {
+        /* 
+        Establece la acción actual del jugador como movimiento.
+        */
         currentAction = PlayerAction.Move;
     }
 
     public void SetActionAttack()
-{
-    currentAction = PlayerAction.Attack;
-    // Llama a FindSelectableTiles con ignoreOccupied = true
-    FindSelectableTiles(true);
-}
+    {
+        /* 
+        Establece la acción actual del jugador como ataque y encuentra
+        los tiles seleccionables.
+        */
+        currentAction = PlayerAction.Attack;
+        FindSelectableTiles(true);
+    }
 
     void CheckMouseMovement()
     {
+        /* 
+        Maneja el movimiento del jugador basado en la entrada del ratón.
+        */
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -83,112 +100,127 @@ public class PlayerMove : TacticsMove
     }
 
     void ShowAttackableEnemies()
-{
-    GameObject[] enemies = GameObject.FindGameObjectsWithTag("NPC");
-    foreach (GameObject enemy in enemies)
     {
-        TacticsMove enemyMove = enemy.GetComponent<TacticsMove>();
-        Tile enemyTile = GetTargetTile(enemy);
-
-        float heightDifference = Mathf.Abs(enemy.transform.position.y - transform.position.y);
-
-        // Añadimos la verificación de heightAttack aquí
-        if (enemyTile != null && selectableTiles.Contains(enemyTile) && 
-            (characterStats.heightAttack || heightDifference <= 0.1f)) // Solo mostrar si la diferencia de altura es mínima
+        /* 
+        Muestra a los enemigos que están dentro del rango de ataque.
+        */
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("NPC");
+        foreach (GameObject enemy in enemies)
         {
-            Renderer renderer = enemy.GetComponent<Renderer>();
-            if (renderer != null)
+            TacticsMove enemyMove = enemy.GetComponent<TacticsMove>();
+            Tile enemyTile = GetTargetTile(enemy);
+
+            float heightDifference = Mathf.Abs(enemy.transform.position.y - transform.position.y);
+
+            if (enemyTile != null && selectableTiles.Contains(enemyTile) && 
+                (characterStats.heightAttack || heightDifference <= 0.1f))
             {
-                renderer.material.color = Color.red;
+                Renderer renderer = enemy.GetComponent<Renderer>();
+                if (renderer != null)
+                {
+                    renderer.material.color = Color.red;
+                }
             }
         }
     }
-}
+
     public void CheckMouseAttack()
-{
-    if (Input.GetMouseButtonDown(0))
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
+        /* 
+        Maneja el ataque del jugador basado en la entrada del ratón.
+        */
+        if (Input.GetMouseButtonDown(0))
         {
-            if (hit.collider.tag == "NPC")
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
             {
-                TacticsMove enemy = hit.collider.GetComponent<TacticsMove>();
-
-                if (enemy != null)
+                if (hit.collider.tag == "NPC")
                 {
-                    float distanceToEnemy = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
-                                                            new Vector3(enemy.transform.position.x, 0, enemy.transform.position.z));
-                    float heightDifference = Mathf.Abs(enemy.transform.position.y - transform.position.y);
+                    TacticsMove enemy = hit.collider.GetComponent<TacticsMove>();
 
-                    // Añadimos la verificación de heightAttack aquí
-                    if (distanceToEnemy <= characterStats.attackRange + 0.05f && 
-                        (characterStats.heightAttack || heightDifference <= 0.1f)) // Solo permitir ataques si la diferencia de altura es mínima
+                    if (enemy != null)
                     {
-                        if (characterStats.attackType == AttackType.Normal)
+                        float distanceToEnemy = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
+                                                                new Vector3(enemy.transform.position.x, 0, enemy.transform.position.z));
+                        float heightDifference = Mathf.Abs(enemy.transform.position.y - transform.position.y);
+
+                        if (distanceToEnemy <= characterStats.attackRange + 0.05f && 
+                            (characterStats.heightAttack || heightDifference <= 0.1f))
                         {
-                            CombatManager.Instance.Attack(this, enemy);
+                            if (characterStats.attackType == AttackType.Normal)
+                            {
+                                CombatManager.Instance.Attack(this, enemy);
+                            }
+                            else if (characterStats.attackType == AttackType.Pierce)
+                            {
+                                CombatManager.Instance.AttackWithPierce(this, enemy);
+                            }
+                            EndTurn();
                         }
-                        else if (characterStats.attackType == AttackType.Pierce)
-                        {
-                            CombatManager.Instance.AttackWithPierce(this, enemy);
-                        }
-                        EndTurn();
                     }
                 }
             }
         }
     }
-}
-
 
     public void EndTurn()
-{
-    currentAction = PlayerAction.None;
-    hasMoved = false;
-
-    GameObject[] enemies = GameObject.FindGameObjectsWithTag("NPC");
-    foreach (GameObject enemy in enemies)
     {
-        Renderer renderer = enemy.GetComponent<Renderer>();
-        if (renderer != null)
+        /* 
+        Finaliza el turno del jugador y restablece los estados y colores
+        de los enemigos y tiles.
+        */
+        currentAction = PlayerAction.None;
+        hasMoved = false;
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("NPC");
+        foreach (GameObject enemy in enemies)
         {
-            renderer.material.color = Color.white;
+            Renderer renderer = enemy.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.material.color = Color.white;
+            }
         }
-    }
 
-    foreach (Tile tile in selectableTiles)
-    {
-        tile.selectable = false;
-        tile.GetComponent<Renderer>().material.color = Color.white;
-    }
-    selectableTiles.Clear();
+        foreach (Tile tile in selectableTiles)
+        {
+            tile.selectable = false;
+            tile.GetComponent<Renderer>().material.color = Color.white;
+        }
+        selectableTiles.Clear();
 
-    TurnManager.EndTurn();
-}
+        TurnManager.EndTurn();
+    }
 
     public void BeginTurn()
     {
+        /* 
+        Inicia el turno del jugador, restableciendo los estados necesarios.
+        */
         turn = true;
         currentAction = PlayerAction.None;
         hasMoved = false;
     }
 
     public override void UpdateHealthUI()
-{
-    int characterIndex = GetCharacterIndex();
-    if (characterIndex != -1)
     {
-        Debug.Log($"Actualizando salud de {characterStats.name} en el índice {characterIndex} con salud {characterStats.health}");
-        UIManager.Instance.UpdateCharacterHealth(characterIndex, characterStats.health);
+        /* 
+        Actualiza la UI de salud del jugador.
+        */
+        int characterIndex = GetCharacterIndex();
+        if (characterIndex != -1)
+        {
+            UIManager.Instance.UpdateCharacterHealth(characterIndex, characterStats.health);
+        }
     }
-}
-
 
     private int GetCharacterIndex()
     {
+        /* 
+        Devuelve el índice del personaje basado en su nombre.
+        */
         if (characterStats.name == "Nekomaru") return 0;
         if (characterStats.name == "Aya") return 1;
         if (characterStats.name == "Umi") return 2;
@@ -198,7 +230,6 @@ public class PlayerMove : TacticsMove
         if (characterStats.name == "Flynn") return 6;
         if (characterStats.name == "Kuroka") return 7;
         
-        Debug.LogWarning($"Nombre de personaje {characterStats.name} no asignado a ningún índice");
         return -1;
     }
 }

@@ -10,6 +10,10 @@ public class TacticsCamera : MonoBehaviour
     // Método para rotar la cámara hacia la izquierda
     public void RotateLeft()
     {
+        /* 
+        Rota la cámara 90 grados hacia la izquierda alrededor del eje Y
+        mundial.
+        */
         if (cameraPivot != null)
         {
             cameraPivot.Rotate(Vector3.up, 90, Space.World);
@@ -19,6 +23,10 @@ public class TacticsCamera : MonoBehaviour
     // Método para rotar la cámara hacia la derecha
     public void RotateRight()
     {
+        /* 
+        Rota la cámara 90 grados hacia la derecha alrededor del eje Y
+        mundial.
+        */
         if (cameraPivot != null)
         {
             cameraPivot.Rotate(Vector3.up, -90, Space.World);

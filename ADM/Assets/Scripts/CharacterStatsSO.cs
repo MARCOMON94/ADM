@@ -38,7 +38,13 @@ public class CharacterStatsSO : ScriptableObject
 
     // Vida del personaje
     public int health = 100;
+
+    // Tipo de ataque del personaje
     public AttackType attackType = AttackType.Normal;
+
+    // Indica si el personaje puede realizar un ataque en altura
     public bool heightAttack;
-     public bool canFly;
+
+    // Indica si el personaje puede volar
+    public bool canFly;
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; // Asegúrate de incluir esto
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -9,25 +9,31 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
+    // Botones de la UI
     public Button moveButton;
     public Button attackButton;
     public Button passTurnButton;
-
     public Button restartButton;
     public Button mainMenuButton;
     public Image gameOverImage;
 
+    // Textos de salud de los personajes
     public TextMeshProUGUI[] characterHealthTexts;
     private PlayerMove currentPlayerMove;
     public TextMeshProUGUI roundText;
 
-    public Image[] turnIndicators; // Array público para asignar en el Inspector
+    // Indicadores de turno
+    public Image[] turnIndicators;
     private Dictionary<string, int> characterTurnIndexMap = new Dictionary<string, int>();
 
     private Dictionary<CharacterStatsSO, CharacterStatsSnapshot> initialStats;
 
     void Awake()
     {
+        /* 
+        Inicializa la instancia del UIManager asegurando que solo haya 
+        una instancia activa en el juego.
+        */
         if (Instance == null)
         {
             Instance = this;
@@ -40,6 +46,10 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
+        /* 
+        Inicializa las estadísticas de los personajes y añade listeners 
+        a los botones para manejar los eventos de clic.
+        */
         initialStats = new Dictionary<CharacterStatsSO, CharacterStatsSnapshot>();
         CharacterStatsSO[] allStats = Resources.FindObjectsOfTypeAll<CharacterStatsSO>();
         foreach (CharacterStatsSO stats in allStats)
@@ -58,6 +68,10 @@ public class UIManager : MonoBehaviour
 
     public void ShowGameOverScreen()
     {
+        /* 
+        Muestra la pantalla de fin de juego activando la imagen de fin 
+        de juego y los botones de reinicio y menú principal.
+        */
         gameOverImage.gameObject.SetActive(true);
         restartButton.gameObject.SetActive(true);
         mainMenuButton.gameObject.SetActive(true);
@@ -65,49 +79,70 @@ public class UIManager : MonoBehaviour
 
     public void HideGameOverScreen()
     {
+        /* 
+        Oculta la pantalla de fin de juego desactivando la imagen de fin 
+        de juego y los botones de reinicio y menú principal.
+        */
         gameOverImage.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(false);
         mainMenuButton.gameObject.SetActive(false);
     }
 
     public void OnRestartButtonClicked()
-{
-    foreach (var entry in initialStats)
     {
-        entry.Value.Restore(entry.Key);
+        /* 
+        Restaura las estadísticas iniciales de los personajes, resetea 
+        el TurnManager y recarga la escena actual.
+        */
+        foreach (var entry in initialStats)
+        {
+            entry.Value.Restore(entry.Key);
+        }
+        TurnManager.ResetTurnManager();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    TurnManager.ResetTurnManager(); // Asegúrate de llamar a esta función
-    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-}
 
     public void OnMainMenuButtonClicked()
     {
+        /* 
+        Carga la escena del menú principal.
+        */
         SceneManager.LoadScene("MainMenu");
     }
 
-    // Otras funciones existentes del UIManager...
-
     public void SetCurrentPlayerMove(PlayerMove playerMove)
     {
+        /* 
+        Establece el movimiento actual del jugador.
+        */
         currentPlayerMove = playerMove;
     }
 
     public PlayerMove GetCurrentPlayerMove()
     {
+        /* 
+        Devuelve el movimiento actual del jugador.
+        */
         return currentPlayerMove;
     }
 
     public void OnMoveButtonClicked()
     {
+        /* 
+        Maneja el evento de clic del botón de movimiento. Establece la 
+        acción de movimiento para el jugador actual.
+        */
         if (currentPlayerMove != null)
         {
             currentPlayerMove.SetActionMove();
-            Debug.Log("Current Player Move set to: " + (currentPlayerMove != null ? currentPlayerMove.name : "null"));
         }
     }
 
     public void TogglePlayerControls(bool enable)
     {
+        /* 
+        Activa o desactiva los controles del jugador.
+        */
         moveButton.interactable = enable;
         attackButton.interactable = enable;
         passTurnButton.interactable = enable;
@@ -115,19 +150,22 @@ public class UIManager : MonoBehaviour
 
     public void OnAttackButtonClicked()
     {
+        /* 
+        Maneja el evento de clic del botón de ataque. Establece la 
+        acción de ataque para el jugador actual.
+        */
         if (currentPlayerMove != null)
         {
-            Debug.Log("Attack button clicked, currentPlayerMove: " + currentPlayerMove.name);
             currentPlayerMove.SetActionAttack();
-        }
-        else
-        {
-            Debug.Log("Attack button clicked, but currentPlayerMove is null");
         }
     }
 
     public void OnPassTurnButtonClicked()
     {
+        /* 
+        Maneja el evento de clic del botón de pasar turno. Finaliza el 
+        turno del jugador actual.
+        */
         if (currentPlayerMove != null)
         {
             currentPlayerMove.EndTurn();
@@ -136,6 +174,9 @@ public class UIManager : MonoBehaviour
 
     public void UpdateCharacterHealth(int characterIndex, int health)
     {
+        /* 
+        Actualiza el texto de salud del personaje en la interfaz.
+        */
         if (characterIndex >= 0 && characterIndex < characterHealthTexts.Length)
         {
             characterHealthTexts[characterIndex].text = health.ToString();
@@ -144,6 +185,9 @@ public class UIManager : MonoBehaviour
 
     public void ShowPlayerControls()
     {
+        /* 
+        Muestra los controles del jugador.
+        */
         moveButton.gameObject.SetActive(true);
         attackButton.gameObject.SetActive(true);
         passTurnButton.gameObject.SetActive(true);
@@ -151,6 +195,9 @@ public class UIManager : MonoBehaviour
 
     public void HidePlayerControls()
     {
+        /* 
+        Oculta los controles del jugador.
+        */
         moveButton.gameObject.SetActive(false);
         attackButton.gameObject.SetActive(false);
         passTurnButton.gameObject.SetActive(false);
@@ -158,6 +205,9 @@ public class UIManager : MonoBehaviour
 
     public void UpdateTurnFrame(string characterName)
     {
+        /* 
+        Actualiza el indicador de turno del personaje especificado.
+        */
         int characterIndex;
         if (characterTurnIndexMap.TryGetValue(characterName, out characterIndex))
         {
@@ -170,6 +220,9 @@ public class UIManager : MonoBehaviour
 
     public void DeactivateTurnFrame(string characterName)
     {
+        /* 
+        Desactiva el indicador de turno del personaje especificado.
+        */
         int characterIndex;
         if (characterTurnIndexMap.TryGetValue(characterName, out characterIndex))
         {
@@ -179,6 +232,9 @@ public class UIManager : MonoBehaviour
 
     public void RegisterCharacterTurnIndicator(string characterName, int index)
     {
+        /* 
+        Registra el indicador de turno del personaje.
+        */
         if (!characterTurnIndexMap.ContainsKey(characterName))
         {
             characterTurnIndexMap.Add(characterName, index);
@@ -187,6 +243,9 @@ public class UIManager : MonoBehaviour
 
     public void RemoveTurnIndicator(string characterName)
     {
+        /* 
+        Elimina el indicador de turno del personaje.
+        */
         if (characterTurnIndexMap.ContainsKey(characterName))
         {
             int index = characterTurnIndexMap[characterName];
@@ -197,6 +256,9 @@ public class UIManager : MonoBehaviour
 
     public void UpdateRoundText(int round)
     {
+        /* 
+        Actualiza el texto de la ronda en la interfaz.
+        */
         roundText.text = "" + round;
     }
 }

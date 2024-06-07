@@ -16,7 +16,10 @@ public class TurnManager : MonoBehaviour
 
     void Start()
     {
-        // Asumiendo que tienes los personajes en orden específico
+        /* 
+        Inicializa el TurnManager, registrando los indicadores de turno 
+        de los personajes y configurando la cola de turnos.
+        */
         string[] characterNames = new string[] { "Nekomaru", "Aya", "Umi", "Gaku", "Yuniti", "Hanami", "Flynn", "Kuroka" };
         for (int i = 0; i < characterNames.Length; i++)
         {
@@ -29,6 +32,9 @@ public class TurnManager : MonoBehaviour
 
     void Update()
     {
+        /* 
+        Si no hay unidades en la cola, la inicializa.
+        */
         if (units.Count == 0)
         {
             InitTurnQueue();
@@ -37,6 +43,10 @@ public class TurnManager : MonoBehaviour
 
     static void InitTurnQueue()
     {
+        /* 
+        Ordena las unidades por velocidad y comienza el turno de la 
+        primera unidad en la cola.
+        */
         units = units.OrderByDescending(unit => unit.characterStats.speed).ToList();
         currentIndex = 0;
         isPlayerTurn = true;
@@ -49,6 +59,10 @@ public class TurnManager : MonoBehaviour
 
     public static void StartTurn()
     {
+        /* 
+        Inicia el turno de la unidad actual, mostrando u ocultando los
+        controles del jugador según corresponda.
+        */
         isEndingTurn = false;
 
         if (units[currentIndex] is PlayerMove)
@@ -62,48 +76,58 @@ public class TurnManager : MonoBehaviour
         }
 
         units[currentIndex].BeginTurn();
-        UIManager.Instance.UpdateTurnFrame(units[currentIndex].characterStats.name); // Actualizamos el marco aquí
+        UIManager.Instance.UpdateTurnFrame(units[currentIndex].characterStats.name);
     }
 
     public static void EndTurn()
-{
-    if (isEndingTurn) return;
-    isEndingTurn = true;
-
-    if (units.Count == 0)
     {
+        /* 
+        Finaliza el turno de la unidad actual, actualiza el índice de la
+        unidad actual y verifica el estado del juego.
+        */
+        if (isEndingTurn) return;
+        isEndingTurn = true;
+
+        if (units.Count == 0)
+        {
+            isEndingTurn = false;
+            return;
+        }
+
+        units[currentIndex].EndTurn();
+        currentIndex++;
+
+        if (currentIndex >= units.Count)
+        {
+            currentIndex = 0;
+            currentRound++;
+            UIManager.Instance.UpdateRoundText(currentRound);
+        }
+
+        CheckGameOver();
         isEndingTurn = false;
-        return;
+
+        if (units.Count > 0)
+        {
+            StartTurn();
+        }
     }
-
-    units[currentIndex].EndTurn();
-    currentIndex++;
-
-    if (currentIndex >= units.Count)
-    {
-        currentIndex = 0;
-        currentRound++;
-        Debug.Log("Ronda " + currentRound);
-        UIManager.Instance.UpdateRoundText(currentRound);
-    }
-
-    CheckGameOver();
-    isEndingTurn = false;
-
-    if (units.Count > 0)
-    {
-        StartTurn();
-    }
-}
 
     public static void AddUnit(TacticsMove unit)
     {
+        /* 
+        Añade una unidad a la lista y la ordena por velocidad.
+        */
         units.Add(unit);
         units = units.OrderByDescending(u => u.characterStats.speed).ToList();
     }
 
     public static void RemoveUnit(TacticsMove unit)
     {
+        /* 
+        Elimina una unidad de la lista y ajusta el índice de la unidad
+        actual según corresponda.
+        */
         int index = units.IndexOf(unit);
         if (index != -1)
         {
@@ -115,7 +139,7 @@ public class TurnManager : MonoBehaviour
             }
             else if (index == currentIndex)
             {
-                currentIndex = currentIndex % units.Count; // Reset currentIndex if it is the removed one
+                currentIndex = currentIndex % units.Count;
             }
             
             UIManager.Instance.DeactivateTurnFrame(unit.characterStats.name);
@@ -124,11 +148,18 @@ public class TurnManager : MonoBehaviour
 
     public static List<TacticsMove> GetUnits()
     {
+        /* 
+        Devuelve la lista de unidades.
+        */
         return units;
     }
 
     private static void CheckGameOver()
     {
+        /* 
+        Verifica si todos los jugadores están muertos y muestra la pantalla
+        de fin de juego si es así.
+        */
         bool allPlayersDead = !units.Any(unit => unit is PlayerMove);
         if (allPlayersDead)
         {
@@ -136,12 +167,15 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-   public static void ResetTurnManager()
-{
-    units.Clear();
-    currentIndex = 0;
-    isPlayerTurn = true;
-    currentRound = 1;
-    isEndingTurn = false;
-}
+    public static void ResetTurnManager()
+    {
+        /* 
+        Reinicia el TurnManager a su estado inicial.
+        */
+        units.Clear();
+        currentIndex = 0;
+        isPlayerTurn = true;
+        currentRound = 1;
+        isEndingTurn = false;
+    }
 }
